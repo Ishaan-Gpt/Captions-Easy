@@ -6,6 +6,7 @@ import { preloadSpeechModel } from "@/features/transcribe/browserWhisper";
 import { getSession, startSession } from "@/features/transcribe/session";
 import { HINGLISH_AVAILABLE, PROJECT_LANGUAGE, likelySpeechLanguage, saveSpeechLanguage, savedSpeechLanguage, speechLanguageOf, type SpeechLanguage } from "@/features/transcribe/runtime";
 import { studioService } from "@/services/studio";
+import { track } from "@/lib/track";
 import { ApiError } from "@/services/api-client";
 import { PrepareError, prepareVideo, type PrepareStage } from "@/features/upload/prepareVideo";
 import { Check, Film, ShieldCheck, Sparkles, Upload } from "lucide-react";
@@ -58,6 +59,7 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
         // captions start as soon as the video has an id (in parallel with saving it), not after the server round trips
         const done = await studioService.uploadVideo(projectId, ready, setProgress, (abort) => (abortRef.current = abort), (videoId) => {
           if (!ready.hasAudio) return;
+          track("video_added", { language: projectLanguage ?? "en", durationS: Math.round(ready.durationMs / 1000) });
           startSession({ projectId, videoId, file: ready.file, language: projectLanguage, info: { codec: ready.videoCodec, converted: ready.converted, previewMode: ready.previewMode, durationS: Math.round(ready.durationMs / 1000) } });
         });
         if (done.jobId) void getSession(projectId)?.attachJob(done.jobId);

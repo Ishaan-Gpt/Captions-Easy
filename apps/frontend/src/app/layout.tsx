@@ -26,10 +26,29 @@ const fontAccent = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
+const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://www.captionseasy.com").replace(/\/$/, "");
+const SITE_TITLE = "Free Auto Captions for Reels, Shorts & TikTok, No Watermark | CaptionsEasy";
+const SITE_DESCRIPTION =
+  "Add animated, word-timed captions to your Reels, Shorts and TikToks in minutes. 20+ caption styles, English and Hinglish, MP4 and SRT export. Free, no watermark, and your video never leaves your browser.";
+
+// og:image / twitter:image come from app/opengraph-image.jpg and app/twitter-image.jpg
 export const metadata: Metadata = {
-  title: "CaptionsEasy — AI Kinetic Captions & Motion Typography",
-  description:
-    "Turn talking-head videos into high-converting viral Shorts & Reels. Automated speech-to-text, frame-accurate timing, and kinetic motion typography.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: "CaptionsEasy",
+  openGraph: {
+    type: "website",
+    siteName: "CaptionsEasy",
+    title: "CaptionsEasy: free animated captions for Reels, Shorts & TikTok",
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CaptionsEasy: free animated captions for Reels, Shorts & TikTok",
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

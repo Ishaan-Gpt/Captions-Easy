@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { FAQS } from "./faqs";
 import { PLANS } from "@capseasy/shared";
 import { Logo as BrandLogo } from "@/components/brand/Logo";
 import { LEGAL_PAGES } from "@/lib/legal";
@@ -13,6 +14,9 @@ const LivePreview = dynamic(() => import("./LivePreview").then((m) => m.LivePrev
 
 const INK = "#1A1A1A";
 export const GITHUB_URL = "https://github.com/Ishaan-Gpt/Captions-Easy";
+/** Product Hunt badge: set NEXT_PUBLIC_PRODUCT_HUNT_POST_ID (and _SLUG) on Vercel once the launch is scheduled; hidden until then. */
+const PH_POST_ID = process.env.NEXT_PUBLIC_PRODUCT_HUNT_POST_ID;
+const PH_SLUG = process.env.NEXT_PUBLIC_PRODUCT_HUNT_SLUG || "captionseasy";
 
 function GitHubMark({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -143,6 +147,20 @@ export function Hero() {
       <div data-parallax="0.4" aria-hidden className="pointer-events-none absolute -right-32 top-48 h-[440px] w-[440px] rounded-full bg-[#FFA946]/25 blur-3xl" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-5 text-center">
+        <div data-hero="eyebrow" className="flex flex-wrap items-center justify-center gap-2.5">
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="inline-flex h-[42px] items-center gap-2 rounded-full border border-[#1A1A1A]/15 bg-white/70 px-4 text-sm font-semibold text-[#1A1A1A] backdrop-blur-md transition hover:border-[#1A1A1A]/40 hover:bg-white">
+            <GitHubMark />
+            Open source on GitHub
+            <span aria-hidden className="text-[#FFA946]">★</span>
+          </a>
+          {PH_POST_ID ? (
+            <a href={`https://www.producthunt.com/posts/${PH_SLUG}?utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-${PH_SLUG}`} target="_blank" rel="noopener noreferrer" className="inline-flex transition hover:scale-[1.02]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=${PH_POST_ID}&theme=light`} alt="CaptionsEasy on Product Hunt" width={194} height={42} className="h-[42px] w-auto" />
+            </a>
+          ) : null}
+        </div>
+
         <h1 className="font-styled mt-5 text-[clamp(2.7rem,min(6.4vw,9.5vh),5.6rem)] font-bold leading-[0.9] tracking-[-0.05em] text-[#1A1A1A]">
           <span className="inline-block overflow-hidden pb-[0.06em]">
             <span data-hero="word" className="inline-block mr-3 sm:mr-4">Don&rsquo;t edit,</span>
@@ -403,13 +421,11 @@ function PopArtifact() {
   );
 }
 
-function OverlayArtifact() {
+function PrivateArtifact() {
   return (
-    <div className="relative mt-6 h-28 sm:h-32 rounded-2xl border border-[#1A1A1A]/10 overflow-hidden bg-checkerboard flex items-center justify-center group-hover:shadow-inner transition-shadow">
-      <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" style={{ backgroundImage: 'conic-gradient(#1A1A1A 90deg, transparent 90deg, transparent 180deg, #1A1A1A 180deg, #1A1A1A 270deg, transparent 270deg)', backgroundSize: '16px 16px' }} />
-      <div className="relative font-styled text-2xl font-bold text-[#1A1A1A] drop-shadow-md group-hover:scale-105 transition-transform">
-        NO BACKGROUND
-      </div>
+    <div className="relative mt-6 h-28 sm:h-32 rounded-2xl border border-[#1A1A1A]/10 bg-[#1A1A1A]/5 overflow-hidden flex flex-col items-center justify-center gap-2 group-hover:bg-[#34D399]/15 transition-colors">
+      <div className="font-styled text-2xl font-bold text-[#1A1A1A] group-hover:scale-105 transition-transform">0 MB uploaded</div>
+      <span className="font-mono text-[10px] uppercase text-[#1A1A1A]/50 tracking-widest bg-white/60 px-2 py-0.5 rounded">Made on your device</span>
     </div>
   );
 }
@@ -417,7 +433,7 @@ function OverlayArtifact() {
 function ExportArtifact() {
   return (
     <div className="relative mt-6 h-28 sm:h-32 rounded-2xl border border-[#1A1A1A]/10 bg-[#1A1A1A]/5 overflow-hidden flex items-center justify-center gap-3 px-2 group-hover:bg-[#1A1A1A]/10 transition-colors">
-       {['SRT', 'VTT', 'TXT'].map((ext, i) => (
+       {['MP4', 'SRT'].map((ext, i) => (
          <div key={ext} className="flex flex-col items-center justify-center w-14 h-16 bg-white rounded-xl shadow-sm border border-[#1A1A1A]/10 relative group-hover:-translate-y-3 transition-transform duration-300" style={{ transitionDelay: `${i * 75}ms` }}>
             <div className="absolute top-0 right-0 w-4 h-4 bg-[#1A1A1A]/5 rounded-bl-xl" />
             <span className="font-mono text-xs font-bold text-[#1A1A1A] mt-2">{ext}</span>
@@ -431,9 +447,9 @@ function LanguageArtifact() {
   return (
     <div className="relative mt-6 h-28 sm:h-32 rounded-2xl border border-[#1A1A1A]/10 bg-[#1A1A1A]/5 overflow-hidden flex flex-col items-center justify-center group-hover:bg-[#F0D7FF]/30 transition-colors">
        <div className="flex flex-col items-center space-y-1 group-hover:scale-105 transition-transform">
-         <span className="font-sans text-base text-[#1A1A1A]/50 line-through decoration-[#1A1A1A]/30">Kya haal hai?</span>
-         <span className="font-sans text-2xl font-bold text-[#1A1A1A]">क्या हाल है?</span>
-         <span className="font-mono text-[10px] uppercase text-[#1A1A1A]/40 tracking-widest mt-2 bg-white/50 px-2 py-0.5 rounded">Devanagari Match</span>
+         <span className="font-sans text-base text-[#1A1A1A]/50 line-through decoration-[#1A1A1A]/30">क्या हाल है?</span>
+         <span className="font-sans text-2xl font-bold text-[#1A1A1A]">Kya haal hai?</span>
+         <span className="font-mono text-[10px] uppercase text-[#1A1A1A]/40 tracking-widest mt-2 bg-white/50 px-2 py-0.5 rounded">Hinglish, as you type it</span>
        </div>
     </div>
   );
@@ -474,9 +490,9 @@ const FEATURES = [
   { t: "Word-perfect timing", d: "Every word lands on the syllable. Drag any word on the timeline to nudge it; the waveform shows you exactly where.", k: "wide", artifact: <TimingArtifact /> },
   { t: "Captions that feel it", d: "Excited, funny, serious: each card's emotion changes how hard it moves. Dial it up or switch it off.", k: "", artifact: <EmotionArtifact /> },
   { t: "Key words that pop", d: "The word that matters on every card gets its own size, colour or box. Picked automatically, always editable.", k: "", artifact: <PopArtifact /> },
-  { t: "Transparent overlays", d: "Export captions only, with transparency (ProRes 4444 or WebM) and drop them over your grade in Premiere, Resolve or Final Cut.", k: "", artifact: <OverlayArtifact /> },
-  { t: "SRT, VTT, ASS & TXT", d: "Subtitle files for YouTube, LinkedIn and every editor, instantly, no render needed.", k: "", artifact: <ExportArtifact /> },
-  { t: "Hinglish & 100+ languages", d: "Code-switching creators welcome. Romanized Hinglish, Devanagari-ready fonts, custom vocabulary for names and brands.", k: "wide", artifact: <LanguageArtifact /> },
+  { t: "Your video stays yours", d: "Captions and the MP4 export are made right in your browser. Your video is never uploaded.", k: "", artifact: <PrivateArtifact /> },
+  { t: "MP4 & SRT", d: "A ready-to-post MP4 with captions burned in, or an SRT file for YouTube, LinkedIn, Premiere, CapCut and every editor.", k: "", artifact: <ExportArtifact /> },
+  { t: "English & Hinglish", d: "Code-switching creators welcome. Hindi and Hinglish speech comes out in Roman script, the way you would type it.", k: "wide", artifact: <LanguageArtifact /> },
   { t: "Your brand, saved", d: "Save colours, fonts and your favourite looks once. Every new project is on-brand from the first second.", k: "", artifact: <BrandArtifact /> },
   { t: "Undo everything", d: "Autosave, full undo/redo, and a safety net if you edit the same project in two tabs.", k: "", artifact: <UndoArtifact /> },
 ];
@@ -669,32 +685,6 @@ export function Control() {
   );
 }
 
-const FAQS = [
-  {
-    q: "Will CaptionsEasy work with vertical 9:16 Shorts, Reels, and TikToks?",
-    a: "Yes! CaptionsEasy is optimized specifically for short-form portrait video (9:16) as well as traditional widescreen (16:9). All kinetic motion keyframes adjust dynamically to fit your framing, with safe-zone clearance for platform UI buttons.",
-  },
-  {
-    q: "How is CaptionsEasy different from basic CapCut or Premiere captions?",
-    a: "Standard video editors apply plain static text. CaptionsEasy delivers syllable-accurate word timing, automatically highlights high-impact hero words with distinct motion, and lets you export transparent overlays (ProRes 4444 / WebM) directly into your NLE timeline.",
-  },
-  {
-    q: "Do I need to install anything?",
-    a: "No. Transcription, editing and MP4 export all run in your browser, on desktop or phone.",
-  },
-  {
-    q: "Can I customize the font, colors, and keyframe animations?",
-    a: "Absolutely. Choose from curated viral looks (Hormozi Box, Karaoke Fill, Beast Bounce, Luxe Serif, Neon, Highlighter, etc.), adjust glowing outlines, padding, box radii, and save your brand kit for one-click re-use.",
-  },
-  {
-    q: "Does it support Hindi, Hinglish, and regional accents?",
-    a: "Yes. Speech recognition handles 100+ languages, accent variations, fast-talking creators, background noise, and code-switching like Hinglish (with automatic romanization options and Devanagari-ready fonts).",
-  },
-  {
-    q: "What export formats are supported?",
-    a: "You can export ready-to-post 1080p vertical MP4 videos with burned-in captions, transparent alpha overlays (ProRes 4444 or WebM) for Premiere, Resolve and Final Cut, or download raw SRT, VTT, ASS and TXT subtitle files instantly.",
-  },
-];
 
 export function Faq() {
   const [activeIdx, setActiveIdx] = useState(0);

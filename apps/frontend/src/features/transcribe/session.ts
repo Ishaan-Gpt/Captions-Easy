@@ -8,6 +8,7 @@ import { decodeAudio, dropWorker, sendToWorker, speechWorker, withRetry, type Br
 import { MODELS, markWebgpuBroken, modelKeyOf, speechLanguageOf, webgpuMarkedBroken, type SpeechLanguage, type SpeechModel } from "./runtime";
 import { dropRepeatedRuns } from "./speech";
 import { mark, note, report } from "./timing";
+import { track } from "@/lib/track";
 import { deleteProgress, getProgress, saveProgress } from "@/features/upload/localVideos";
 
 /**
@@ -316,6 +317,7 @@ export class TranscriptionSession {
       note(this.runId, { device: this.finished.device, words: words.length });
       await deleteProgress(this.videoId);
       this.set({ phase: "saved" });
+      track("captions_ready", { model: this.model.key, words: words.length, device: this.finished.device ?? null });
       report(this.runId);
     } catch (e) {
       this.completing = false;
@@ -445,6 +447,7 @@ export class TranscriptionSession {
           ? "Setup didn't finish because the connection dropped. Check your internet and try again."
           : "Something interrupted the captions. Try again: it continues from where it stopped, so it's faster now.",
     });
+    track("captions_failed", { model: this.model.key });
     void this.releaseJob(message.slice(0, 280));
     this.settle();
   }

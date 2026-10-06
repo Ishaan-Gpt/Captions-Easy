@@ -6,14 +6,7 @@ import { useRouter } from "next/navigation";
 import { authService } from "@/services/auth";
 import { supabase } from "@/services/auth/supabaseClient";
 import { setAfterSignIn } from "@/services/auth/guest";
-import AuthShell, {
-  Field,
-  PasswordField,
-  SubmitButton,
-  ErrorNote,
-  friendlyAuthError,
-  validEmail,
-} from "@/components/auth/AuthShell";
+import AuthShell, { Field, PasswordField, SubmitButton, ErrorNote, friendlyAuthError, validEmail } from "@/components/auth/AuthShell";
 
 const GoogleIcon = () => (
   <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" aria-hidden>
@@ -36,21 +29,22 @@ const GoogleIcon = () => (
   </svg>
 );
 
-type Mode = "signin" | "signup" | "verify-sent";
+/**
+ * Google is the only way to create an account (no confirmation emails, one tap on phones).
+ * "Sign in with email" stays as a small link for people who already made an email account.
+ */
+type Mode = "google" | "email";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [mode, setMode] = useState<Mode>("signin");
-  const [name, setName] = useState("");
+  const [mode, setMode] = useState<Mode>("google");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string; name?: string }>({});
-  const [resent, setResent] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   // on a slow phone people type before the page script has loaded: keep what they typed, and keep the
   // button off until then (pressing Enter earlier would reload the page and wipe the form)
   const formRef = useRef<HTMLFormElement>(null);
@@ -63,14 +57,16 @@ export default function LoginPage() {
     setReady(true);
   }, []);
 
-  // "Start free" links arrive with ?mode=signup: open on Create Account, not Welcome Back
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if (q.get("mode") === "signup") setMode("signup");
     // a page that sent them here (e.g. a project link) is where they continue after signing in
     setAfterSignIn(q.get("redirect"));
+    // arriving with an email means "I already have an email account": open the email form, filled in
     const e = q.get("email");
-    if (e) setEmail(e);
+    if (e) {
+      setEmail(e);
+      setMode("email");
+    }
   }, []);
 
   // Redirect if already authenticated; also catches the OAuth return.
@@ -90,8 +86,7 @@ export default function LoginPage() {
   const validate = () => {
     const errs: typeof fieldErrors = {};
     if (!validEmail(email)) errs.email = "Enter a valid email address.";
-    if (password.length < 6) errs.password = "Password must be at least 6 characters.";
-    if (mode === "signup" && !name.trim()) errs.name = "Please enter your name.";
+    if (!password) errs.password = "Enter your password.";
     setFieldErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -102,13 +97,8 @@ export default function LoginPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      if (mode === "signup") {
-        await authService.register(name.trim(), email, password);
-        setMode("verify-sent");
-      } else {
-        await authService.login(email, password);
-        router.replace("/start");
-      }
+      await authService.login(email, password);
+      router.replace("/start");
     } catch (err) {
       setError(friendlyAuthError((err instanceof Error ? err.message : "") || "Authentication failed."));
     } finally {
@@ -127,96 +117,64 @@ export default function LoginPage() {
     }
   };
 
-  const handleResend = async () => {
-    setResent(false);
+  const switchTo = (m: Mode) => {
+    setMode(m);
     setError(null);
-    try {
-      const { error: rErr } = await supabase.auth.resend({ type: "signup", email });
-      if (rErr) throw new Error(rErr.message);
-      setResent(true);
-    } catch (err) {
-      setError(friendlyAuthError((err instanceof Error ? err.message : "") || "Couldn't resend the email."));
-    }
+    setFieldErrors({});
   };
 
-  if (mode === "verify-sent") {
+  const googleButton = (
+    <button
+      type="button"
+      onClick={handleGoogle}
+      disabled={loading}
+      className={`w-full rounded-xl py-3 px-3 font-semibold text-[14px] transition duration-150 cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2.5 ${
+        mode === "google"
+          ? "bg-neutral-900 text-white hover:bg-neutral-800 shadow-[0_6px_16px_-8px_rgba(0,0,0,0.5)]"
+          : "border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50/90 hover:border-neutral-300 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+      }`}
+    >
+      <span className={mode === "google" ? "rounded-full bg-white p-1" : ""}>
+        <GoogleIcon />
+      </span>
+      <span className="truncate">Continue with Google</span>
+    </button>
+  );
+
+  if (mode === "google") {
     return (
       <AuthShell
-        title="Check your inbox"
-        subtitle={
-          <>
-            We sent a confirmation link to <strong className="text-neutral-900">{email}</strong>.
-            Open it to activate your account, then come back and sign in.
-          </>
-        }
+        title="Sign in to CaptionsEasy"
+        subtitle={<p className="text-[13.5px] text-neutral-600">New here? Continue with Google and your free account is ready in one tap.</p>}
       >
         <div className="space-y-4">
           {error && <ErrorNote>{error}</ErrorNote>}
-          {resent && (
-            <div className="rounded-xl border border-blue-200 bg-blue-50/80 px-4 py-3 text-[13px] text-blue-800 font-medium">
-              Sent again — please check your inbox and spam folder.
-            </div>
-          )}
+          {googleButton}
+          <p className="text-center text-[12px] text-neutral-500">
+            Free. No card. By continuing you agree to the{" "}
+            <Link href="/terms" className="underline">Terms</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.
+          </p>
           <button
-            onClick={handleResend}
-            className="w-full rounded-xl border border-neutral-300 bg-white px-6 py-3 text-[14px] font-medium text-neutral-800 hover:bg-neutral-50 transition cursor-pointer"
+            type="button"
+            onClick={() => switchTo("email")}
+            className="w-full text-center text-[13px] font-medium text-neutral-500 hover:text-neutral-900 transition cursor-pointer py-1"
           >
-            Resend confirmation email
-          </button>
-          <button
-            onClick={() => {
-              setMode("signin");
-              setError(null);
-              setResent(false);
-            }}
-            className="w-full text-center text-[13px] font-medium text-neutral-600 hover:text-neutral-900 transition cursor-pointer py-2"
-          >
-            Back to sign in
+            Already have an email account? Sign in with email
           </button>
         </div>
       </AuthShell>
     );
   }
 
-  const isSignUp = mode === "signup";
-
   return (
     <AuthShell
-      title={isSignUp ? "Create Account" : "Welcome Back"}
-      subtitle={
-        <p className="text-[13.5px] text-neutral-600">
-          {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-          <button
-            type="button"
-            onClick={() => {
-              setMode(isSignUp ? "signin" : "signup");
-              setError(null);
-              setFieldErrors({});
-            }}
-            className="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer underline-offset-2 hover:underline transition"
-          >
-            {isSignUp ? "Sign In" : "Sign up"}
-          </button>
-        </p>
-      }
+      title="Sign in with email"
+      subtitle={<p className="text-[13.5px] text-neutral-600">For accounts made with an email and password.</p>}
     >
       <div className="space-y-4">
         {error && <ErrorNote>{error}</ErrorNote>}
 
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4" noValidate>
-          {isSignUp && (
-            <Field
-              label="Full Name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Alex Rivera"
-              autoComplete="name"
-              error={fieldErrors.name}
-              disabled={loading}
-            />
-          )}
-
           <Field
             label="Email Address"
             type="email"
@@ -224,7 +182,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
             autoComplete="email"
-            autoFocus
+            autoFocus={!email}
             error={fieldErrors.email}
             disabled={loading}
           />
@@ -234,57 +192,40 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            autoComplete={isSignUp ? "new-password" : "current-password"}
+            autoComplete="current-password"
+            autoFocus={!!email}
             error={fieldErrors.password}
             disabled={loading}
           />
 
-          {!isSignUp && (
-            <div className="flex items-center justify-between pt-0.5 pb-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-neutral-300 text-blue-600 focus:ring-blue-500 cursor-pointer accent-neutral-900"
-                />
-                <span className="text-[13px] text-neutral-600 font-normal">Remember me</span>
-              </label>
-
-              <Link
-                href="/forgot-password"
-                className="text-[13px] font-medium text-blue-600 hover:text-blue-700 hover:underline transition"
-              >
-                Forgot password?
-              </Link>
-            </div>
-          )}
+          <div className="flex justify-end pt-0.5 pb-1">
+            <Link
+              href="/forgot-password"
+              className="text-[13px] font-medium text-blue-600 hover:text-blue-700 hover:underline transition"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
           <SubmitButton loading={loading} disabled={!ready}>
-            {isSignUp ? "Sign Up" : "Sign In"}
+            Sign In
           </SubmitButton>
         </form>
 
-        {/* Divider */}
         <div className="relative py-2 flex items-center justify-center">
           <div className="w-full border-t border-neutral-200" />
-          <span className="absolute bg-white px-3 text-[12px] font-medium text-neutral-400 lowercase">
-            or
-          </span>
+          <span className="absolute bg-white px-3 text-[12px] font-medium text-neutral-400 lowercase">or</span>
         </div>
 
-        {/* Social Buttons */}
-        <div className="grid gap-3">
-          <button
-            type="button"
-            onClick={handleGoogle}
-            disabled={loading}
-            className="w-full rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50/90 py-2.5 px-3 font-medium text-[13px] text-neutral-700 hover:border-neutral-300 transition duration-150 cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-          >
-            <GoogleIcon />
-            <span className="truncate">Continue with Google</span>
-          </button>
-        </div>
+        {googleButton}
+
+        <button
+          type="button"
+          onClick={() => switchTo("google")}
+          className="w-full text-center text-[13px] font-medium text-neutral-500 hover:text-neutral-900 transition cursor-pointer py-1"
+        >
+          New to CaptionsEasy? Create your account with Google
+        </button>
       </div>
     </AuthShell>
   );
