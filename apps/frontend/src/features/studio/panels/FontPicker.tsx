@@ -1,15 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Check, ChevronDown, Laptop, Loader2, Search } from "lucide-react";
-import { FONT_CATEGORIES, GOOGLE_FONTS, POPULAR_FONTS, deviceHasFont, fontStack, getFontEntry, loadFontFamily, loadFontPreview, type FontCategory, type FontEntry } from "@capseasy/templates";
-
-type LocalFontData = { family: string };
-declare global {
-  interface Window {
-    queryLocalFonts?: () => Promise<LocalFontData[]>;
-  }
-}
+import { Check, ChevronDown, Loader2, Search } from "lucide-react";
+import { FONT_CATEGORIES, GOOGLE_FONTS, POPULAR_FONTS, fontStack, loadFontFamily, loadFontPreview, type FontCategory } from "@capseasy/templates";
 
 /** Draws a font's name in that font. Google previews fetch only the letters of the name (a few KB). */
 const FontName: React.FC<{ family: string; root: React.RefObject<HTMLElement | null>; className?: string }> = ({ family, root, className }) => {
@@ -40,10 +33,7 @@ const FontName: React.FC<{ family: string; root: React.RefObject<HTMLElement | n
   );
 };
 
-function deviceNote(e: FontEntry): string | null {
-  if (e.source !== "device") return null;
-  return deviceHasFont(e.family) ? "On this device" : `Not installed · shows as ${e.fallback}`;
-}
+const POPULAR_SET = new Set(POPULAR_FONTS.map((f) => f.family));
 
 interface Props {
   label: string;
@@ -52,7 +42,7 @@ interface Props {
 }
 
 /**
- * Font chooser: creator favourites (Helvetica, Open Sauce, Coolvetica…) first, then Google Fonts by category.
+ * Font chooser: creator favourites first, then Google Fonts by category. Every font loads by itself when picked.
  * Each name is drawn in its own face; the full font downloads only when picked.
  */
 export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
@@ -60,8 +50,6 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<FontCategory | "all">("all");
   const [busy, setBusy] = useState<string | null>(null);
-  const [local, setLocal] = useState<string[] | null>(null);
-  const [localError, setLocalError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [currentCss, setCurrentCss] = useState<string>(fontStack(value));
 
@@ -77,8 +65,7 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
   const q = query.trim().toLowerCase();
   const match = (f: string) => !q || f.toLowerCase().includes(q);
   const popular = useMemo(() => POPULAR_FONTS.filter((f) => match(f.family) && (cat === "all" || f.category === cat)), [q, cat]); // eslint-disable-line react-hooks/exhaustive-deps
-  const google = useMemo(() => GOOGLE_FONTS.filter((f) => match(f.family) && (cat === "all" || f.category === cat)), [q, cat]); // eslint-disable-line react-hooks/exhaustive-deps
-  const localShown = useMemo(() => (local ?? []).filter(match), [local, q]); // eslint-disable-line react-hooks/exhaustive-deps
+  const google = useMemo(() => GOOGLE_FONTS.filter((f) => !POPULAR_SET.has(f.family) && match(f.family) && (cat === "all" || f.category === cat)), [q, cat]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = async (family: string) => {
     setBusy(family);
@@ -88,16 +75,6 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
       setBusy(null);
     }
     onChange(family);
-  };
-
-  const showLocal = async () => {
-    setLocalError(null);
-    try {
-      const fonts = await window.queryLocalFonts!();
-      setLocal([...new Set(fonts.map((f) => f.family))].sort((a, b) => a.localeCompare(b)));
-    } catch {
-      setLocalError("Your browser didn't share this computer's fonts.");
-    }
   };
 
   const row = (family: string, note: string | null) => (
@@ -117,7 +94,6 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
     </button>
   );
 
-  const current = getFontEntry(value);
   return (
     <div className="text-sm text-st-text/90">
       <div className="flex items-center justify-between gap-3">
@@ -132,7 +108,6 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
           <ChevronDown className={`h-3.5 w-3.5 shrink-0 text-st-muted transition-transform ${open ? "rotate-180" : ""}`} />
         </button>
       </div>
-      {current?.source === "device" && !deviceHasFont(value) ? <p className="mt-1 text-right text-[11px] text-st-faint">{value} isn&apos;t installed here, so it shows as {current.fallback}.</p> : null}
 
       {open ? (
         <div className="mt-2 rounded-lg border border-st-line bg-st-panel">
@@ -153,14 +128,7 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
             {popular.length ? (
               <>
                 <div className="px-2.5 pb-1 pt-1.5 text-[11px] font-semibold uppercase tracking-wider text-st-muted">Popular</div>
-                {popular.map((f) => row(f.family, deviceNote(f)))}
-              </>
-            ) : null}
-            {local !== null ? (
-              <>
-                <div className="px-2.5 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-wider text-st-muted">On this computer</div>
-                <p className="px-2.5 pb-1 text-[11px] text-st-faint">These show only on this computer.</p>
-                {localShown.map((f) => row(f, null))}
+                {popular.map((f) => row(f.family, null))}
               </>
             ) : null}
             {google.length ? (
@@ -169,16 +137,8 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
                 {google.map((f) => row(f.family, null))}
               </>
             ) : null}
-            {!popular.length && !google.length && !localShown.length ? <p className="px-2.5 py-6 text-center text-xs text-st-faint">No font called &ldquo;{query}&rdquo;.</p> : null}
+            {!popular.length && !google.length ? <p className="px-2.5 py-6 text-center text-xs text-st-faint">No font called &ldquo;{query}&rdquo;.</p> : null}
           </div>
-          {typeof window !== "undefined" && window.queryLocalFonts && local === null ? (
-            <div className="border-t border-st-line p-2">
-              <button type="button" onClick={() => void showLocal()} className="flex w-full items-center justify-center gap-2 rounded-md bg-st-raised px-2.5 py-1.5 text-xs hover:bg-st-hover">
-                <Laptop className="h-3.5 w-3.5" /> Use fonts installed on this computer
-              </button>
-              {localError ? <p className="mt-1 text-center text-[11px] text-st-faint">{localError}</p> : null}
-            </div>
-          ) : null}
         </div>
       ) : null}
     </div>

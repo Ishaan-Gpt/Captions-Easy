@@ -10,6 +10,13 @@ import { ApiError } from "@/services/api-client";
 import { Button, fmtBytes, fmtTime, triggerDownload } from "./controls";
 import { VideoReady } from "./VideoReady";
 
+/** Same resolution either way: this only trades sharpness for file size. */
+const QUALITY_OPTIONS = [
+  { id: "high", label: "Best", hint: "Sharpest picture, biggest file. Best for posting to Reels, Shorts or TikTok." },
+  { id: "balanced", label: "Balanced", hint: "Looks almost the same, file about a third smaller." },
+  { id: "small", label: "Smaller file", hint: "Smallest file, slightly softer. Good for WhatsApp or slow internet." },
+] as const;
+
 interface Option { kind: ExportKind; title: string; desc: string; usesRange: boolean; popular?: boolean }
 /** Browser-first launch: the two exports that work everywhere with nothing installed. */
 const OPTIONS: Option[] = [
@@ -208,13 +215,16 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
 
         <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-5">
           {saving ? <p className="mb-3 rounded-lg bg-st-raised/70 px-3 py-2 text-xs text-st-muted">Saving your latest edits first…</p> : null}
-          <div className="mb-3 flex flex-col gap-1.5 text-sm text-st-text/80 sm:flex-row sm:items-center sm:justify-between">
-            <span>Video quality</span>
-            <div className="grid grid-cols-3 rounded-lg border border-st-line bg-st-raised p-0.5 sm:inline-flex">
-              {(["high", "balanced", "small"] as const).map((q) => (
-                <button key={q} onClick={() => setQuality(q)} className={`rounded-md px-2.5 py-2 text-xs capitalize sm:py-1 ${quality === q ? "bg-st-lav text-obsidian" : "text-st-text/80"}`}>{q}</button>
-              ))}
+          <div className="mb-3 text-sm text-st-text/80">
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
+              <span>Video quality</span>
+              <div role="radiogroup" aria-label="Video quality" className="grid grid-cols-3 rounded-lg border border-st-line bg-st-raised p-0.5 sm:inline-flex">
+                {QUALITY_OPTIONS.map((q) => (
+                  <button key={q.id} role="radio" aria-checked={quality === q.id} onClick={() => setQuality(q.id)} className={`rounded-md px-2.5 py-2 text-xs sm:py-1 ${quality === q.id ? "bg-st-lav text-obsidian" : "text-st-text/80"}`}>{q.label}</button>
+                ))}
+              </div>
             </div>
+            <p className="mt-1 text-xs text-st-faint sm:text-right">{QUALITY_OPTIONS.find((q) => q.id === quality)?.hint}</p>
           </div>
 
           <div className="mb-3 flex flex-col gap-1.5 text-sm text-st-text/80 sm:flex-row sm:items-center sm:justify-between">

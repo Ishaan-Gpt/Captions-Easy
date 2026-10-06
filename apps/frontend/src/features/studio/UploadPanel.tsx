@@ -8,6 +8,7 @@ import { HINGLISH_AVAILABLE, PROJECT_LANGUAGE, likelySpeechLanguage, saveSpeechL
 import { studioService } from "@/services/studio";
 import { ApiError } from "@/services/api-client";
 import { PrepareError, prepareVideo, type PrepareStage } from "@/features/upload/prepareVideo";
+import { Check, Film, ShieldCheck, Sparkles, Upload } from "lucide-react";
 import { Button } from "./controls";
 
 interface Props {
@@ -94,14 +95,16 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
         }}
         className={`w-full max-w-xl rounded-2xl border-2 border-dashed p-10 text-center transition ${over ? "border-st-ink bg-st-lav/40" : "border-st-hover bg-st-panel"}`}
       >
-        <div className="mb-3 text-4xl">🎬</div>
+        <div className={`mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl border border-st-line bg-st-lav/60 text-obsidian transition-transform ${over ? "scale-110" : ""}`} aria-hidden>
+          <Upload className="h-6 w-6" />
+        </div>
         <h2 className="text-lg font-semibold">
           {prep?.stage === "check" ? "Checking your video…" : prep?.stage === "convert" ? "Preparing your video…" : busy ? "Saving your video…" : "Drop your video here"}
         </h2>
         <p className="mt-1 text-sm text-st-muted">
           {prep?.stage === "convert"
             ? "Converting it so it plays in every browser. This happens on your device."
-            : note ?? `MP4, MOV or WebM, up to ${Math.round(limits.maxDurationSec / 60)} minutes. Your video stays on this device.`}
+            : note ?? (busy ? "" : "or choose one from your device")}
         </p>
 
         {prep ? (
@@ -133,8 +136,15 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
             {pending ? (
               <p className="mt-3 text-xs text-st-muted">Pick the language and <span className="font-medium text-st-text">{pending.name}</span> starts right away.</p>
             ) : (
-              <Button tone="primary" className="mt-5 !px-5 !py-2.5" onClick={() => inputRef.current?.click()}>Choose a video</Button>
+              <Button tone="primary" className="mt-5 inline-flex items-center gap-2 !px-5 !py-2.5" onClick={() => inputRef.current?.click()}>
+                <Upload className="h-4 w-4" aria-hidden /> Choose a video
+              </Button>
             )}
+            <ul className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-st-muted">
+              <li className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" aria-hidden /> Stays on your device</li>
+              <li className="flex items-center gap-1.5"><Sparkles className="h-3.5 w-3.5" aria-hidden /> No watermark</li>
+              <li className="flex items-center gap-1.5"><Film className="h-3.5 w-3.5" aria-hidden /> MP4, MOV or WebM · up to {Math.round(limits.maxDurationSec / 60)} min</li>
+            </ul>
             <input ref={inputRef} type="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.webm,.mkv" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) pick(f); e.target.value = ""; }} />
           </>
         )}
@@ -151,8 +161,8 @@ const LANGS: { id: SpeechLanguage; label: string; hint: string }[] = [
 
 /** "What's spoken in the video?" Picks the speech model; captions are always written in English letters. */
 const LanguageChoice: React.FC<{ value: SpeechLanguage | null; onChange: (l: SpeechLanguage) => void; asking: boolean }> = ({ value, onChange, asking }) => (
-  <div className={`mx-auto mt-6 max-w-sm rounded-xl p-2 text-left ${asking ? "bg-st-lav/50 ring-2 ring-st-ink" : ""}`} role="radiogroup" aria-label="Language spoken in the video">
-    <p className="mb-2 px-1 text-sm font-medium text-st-text">What language is spoken in the video?</p>
+  <div className={`mx-auto mt-6 max-w-md rounded-xl p-2 text-left ${asking ? "bg-st-lav/50 ring-2 ring-st-ink" : ""}`} role="radiogroup" aria-label="Language spoken in the video">
+    <p className="mb-2 px-1 text-sm font-medium text-st-text">Language spoken in the video</p>
     <div className="grid grid-cols-2 gap-2">
       {LANGS.map((l) => (
         <button
@@ -160,10 +170,15 @@ const LanguageChoice: React.FC<{ value: SpeechLanguage | null; onChange: (l: Spe
           role="radio"
           aria-checked={value === l.id}
           onClick={() => onChange(l.id)}
-          className={`min-h-14 rounded-xl border px-3 py-2 text-left transition ${value === l.id ? "border-st-ink bg-st-lav text-obsidian" : "border-st-line bg-st-panel hover:bg-st-lav/30"}`}
+          className={`flex min-h-14 items-start gap-2.5 rounded-xl border px-3 py-2.5 text-left transition ${value === l.id ? "border-st-ink bg-st-lav text-obsidian" : "border-st-line bg-st-panel hover:bg-st-lav/30"}`}
         >
-          <span className="block text-sm font-semibold">{l.label}</span>
-          <span className="block text-[11px] leading-tight text-st-muted">{l.hint}</span>
+          <span className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border ${value === l.id ? "border-st-ink bg-st-ink text-st-panel" : "border-st-hover"}`} aria-hidden>
+            {value === l.id ? <Check className="h-3 w-3" strokeWidth={3} /> : null}
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold">{l.label}</span>
+            <span className="block text-[11px] leading-tight text-st-muted">{l.hint}</span>
+          </span>
         </button>
       ))}
     </div>

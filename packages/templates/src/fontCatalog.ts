@@ -27,11 +27,12 @@ const W = (s: string) => s.split(",").map(Number);
 const device = (family: string, category: FontCategory, local: string[], fallback: string): FontEntry => ({ family, category, weights: [400, 700, 900], source: "device", local, fallback });
 const hosted = (family: string, category: FontCategory, fontsourceId: string, weights: number[]): FontEntry => ({ family, category, weights, source: "hosted", fontsourceId });
 
-/** Creator favourites, shown first. Device entries fall back to the closest open family. */
-export const POPULAR_FONTS: FontEntry[] = [
+/**
+ * Licensed fonts that only draw when installed on the viewer's device. Not offered in the picker any more
+ * (zero setup for creators); kept so older projects that picked one still render with the open fallback.
+ */
+const DEVICE_FONTS: FontEntry[] = [
   device("Helvetica", "sans", ["Helvetica Neue", "Helvetica"], "Arimo"),
-  hosted("Open Sauce One", "sans", "open-sauce-one", W("300,400,500,600,700,800,900")),
-  hosted("Open Sauce Sans", "sans", "open-sauce-sans", W("300,400,500,600,700,800,900")),
   device("Coolvetica", "display", ["Coolvetica", "Coolvetica Rg", "Coolvetica Hv"], "Inter Tight"),
   device("Birds of Paradise", "handwriting", ["Birds of Paradise", "Birds of Paradise Personal use", "Birds of Paradise PERSONAL USE ONLY"], "Great Vibes"),
   device("Futura", "sans", ["Futura", "Futura PT", "Futura Std"], "Jost"),
@@ -58,8 +59,20 @@ const EXTRA_GOOGLE: [string, FontCategory, string][] = [
 
 const google: FontEntry[] = [...(generated as [string, FontCategory, string][]), ...EXTRA_GOOGLE].map(([family, category, weights]) => ({ family, category, weights: W(weights), source: "google" }));
 
+const HOSTED_FONTS: FontEntry[] = [
+  hosted("Open Sauce One", "sans", "open-sauce-one", W("300,400,500,600,700,800,900")),
+  hosted("Open Sauce Sans", "sans", "open-sauce-sans", W("300,400,500,600,700,800,900")),
+];
+
 const byFamily = new Map<string, FontEntry>();
-for (const f of [...google, ...POPULAR_FONTS]) byFamily.set(f.family, f);
+for (const f of [...google, ...DEVICE_FONTS, ...HOSTED_FONTS]) byFamily.set(f.family, f);
+
+/** Creator favourites, shown first. Every one loads by itself the moment it's picked: nothing to install. */
+const POPULAR_GOOGLE = ["Montserrat", "Poppins", "Inter", "Anton", "Bebas Neue", "Bangers", "Luckiest Guy", "Archivo Black", "Oswald", "Plus Jakarta Sans", "Playfair Display", "Pacifico"];
+export const POPULAR_FONTS: FontEntry[] = [
+  ...HOSTED_FONTS,
+  ...POPULAR_GOOGLE.map((f) => byFamily.get(f)).filter((f): f is FontEntry => f?.source === "google"),
+];
 
 export const GOOGLE_FONTS: FontEntry[] = [...new Map(google.map((f) => [f.family, f])).values()];
 
