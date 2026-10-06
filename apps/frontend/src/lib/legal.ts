@@ -22,6 +22,9 @@ export const LEGAL = {
   site: "captionseasy.com",
 } as const;
 
+/** Opens the visitor's mail app with a feedback email to the public inbox. */
+export const FEEDBACK_MAILTO = `mailto:${LEGAL.email}?subject=${encodeURIComponent("CaptionsEasy feedback")}`;
+
 export const LEGAL_PAGES = [
   { href: "/terms", title: "Terms of Service" },
   { href: "/privacy", title: "Privacy Policy" },

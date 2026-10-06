@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Logo } from "@/components/brand/Logo";
 import { authService } from "@/services/auth";
 import { User } from "@/services/types";
+import { FEEDBACK_MAILTO } from "@/lib/legal";
 
 type HealthChecks = { database: boolean; queue: boolean };
 
@@ -141,6 +142,11 @@ export default function StudioShell({ children }: { children: React.ReactNode })
         </nav>
 
         <div className="mt-auto">
+          <a href={FEEDBACK_MAILTO} className="mx-3 mb-3 flex items-center gap-3 rounded-lg px-3 py-2.5 font-sora text-[13px] font-semibold text-sand-700 transition-colors hover:bg-sand-100 hover:text-ink">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden><path strokeLinecap="round" strokeLinejoin="round" d="M4 5h16v11H8l-4 4V5z" /></svg>
+            Send feedback
+          </a>
+
           {/* Render service health (local dev only) */}
           {SHOW_HEALTH ? <div className="mx-5 mb-4 rounded-lg border border-sand-200 bg-white px-4 py-3 space-y-2">
             <p className="font-sora text-[11px] font-semibold text-sand-700">Service status</p>

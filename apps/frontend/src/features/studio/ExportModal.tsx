@@ -9,6 +9,7 @@ import { studioService, type ExportKind, type ExportRow } from "@/services/studi
 import { ApiError } from "@/services/api-client";
 import { Button, fmtBytes, fmtTime, triggerDownload } from "./controls";
 import { VideoReady } from "./VideoReady";
+import { track } from "@/lib/track";
 
 /** Same resolution either way: this only trades sharpness for file size. */
 const QUALITY_OPTIONS = [
@@ -130,11 +131,13 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
       setWebDone(`${fmtBytes(blob.size)} · made in ${fmtTime(clock() - started)}`);
       setMade({ blob, name });
       setShowReady(true);
+      track("export_done", { kind: "mp4", quality, trimmed: trim });
     } catch (e) {
       if (stalled && attempt < 2) again = true;
       else if (stalled) setError("The export kept stalling. Keep this tab open and in front while it renders, then try again.");
       else if (!ctrl.signal.aborted) {
         Sentry.captureException(e, { tags: { area: "browser-export" } });
+        track("export_failed", { kind: "mp4" });
         setError(e instanceof Error ? `Couldn't render in the browser: ${e.message}` : "Couldn't render in the browser.");
       }
     } finally {
@@ -194,6 +197,7 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
       };
       const created = await studioService.createExport(projectId, body);
       if (created.ready && created.downloadUrl) triggerDownload(created.downloadUrl);
+      track("export_done", { kind: o.kind });
       await qc.invalidateQueries({ queryKey: ["exports", projectId] });
       await qc.invalidateQueries({ queryKey: ["studio", projectId] });
     } catch (e) {

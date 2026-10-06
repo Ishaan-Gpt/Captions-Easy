@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { CANONICAL_APP } from "@/lib/authReturn";
+import { FEEDBACK_MAILTO, LEGAL } from "@/lib/legal";
 import { Button } from "./controls";
 
 const SITE = CANONICAL_APP.replace(/^https?:\/\//, "");
@@ -98,6 +99,9 @@ export const VideoReady: React.FC<Props> = ({ blob, filename, detail, onDownload
             </button>
           </div>
           {note ? <p role="status" className="mt-3 rounded-lg bg-st-raised px-3 py-2 text-xs text-st-text">{note}</p> : null}
+          <p className="mt-4 text-center text-xs text-st-muted">
+            How did it go? <a href={FEEDBACK_MAILTO} className="font-semibold text-st-text underline">Send feedback</a> to {LEGAL.email}
+          </p>
         </div>
       </div>
     </div>
