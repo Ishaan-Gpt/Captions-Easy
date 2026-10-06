@@ -1,0 +1,82 @@
+{
+  "sol": {
+    "title": "Peru Testimonial - Sol Luciana",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peru_Testimonial_-_Sol_Luciana.webm",
+    "look": "staggered_splash",
+    "lookName": "3-Line Stagger",
+    "text": "En mi caso, lo que hacemos es hacer campañas de diferentes puntos de la ciudad, ya que la"
+  },
+  "gianna": {
+    "title": "Peru Testimonial - Gianna Garcia",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peru_Testimonial_-_Gianna_Garcia.webm",
+    "look": "hormozi_box",
+    "lookName": "Jumping Box",
+    "text": "que es fomentar diversidad, conocimiento acerca de las personas trans yo trabajo mucho"
+  },
+  "jesse": {
+    "title": "Peru Testimonial - Jesse Vilela",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peru_Testimonial_-_Jesse_Vilela.webm",
+    "look": "glow_stack_classic",
+    "lookName": "3-Line Glow Hero",
+    "text": "podían acceder a sus derechos y también creo que me inicie como activista trans porque"
+  },
+  "aisha": {
+    "title": "Wikinights testimonial by Aisha",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wikinights_testimonial_by_Aisha.webm",
+    "look": "beast_bounce",
+    "lookName": "Bouncy Single Word",
+    "text": "community project so how was your experience during weeknight sambuanga so my experience during"
+  },
+  "rusita": {
+    "title": "Wikipedians speak - Konkani Wikipedian Rusita Paryekar",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wikipedians_speak_-_Konkani_Wikipedian_Rusita_Paryekar-en_1080p.webm",
+    "look": "vintage_cinematic",
+    "lookName": "Giant Italic Hero",
+    "text": "And after since now Wikipedia is an incubator and I got to know"
+  },
+  "william": {
+    "title": "WIKITONGUES- William speaking English",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_William_speaking_English.webm",
+    "look": "comic_burst",
+    "lookName": "Comic Tilt",
+    "text": "by its users or its consumers to give up any certain personal information,"
+  },
+  "sam": {
+    "title": "WIKITONGUES- Sam speaking English",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Sam_speaking_English.webm",
+    "look": "serif_pop_classic",
+    "lookName": "Script Hero Pop",
+    "text": "big books, like you can put the libraries, you know, pay so much, you know, to access knowledge, I can just, you know,"
+  },
+  "gereon": {
+    "title": "WIKITONGUES- Gereon speaking English",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Gereon_speaking_English.webm",
+    "look": "explainer",
+    "lookName": "Underline Sweep",
+    "text": "Now, that's a very nice thing because you have experienced Wikipedians on site."
+  },
+  "mckensie": {
+    "title": "WIKITONGUES- Mckensie speaking English",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Mckensie_speaking_English.webm",
+    "look": "kinetic_mix",
+    "lookName": "Kinetic Big Word",
+    "text": "So we welcome people from all over the world to edit, specifically on those topics, but not just that, but to learn how to edit."
+  },
+  "omar": {
+    "title": "WIKITONGUES- Omar Speaking English and Jamaican Patois",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Omar_Speaking_English_and_Jamaican_Patois.webm",
+    "look": "highlighter_card",
+    "lookName": "Yellow Highlighter",
+    "text": "just being back home it's like you know it's so free and natural for me to talk tattoo and talk like the way"
+  }
+}

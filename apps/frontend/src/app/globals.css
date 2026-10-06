@@ -1,0 +1,304 @@
+@import "tailwindcss";
+
+@theme {
+  /* Exact User Color System */
+  --color-major: #FFFFEB;
+  --color-side: #F0D7FF;
+  --color-emerald-accent: #34D399;
+  --color-orange-accent: #FFA946;
+  --color-obsidian: #1A1A1A;
+  --color-muted-beige: #E4E4D0;
+
+  /* Legacy compatibility aliases for workspace dashboard */
+  --color-bg-dark: #1A1A1A;
+  --color-bg-panel: #FFFFEB;
+  --color-bg-panel-light: #F0D7FF;
+  --color-border-grey: #E4E4D0;
+  --color-text-grey: #1A1A1A;
+  --color-brand-orange: #FFA946;
+  --color-dune-white: #FFFFEB;
+  --color-ink: #1A1A1A;
+
+  /* Everything below is derived ONLY from the six colours above: cream, lavender, emerald, orange,
+     obsidian, beige (and mixes of cream/beige with obsidian). Pure white is remapped to cream so
+     stray `bg-white` / `text-white` classes stay on-palette. */
+  --color-white: #FFFFEB;
+
+  /* Warm neutral scale (cream -> beige -> obsidian), used by dashboard, settings, auth, pair pages */
+  --color-sand-50: #FFFFEB;
+  --color-sand-100: #F4F4E0;
+  --color-sand-200: #E4E4D0;
+  --color-sand-300: #D2D2BF;
+  --color-sand-400: #A9A99C;
+  --color-sand-500: #8C8C83;
+  --color-sand-600: #6E6E67;
+  --color-sand-700: #4C4C47;
+  --color-sand-800: #33332F;
+  --color-sand-900: #1A1A1A;
+
+  /* Studio (editor) palette: LIGHT. Cream panels on a beige-tinted stage, obsidian type, lavender selection,
+     orange for "now" (the spoken word / live caption), emerald for on / success. */
+  --color-st-bg: #F4F4E0;
+  --color-st-panel: #FFFFEB;
+  --color-st-raised: #F4F4E0;
+  --color-st-hover: #E4E4D0;
+  --color-st-line: #E4E4D0;
+  --color-st-text: #1A1A1A;
+  --color-st-muted: #5F5F59;
+  --color-st-faint: #8C8C83;
+  --color-st-lav: #F0D7FF;
+  --color-st-lav-strong: #E3CCF1;
+  --color-st-em: #34D399;
+  --color-st-or: #FFA946;
+  --color-st-ink: #1A1A1A;
+
+  /* Elevation + motion tokens used across dashboard/auth/landing */
+  --shadow-sand-soft: 0 1px 2px rgba(31, 31, 26, 0.04), 0 8px 24px -12px rgba(31, 31, 26, 0.18);
+  --shadow-sand-deep: 0 2px 4px rgba(31, 31, 26, 0.06), 0 24px 64px -24px rgba(31, 31, 26, 0.35);
+  --animate-fade-in-up: fade-in-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-subtle-float: subtle-float 6s ease-in-out infinite;
+  --animate-caption-pop: caption-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  /* Typography: TWO fonts, locked. Sans for everything; the accent is Instrument Serif Italic (slightly cursive).
+     The old display aliases (styled/sora/serif/display) all point at the sans so headings stay one family. */
+  --font-sans: var(--font-normal-sys), system-ui, sans-serif;
+  --font-styled: var(--font-normal-sys), system-ui, sans-serif;
+  --font-sora: var(--font-normal-sys), system-ui, sans-serif;
+  --font-serif: var(--font-normal-sys), system-ui, sans-serif;
+  --font-display: var(--font-normal-sys), system-ui, sans-serif;
+  --font-accent: var(--font-accent-sys), Georgia, serif;
+}
+
+:root {
+  --background: #FFFFEB;
+  --foreground: #1A1A1A;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #FFFFEB;
+  color: #1A1A1A;
+}
+
+body {
+  background-color: #FFFFEB;
+  color: #1A1A1A;
+  font-family: var(--font-normal-sys), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Dual Font Utility Classes */
+.font-normal {
+  font-family: var(--font-normal-sys), sans-serif;
+}
+
+.font-styled {
+  font-family: var(--font-normal-sys), system-ui, sans-serif;
+}
+
+/* The accent: every emphasised word (<em>, .italic) in site chrome is set in Instrument Serif Italic, never a
+   synthetic slant of the sans. Caption renders are unaffected: they set their own inline font-family. */
+em,
+.italic,
+.font-accent {
+  font-family: var(--font-accent-sys), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: 0;
+}
+
+/* --- MOTION & EFFECT UTILITY CLASSES --- */
+
+/* 1. Conic-Gradient Rotating Border (Sleek, razor-thin 1px border) */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-conic {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.conic-glow-pill {
+  position: relative;
+  border-radius: 9999px;
+  padding: 1px;
+  background: transparent;
+  z-index: 1;
+}
+/* in the components layer so utilities (hidden, sm:block, w-full…) can override it */
+@layer components {
+  .conic-glow-pill { display: inline-flex; }
+}
+
+.conic-glow-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), #FFA946, #34D399, #F0D7FF, #1A1A1A, #FFA946);
+  animation: rotate-conic 3s linear infinite;
+  z-index: -1;
+}
+
+/* Subtle soundwave bar bounce */
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.7); }
+}
+
+.animate-wave-bar-1 { animation: wave-bar 1.6s ease-in-out infinite; transform-origin: bottom; }
+.animate-wave-bar-2 { animation: wave-bar 1.9s ease-in-out infinite 0.25s; transform-origin: bottom; }
+.animate-wave-bar-3 { animation: wave-bar 1.4s ease-in-out infinite 0.5s; transform-origin: bottom; }
+
+/* 2. Gradient Text Sweep */
+@keyframes text-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text-sweep {
+  background: linear-gradient(90deg, #1A1A1A, #FFA946, #34D399, #1A1A1A);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-sweep 4s ease infinite;
+}
+
+/* 3. Infinite Marquee Animation */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 28s linear infinite;
+}
+
+.animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 14s linear infinite;
+}
+
+/* Lenis smooth-scroll integration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFEB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F0D7FF;
+  border: 2px solid #1A1A1A;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFA946;
+}
+
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes subtle-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes caption-pop { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
+
+/* ---------- Studio (light editor) ---------- */
+.studio {
+  background: var(--color-st-bg);
+  color: var(--color-st-text);
+  font-family: var(--font-normal-sys), sans-serif;
+}
+.studio ::-webkit-scrollbar { width: 8px; height: 8px; }
+.studio ::-webkit-scrollbar-track { background: transparent; }
+.studio ::-webkit-scrollbar-thumb { background: #E4E4D0; border: 2px solid var(--color-st-panel); border-radius: 8px; }
+.studio ::-webkit-scrollbar-thumb:hover { background: #D2D2BF; }
+.studio input[type="range"] { accent-color: var(--color-st-em); }
+.studio select option { background: var(--color-st-panel); color: var(--color-st-text); }
+.studio .font-display { font-family: var(--font-normal-sys), sans-serif; letter-spacing: -0.01em; }
+
+/* soft entrance for panels (UI chrome only; never used inside rendered captions) */
+@keyframes st-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.st-rise { animation: st-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .st-rise, .animate-fade-in-up, .animate-subtle-float, .animate-caption-pop, .animate-marquee-slow, .animate-marquee-fast, .gradient-text-sweep, .conic-glow-pill::before { animation: none !important; }
+}
+
+/* ── hero entrance ──────────────────────────────────────────────
+ * Pure CSS, so hydration can never reset it. When the brand intro plays (<html data-intro="play">, see
+ * components/home/intro.ts) it is held until the intro exits (html.ce-out), then rises as the sheet lifts. */
+:root { --hero-at: 60ms; }
+html[data-intro="play"] { --hero-at: 260ms; }
+html[data-intro="play"]:not(.ce-out) [data-hero] { animation-play-state: paused !important; }
+[data-hero="eyebrow"] { animation: hero-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-at) both; }
+[data-hero="word"] { animation: hero-up 1.1s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 60ms) both; }
+[data-hero="word2"] { animation: hero-up 1.1s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 150ms) both, text-sweep 4s ease calc(var(--hero-at) + 1.3s) infinite; }
+[data-hero="sub"] { animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 340ms) both; }
+[data-hero="cta"] { animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 460ms) both; }
+[data-hero="points"] { animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 560ms) both; }
+[data-hero="stream"] { animation: hero-stream 1.5s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--hero-at) + 380ms) both; }
+/* phones: the subtitle and buttons are the main content; show them at first paint instead of fading in */
+@media (pointer: coarse) { [data-hero="sub"], [data-hero="cta"] { animation: none; } }
+@keyframes hero-up { from { transform: translateY(110%); } to { transform: none; } }
+@keyframes hero-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes hero-stream { from { opacity: 0; transform: translateY(48px) scale(0.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-hero] { animation: none !important; }
+}
+
+/* ── logo wave + skeletons (UI chrome only) ──────────────────────
+ * The three caption bars from the logo, bouncing: the "something is happening" animation between events.
+ * transform/opacity only, so it keeps moving while the page is busy. */
+@keyframes ce-wave { 0%, 100% { transform: scaleY(0.28); } 45% { transform: scaleY(1); } 70% { transform: scaleY(0.6); } }
+.ce-wave { display: inline-flex; align-items: flex-end; }
+.ce-wave > span { display: block; height: 100%; transform-origin: 50% 100%; border-radius: 999px; animation: ce-wave 0.95s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
+.ce-wave > span:nth-child(2) { animation-delay: 0.14s; }
+.ce-wave > span:nth-child(3) { animation-delay: 0.28s; }
+@keyframes ce-veil-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ce-veil-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
+.ce-veil { animation: ce-veil-in 0.16s ease-out both; }
+.ce-veil-card { animation: ce-veil-pop 0.28s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
+@keyframes ce-skel { from { background-position: -320px 0; } to { background-position: 320px 0; } }
+.skel {
+  background-color: var(--color-sand-100);
+  background-image: linear-gradient(90deg, transparent 0, rgba(255, 255, 255, 0.75) 160px, transparent 320px);
+  background-size: 640px 100%;
+  background-repeat: no-repeat;
+  animation: ce-skel 1.3s linear infinite;
+}
+.studio .skel { background-color: var(--color-st-line); }
+@media (prefers-reduced-motion: reduce) {
+  .ce-wave > span { animation: none; transform: scaleY(0.7); }
+  .skel, .ce-veil, .ce-veil-card { animation: none; }
+}

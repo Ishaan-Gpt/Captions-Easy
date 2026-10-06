@@ -1,0 +1,41 @@
+node_modules/
+.next/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+*.log
+.pnpm-debug.log
+__pycache__/
+*.pyc
+celerybeat-schedule*
+/test/
+.pytest_cache/
+.venv/
+venv/
+
+# local test output
+packages/companion/.e2e-out/
+apps/frontend/.e2e-ui/
+apps/frontend/.e2e-upload/
+.next-start.log
+
+# Launch film folders
+captions-easy-film/
+captionseasy-launch/
+lemo-opuscar/
+
+# local Vercel link (per machine)
+.vercel/
+
+# personal notes, agent tooling and launch material (kept locally, never published)
+CLAUDE.md
+AGENTS.md
+remotion.md
+remotion2.md
+docs/
+apps/launch-video/
+.agents/
+skills-lock.json
+.mcp.json

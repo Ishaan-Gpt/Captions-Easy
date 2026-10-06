@@ -1,0 +1,822 @@
+{
+ "front": [
+  {
+   "id": "hormozi_viral",
+   "name": "Hormozi Viral",
+   "desc": "Bold Anton font, electric yellow active word with thick black outline",
+   "caption_template": "sentence_highlight",
+   "font": "Anton",
+   "size": 54,
+   "weight": "900",
+   "color": "#FFFFFF",
+   "highlight_color": "#FFE600",
+   "outline": 3.5,
+   "shadow": 2.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 2,
+   "caption_spacing_ms": 40,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 50,
+   "box_right": 50
+  },
+  {
+   "id": "mrbeast_punch",
+   "name": "MrBeast Punch",
+   "desc": "Lilita One font, neon cyan highlight with strong 3D drop shadow",
+   "caption_template": "word_by_word",
+   "font": "Lilita One",
+   "size": 58,
+   "weight": "900",
+   "color": "#FFFFFF",
+   "highlight_color": "#00F5FF",
+   "outline": 4.0,
+   "shadow": 4.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 1,
+   "caption_spacing_ms": 30,
+   "word_pacing": "dynamic",
+   "pause_handling": "clear",
+   "box_top": 60,
+   "box_bottom": 150,
+   "box_left": 40,
+   "box_right": 40
+  },
+  {
+   "id": "cyber_neon",
+   "name": "Cyber Neon",
+   "desc": "Monospace font with electrifying magenta and cyan neon glow",
+   "caption_template": "glow_stack",
+   "font": "Space Mono",
+   "size": 50,
+   "weight": "700",
+   "color": "#E0F7FA",
+   "highlight_color": "#FF007F",
+   "outline": 2.0,
+   "shadow": 4.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 4,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 50,
+   "box_right": 50
+  },
+  {
+   "id": "tiktok_pop",
+   "name": "TikTok Pop",
+   "desc": "Fredoka font with soft pill background highlight and lime accent",
+   "caption_template": "sentence_highlight",
+   "font": "Fredoka",
+   "size": 52,
+   "weight": "700",
+   "color": "#FFFFFF",
+   "highlight_color": "#76FF03",
+   "outline": 2.0,
+   "shadow": 1.5,
+   "background_style": "pill",
+   "y_position_percent": 71.4,
+   "word_limit": 3,
+   "caption_spacing_ms": 60,
+   "word_pacing": "even",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 110,
+   "box_left": 50,
+   "box_right": 50
+  },
+  {
+   "id": "minimal_luxe",
+   "name": "Minimal Luxe",
+   "desc": "Cinzel serif typography with champagne gold highlight accents",
+   "caption_template": "sentence_clean",
+   "font": "Cinzel",
+   "size": 44,
+   "weight": "600",
+   "color": "#F8F5EE",
+   "highlight_color": "#E5C158",
+   "outline": 0.5,
+   "shadow": 1.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 4,
+   "caption_spacing_ms": 120,
+   "word_pacing": "even",
+   "pause_handling": "hold",
+   "box_top": 100,
+   "box_bottom": 100,
+   "box_left": 80,
+   "box_right": 80
+  },
+  {
+   "id": "vintage_cinematic",
+   "name": "Vintage Cinematic",
+   "desc": "Playfair Display font with vibrant emerald green hero word",
+   "caption_template": "cinematic_emerald",
+   "font": "Playfair Display",
+   "size": 48,
+   "weight": "800",
+   "color": "#FFFFFF",
+   "highlight_color": "#8CFF3E",
+   "outline": 0.0,
+   "shadow": 3.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 5,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 65,
+   "box_right": 65
+  },
+  {
+   "id": "bold_impact",
+   "name": "Bold Impact",
+   "desc": "Heavy Montserrat font with blazing neon orange pop highlight",
+   "caption_template": "sentence_highlight",
+   "font": "Montserrat",
+   "size": 54,
+   "weight": "900",
+   "color": "#FFFFFF",
+   "highlight_color": "#FF5722",
+   "outline": 3.0,
+   "shadow": 2.5,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 3,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 50,
+   "box_right": 50
+  },
+  {
+   "id": "staggered_splash",
+   "name": "Staggered Splash",
+   "desc": "Outfit font with multi-line staggered layout & neon green active word",
+   "caption_template": "staggered_3line",
+   "font": "Outfit",
+   "size": 50,
+   "weight": "800",
+   "color": "#FFFFFF",
+   "highlight_color": "#C5FF00",
+   "outline": 2.5,
+   "shadow": 2.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "staggered_layout": "splash",
+   "accent_period_enabled": true,
+   "word_limit": 5,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 65,
+   "box_right": 65
+  },
+  {
+   "id": "staggered_classic",
+   "name": "Staggered",
+   "desc": "Outfit font, staggered 3-line layout with the signature mint highlight",
+   "caption_template": "staggered_3line",
+   "font": "Outfit",
+   "size": 50,
+   "weight": "700",
+   "color": "#FFFFFF",
+   "highlight_color": "#00F5C4",
+   "outline": 2.5,
+   "shadow": 2.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "staggered_layout": "splash",
+   "accent_period_enabled": false,
+   "word_limit": 5,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 65,
+   "box_right": 65
+  },
+  {
+   "id": "glow_stack_classic",
+   "name": "Glow Stack",
+   "desc": "Rounded Baloo 2 body text with a flat deep-blue glowing hero word",
+   "caption_template": "glow_stack",
+   "font": "Baloo 2",
+   "size": 50,
+   "weight": "800",
+   "color": "#FFFFFF",
+   "highlight_color": "#4FA8FF",
+   "outline": 2.0,
+   "shadow": 2.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "staggered_layout": "splash",
+   "word_limit": 4,
+   "caption_spacing_ms": 50,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 50,
+   "box_right": 50
+  },
+  {
+   "id": "serif_pop_classic",
+   "name": "Serif Pop",
+   "desc": "Bold brush-script hero word with the signature yellow pop dot",
+   "caption_template": "serif_pop",
+   "font": "Playfair Display",
+   "size": 48,
+   "weight": "800",
+   "color": "#FFFFFF",
+   "highlight_color": "#FFEE00",
+   "outline": 1.5,
+   "shadow": 1.5,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "accent_period_enabled": true,
+   "word_limit": 4,
+   "caption_spacing_ms": 60,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 80,
+   "box_bottom": 120,
+   "box_left": 60,
+   "box_right": 60
+  },
+  {
+   "id": "cartoon_stack_classic",
+   "name": "Cartoon Stack",
+   "desc": "Playful Fredoka font with a thick border and handwritten Caveat top text",
+   "caption_template": "cartoon_stack",
+   "font": "Fredoka",
+   "size": 46,
+   "weight": "700",
+   "color": "#FFFFFF",
+   "highlight_color": "#EDE0A6",
+   "outline": 3.0,
+   "shadow": 1.0,
+   "background_style": "none",
+   "y_position_percent": 71.4,
+   "word_limit": 3,
+   "caption_spacing_ms": 60,
+   "word_pacing": "dynamic",
+   "pause_handling": "hold",
+   "box_top": 90,
+   "box_bottom": 110,
+   "box_left": 55,
+   "box_right": 55
+  }
+ ],
+ "back": {
+  "minimal": {
+   "name": "Minimal",
+   "typography": {
+    "font": "Inter",
+    "size": 48.0,
+    "weight": "400",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 0.0,
+    "outline": 1.0
+   },
+   "animation": {
+    "caption_animation": "fade",
+    "motion_preset": "minimal",
+    "intensity": "low"
+   },
+   "highlight": {
+    "colors": [
+     "#E0E0E0"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 80.0,
+    "left": 40.0,
+    "right": 40.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 3,
+    "caption_spacing_ms": 100,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 18,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "none"
+  },
+  "modern": {
+   "name": "Modern",
+   "typography": {
+    "font": "Outfit",
+    "size": 52.0,
+    "weight": "700",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 1.0,
+    "outline": 2.0
+   },
+   "animation": {
+    "caption_animation": "pop",
+    "motion_preset": "dynamic",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#FFFF00"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 120.0,
+    "left": 50.0,
+    "right": 50.0
+   },
+   "emoji": {
+    "behavior": "occasional"
+   },
+   "timing": {
+    "word_limit": 2,
+    "caption_spacing_ms": 50,
+    "word_pacing": "dynamic",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 22,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "fade"
+  },
+  "podcast": {
+   "name": "Podcast",
+   "typography": {
+    "font": "Inter",
+    "size": 46.0,
+    "weight": "800",
+    "color": "#FFFFFF",
+    "alignment": "left",
+    "shadow": 2.0,
+    "outline": 2.5
+   },
+   "animation": {
+    "caption_animation": "slide",
+    "motion_preset": "smooth",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#00FF00",
+     "#FFFF00"
+    ]
+   },
+   "safe_area": {
+    "top": 100.0,
+    "bottom": 150.0,
+    "left": 80.0,
+    "right": 80.0
+   },
+   "emoji": {
+    "behavior": "occasional"
+   },
+   "timing": {
+    "word_limit": 1,
+    "caption_spacing_ms": 30,
+    "word_pacing": "dynamic",
+    "pause_handling": "clear",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 25,
+    "caption_template": "word_by_word"
+   },
+   "transitions": "none"
+  },
+  "documentary": {
+   "name": "Documentary",
+   "typography": {
+    "font": "Cinzel",
+    "size": 42.0,
+    "weight": "400",
+    "color": "#F5F5DC",
+    "alignment": "center",
+    "shadow": 0.0,
+    "outline": 0.5
+   },
+   "animation": {
+    "caption_animation": "fade",
+    "motion_preset": "minimal",
+    "intensity": "low"
+   },
+   "highlight": {
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   "safe_area": {
+    "top": 120.0,
+    "bottom": 120.0,
+    "left": 100.0,
+    "right": 100.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 4,
+    "caption_spacing_ms": 150,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 15,
+    "caption_template": "sentence_clean"
+   },
+   "transitions": "fade"
+  },
+  "viral shorts": {
+   "name": "Viral Shorts",
+   "typography": {
+    "font": "Outfit",
+    "size": 60.0,
+    "weight": "900",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 3.0,
+    "outline": 4.0
+   },
+   "animation": {
+    "caption_animation": "scale",
+    "motion_preset": "dynamic",
+    "intensity": "high"
+   },
+   "highlight": {
+    "colors": [
+     "#FFEA00"
+    ]
+   },
+   "safe_area": {
+    "top": 60.0,
+    "bottom": 160.0,
+    "left": 40.0,
+    "right": 40.0
+   },
+   "emoji": {
+    "behavior": "frequent"
+   },
+   "timing": {
+    "word_limit": 1,
+    "caption_spacing_ms": 20,
+    "word_pacing": "dynamic",
+    "pause_handling": "clear",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 28,
+    "caption_template": "word_by_word"
+   },
+   "transitions": "pop"
+  },
+  "educational": {
+   "name": "Educational",
+   "typography": {
+    "font": "Outfit",
+    "size": 48.0,
+    "weight": "600",
+    "color": "#E0F7FA",
+    "alignment": "center",
+    "shadow": 1.5,
+    "outline": 2.0
+   },
+   "animation": {
+    "caption_animation": "pop",
+    "motion_preset": "smooth",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#FF4081"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 100.0,
+    "left": 50.0,
+    "right": 50.0
+   },
+   "emoji": {
+    "behavior": "occasional"
+   },
+   "timing": {
+    "word_limit": 2,
+    "caption_spacing_ms": 80,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 20,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "fade"
+  },
+  "luxury": {
+   "name": "Luxury",
+   "typography": {
+    "font": "Cinzel",
+    "size": 40.0,
+    "weight": "500",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 1.0,
+    "outline": 1.5
+   },
+   "animation": {
+    "caption_animation": "fade",
+    "motion_preset": "minimal",
+    "intensity": "low"
+   },
+   "highlight": {
+    "colors": [
+     "#D4AF37"
+    ]
+   },
+   "safe_area": {
+    "top": 100.0,
+    "bottom": 100.0,
+    "left": 80.0,
+    "right": 80.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 3,
+    "caption_spacing_ms": 120,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 16,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "fade"
+  },
+  "formal": {
+   "name": "Formal",
+   "typography": {
+    "font": "Georgia",
+    "size": 46.0,
+    "weight": "700",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 1.0,
+    "outline": 1.5
+   },
+   "animation": {
+    "caption_animation": "fade",
+    "motion_preset": "minimal",
+    "intensity": "low"
+   },
+   "highlight": {
+    "colors": [
+     "#D4B96A"
+    ]
+   },
+   "safe_area": {
+    "top": 100.0,
+    "bottom": 100.0,
+    "left": 60.0,
+    "right": 60.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 8,
+    "caption_spacing_ms": 120,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 16,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "fade"
+  },
+  "sarcastic": {
+   "name": "Sarcastic",
+   "typography": {
+    "font": "Impact",
+    "size": 54.0,
+    "weight": "800",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 2.0,
+    "outline": 3.0
+   },
+   "animation": {
+    "caption_animation": "rotate",
+    "motion_preset": "dynamic",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#FF5E3A"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 120.0,
+    "left": 50.0,
+    "right": 50.0
+   },
+   "emoji": {
+    "behavior": "occasional"
+   },
+   "timing": {
+    "word_limit": 8,
+    "caption_spacing_ms": 60,
+    "word_pacing": "dynamic",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 22,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "pop"
+  },
+  "humorous_tech": {
+   "name": "Humorous Tech",
+   "typography": {
+    "font": "Consolas",
+    "size": 54.0,
+    "weight": "700",
+    "color": "#E8FFFB",
+    "alignment": "center",
+    "shadow": 3.0,
+    "outline": 3.0
+   },
+   "animation": {
+    "caption_animation": "scale",
+    "motion_preset": "dynamic",
+    "intensity": "high"
+   },
+   "highlight": {
+    "colors": [
+     "#39FF8C"
+    ]
+   },
+   "safe_area": {
+    "top": 60.0,
+    "bottom": 150.0,
+    "left": 40.0,
+    "right": 40.0
+   },
+   "emoji": {
+    "behavior": "frequent"
+   },
+   "timing": {
+    "word_limit": 8,
+    "caption_spacing_ms": 40,
+    "word_pacing": "dynamic",
+    "pause_handling": "clear",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 26,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "pop"
+  },
+  "humorous_non_tech": {
+   "name": "Humorous Non-Tech",
+   "typography": {
+    "font": "Comic Sans MS",
+    "size": 50.0,
+    "weight": "700",
+    "color": "#FFFDD0",
+    "alignment": "center",
+    "shadow": 1.5,
+    "outline": 2.5
+   },
+   "animation": {
+    "caption_animation": "bounce",
+    "motion_preset": "smooth",
+    "intensity": "high"
+   },
+   "highlight": {
+    "colors": [
+     "#FFB200"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 110.0,
+    "left": 50.0,
+    "right": 50.0
+   },
+   "emoji": {
+    "behavior": "frequent"
+   },
+   "timing": {
+    "word_limit": 8,
+    "caption_spacing_ms": 80,
+    "word_pacing": "even",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 20,
+    "caption_template": "sentence_highlight"
+   },
+   "transitions": "fade"
+  },
+  "kalakar": {
+   "name": "Kalakar",
+   "typography": {
+    "font": "Outfit",
+    "size": 48.0,
+    "weight": "800",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 0.0,
+    "outline": 2.0
+   },
+   "animation": {
+    "caption_animation": "pop",
+    "motion_preset": "dynamic",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#C5FF00"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 120.0,
+    "left": 65.0,
+    "right": 65.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 5,
+    "caption_spacing_ms": 50,
+    "word_pacing": "dynamic",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 22,
+    "caption_template": "staggered_3line"
+   },
+   "transitions": "fade"
+  },
+  "kalakar_shadow": {
+   "name": "Kalakar Shadow",
+   "typography": {
+    "font": "Outfit",
+    "size": 48.0,
+    "weight": "800",
+    "color": "#FFFFFF",
+    "alignment": "center",
+    "shadow": 2.5,
+    "outline": 2.0
+   },
+   "animation": {
+    "caption_animation": "pop",
+    "motion_preset": "dynamic",
+    "intensity": "medium"
+   },
+   "highlight": {
+    "colors": [
+     "#C5FF00"
+    ]
+   },
+   "safe_area": {
+    "top": 80.0,
+    "bottom": 120.0,
+    "left": 65.0,
+    "right": 65.0
+   },
+   "emoji": {
+    "behavior": "none"
+   },
+   "timing": {
+    "word_limit": 5,
+    "caption_spacing_ms": 50,
+    "word_pacing": "dynamic",
+    "pause_handling": "hold",
+    "sentence_segmentation": "semantic",
+    "reading_speed_limit_cps": 22,
+    "caption_template": "staggered_3line"
+   },
+   "transitions": "fade"
+  }
+ }
+}

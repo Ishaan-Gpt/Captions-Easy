@@ -1,0 +1,2381 @@
+[
+ {
+  "id": "hormozi_viral",
+  "name": "Hormozi Viral",
+  "description": "Bold Anton font, electric yellow active word with thick black outline",
+  "category": "Viral",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Anton",
+   "fontWeight": 900,
+   "fontStyle": "normal",
+   "fontSize": 54,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFE600",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 3.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 2,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "mrbeast_punch",
+  "name": "MrBeast Punch",
+  "description": "Lilita One font, neon cyan highlight with strong 3D drop shadow",
+  "category": "Viral",
+  "templateId": "word_by_word",
+  "style": {
+   "templateId": "word_by_word",
+   "fontId": "Lilita One",
+   "fontWeight": 900,
+   "fontStyle": "normal",
+   "fontSize": 58,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#00F5FF",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 4,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 4,
+     "blur": 5.6,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.03125,
+    "bottom": 0.078125,
+    "left": 0.037037037037037035,
+    "right": 0.037037037037037035
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 1,
+   "gapBehavior": "clear"
+  },
+  "legacy": true
+ },
+ {
+  "id": "cyber_neon",
+  "name": "Cyber Neon",
+  "description": "Monospace font with electrifying magenta and cyan neon glow",
+  "category": "Tech",
+  "templateId": "glow_stack",
+  "style": {
+   "templateId": "glow_stack",
+   "fontId": "Space Mono",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 50,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#E0F7FA"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FF007F",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 4,
+     "blur": 5.6,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 4,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "tiktok_pop",
+  "name": "TikTok Pop",
+  "description": "Fredoka font with soft pill background highlight and lime accent",
+  "category": "Viral",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Fredoka",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 52,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#76FF03",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1.5,
+     "blur": 2.0999999999999996,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "pill",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.057291666666666664,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 3,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "minimal_luxe",
+  "name": "Minimal Luxe",
+  "description": "Cinzel serif typography with champagne gold highlight accents",
+  "category": "Luxury",
+  "templateId": "sentence_clean",
+  "style": {
+   "templateId": "sentence_clean",
+   "fontId": "Cinzel",
+   "fontWeight": 600,
+   "fontStyle": "normal",
+   "fontSize": 44,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#F8F5EE"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#E5C158",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 0.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1,
+     "blur": 2,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.052083333333333336,
+    "bottom": 0.052083333333333336,
+    "left": 0.07407407407407407,
+    "right": 0.07407407407407407
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 4,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "vintage_cinematic",
+  "name": "Vintage Cinematic",
+  "description": "Playfair Display font with vibrant emerald green hero word",
+  "category": "Cinematic",
+  "templateId": "cinematic_emerald",
+  "style": {
+   "templateId": "cinematic_emerald",
+   "fontId": "Playfair Display",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#8CFF3E",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": false,
+    "width": 0,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 3,
+     "blur": 4.199999999999999,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.06018518518518518,
+    "right": 0.06018518518518518
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 5,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "bold_impact",
+  "name": "Bold Impact",
+  "description": "Heavy Montserrat font with blazing neon orange pop highlight",
+  "category": "Viral",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Montserrat",
+   "fontWeight": 900,
+   "fontStyle": "normal",
+   "fontSize": 54,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FF5722",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 3,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2.5,
+     "blur": 3.5,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 3,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "staggered_splash",
+  "name": "Staggered Splash",
+  "description": "Outfit font with multi-line staggered layout & neon green active word",
+  "category": "Classic",
+  "templateId": "staggered_3line",
+  "style": {
+   "templateId": "staggered_3line",
+   "fontId": "Outfit",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 50,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#C5FF00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.06018518518518518,
+    "right": 0.06018518518518518
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 5,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "staggered_classic",
+  "name": "Staggered",
+  "description": "Outfit font, staggered 3-line layout with the signature mint highlight",
+  "category": "Classic",
+  "templateId": "staggered_3line",
+  "style": {
+   "templateId": "staggered_3line",
+   "fontId": "Outfit",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 50,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#00F5C4",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.06018518518518518,
+    "right": 0.06018518518518518
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 5,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "glow_stack_classic",
+  "name": "Glow Stack",
+  "description": "Rounded Baloo 2 body text with a flat deep-blue glowing hero word",
+  "category": "Classic",
+  "templateId": "glow_stack",
+  "style": {
+   "templateId": "glow_stack",
+   "fontId": "Baloo 2",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 50,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#4FA8FF",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 4,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "serif_pop_classic",
+  "name": "Serif Pop",
+  "description": "Bold brush-script hero word with the signature yellow pop dot",
+  "category": "Classic",
+  "templateId": "serif_pop",
+  "style": {
+   "templateId": "serif_pop",
+   "fontId": "Playfair Display",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFEE00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 1.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1.5,
+     "blur": 2.0999999999999996,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.05555555555555555,
+    "right": 0.05555555555555555
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 4,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "cartoon_stack_classic",
+  "name": "Cartoon Stack",
+  "description": "Playful Fredoka font with a thick border and handwritten Caveat top text",
+  "category": "Classic",
+  "templateId": "cartoon_stack",
+  "style": {
+   "templateId": "cartoon_stack",
+   "fontId": "Fredoka",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 46,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#EDE0A6",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 3,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1,
+     "blur": 2,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.7140000000000001
+   },
+   "safeBox": {
+    "top": 0.046875,
+    "bottom": 0.057291666666666664,
+    "left": 0.05092592592592592,
+    "right": 0.05092592592592592
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "rise",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 3,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "minimal",
+  "name": "Minimal",
+  "description": "Minimal style preset",
+  "category": "Clean",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Inter",
+   "fontWeight": 400,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#E0E0E0",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 1,
+    "color": "#000000"
+   },
+   "shadows": [],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.041666666666666664,
+    "left": 0.037037037037037035,
+    "right": 0.037037037037037035
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "fade",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 3,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "modern",
+  "name": "Modern",
+  "description": "Modern style preset",
+  "category": "Clean",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Outfit",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 52,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFFF00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1,
+     "blur": 2,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "pop",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 2,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "podcast",
+  "name": "Podcast",
+  "description": "Podcast style preset",
+  "category": "Podcast",
+  "templateId": "word_by_word",
+  "style": {
+   "templateId": "word_by_word",
+   "fontId": "Inter",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 46,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "left",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#00FF00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.052083333333333336,
+    "bottom": 0.078125,
+    "left": 0.07407407407407407,
+    "right": 0.07407407407407407
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "slide-left",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 1,
+   "gapBehavior": "clear"
+  },
+  "legacy": true
+ },
+ {
+  "id": "documentary",
+  "name": "Documentary",
+  "description": "Documentary style preset",
+  "category": "Cinematic",
+  "templateId": "sentence_clean",
+  "style": {
+   "templateId": "sentence_clean",
+   "fontId": "Cinzel",
+   "fontWeight": 400,
+   "fontStyle": "normal",
+   "fontSize": 42,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#F5F5DC"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFFFFF",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 0.5,
+    "color": "#000000"
+   },
+   "shadows": [],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.0625,
+    "bottom": 0.0625,
+    "left": 0.09259259259259259,
+    "right": 0.09259259259259259
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "fade",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 4,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "viral_shorts",
+  "name": "Viral Shorts",
+  "description": "Viral Shorts style preset",
+  "category": "Viral",
+  "templateId": "word_by_word",
+  "style": {
+   "templateId": "word_by_word",
+   "fontId": "Outfit",
+   "fontWeight": 900,
+   "fontStyle": "normal",
+   "fontSize": 60,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFEA00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 4,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 3,
+     "blur": 4.199999999999999,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.03125,
+    "bottom": 0.08333333333333333,
+    "left": 0.037037037037037035,
+    "right": 0.037037037037037035
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "zoom",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 1,
+   "gapBehavior": "clear"
+  },
+  "legacy": true
+ },
+ {
+  "id": "educational",
+  "name": "Educational",
+  "description": "Educational style preset",
+  "category": "Education",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Outfit",
+   "fontWeight": 600,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#E0F7FA"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FF4081",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1.5,
+     "blur": 2.0999999999999996,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.052083333333333336,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "pop",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 2,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "luxury",
+  "name": "Luxury",
+  "description": "Luxury style preset",
+  "category": "Luxury",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Cinzel",
+   "fontWeight": 500,
+   "fontStyle": "normal",
+   "fontSize": 40,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#D4AF37",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 1.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1,
+     "blur": 2,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.052083333333333336,
+    "bottom": 0.052083333333333336,
+    "left": 0.07407407407407407,
+    "right": 0.07407407407407407
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "fade",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 3,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "formal",
+  "name": "Formal",
+  "description": "Formal style preset",
+  "category": "Clean",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Libre Baskerville",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 46,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#D4B96A",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 1.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1,
+     "blur": 2,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.052083333333333336,
+    "bottom": 0.052083333333333336,
+    "left": 0.05555555555555555,
+    "right": 0.05555555555555555
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "fade",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 8,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "sarcastic",
+  "name": "Sarcastic",
+  "description": "Sarcastic style preset",
+  "category": "Fun",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Anton",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 54,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FF5E3A",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 3,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2,
+     "blur": 2.8,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "flip",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 8,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "humorous_tech",
+  "name": "Humorous Tech",
+  "description": "Humorous Tech style preset",
+  "category": "Tech",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "JetBrains Mono",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 54,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#E8FFFB"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#39FF8C",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 3,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 3,
+     "blur": 4.199999999999999,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.03125,
+    "bottom": 0.078125,
+    "left": 0.037037037037037035,
+    "right": 0.037037037037037035
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "zoom",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 8,
+   "gapBehavior": "clear"
+  },
+  "legacy": true
+ },
+ {
+  "id": "humorous_non_tech",
+  "name": "Humorous Non-Tech",
+  "description": "Humorous Non-Tech style preset",
+  "category": "Fun",
+  "templateId": "sentence_highlight",
+  "style": {
+   "templateId": "sentence_highlight",
+   "fontId": "Comic Neue",
+   "fontWeight": 700,
+   "fontStyle": "normal",
+   "fontSize": 50,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFDD0"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#FFB200",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2.5,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 1.5,
+     "blur": 2.0999999999999996,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.057291666666666664,
+    "left": 0.046296296296296294,
+    "right": 0.046296296296296294
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "elastic",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 8,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "kalakar",
+  "name": "Kalakar",
+  "description": "Kalakar style preset",
+  "category": "Classic",
+  "templateId": "staggered_3line",
+  "style": {
+   "templateId": "staggered_3line",
+   "fontId": "Outfit",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#C5FF00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.06018518518518518,
+    "right": 0.06018518518518518
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "pop",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 5,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ },
+ {
+  "id": "kalakar_shadow",
+  "name": "Kalakar Shadow",
+  "description": "Kalakar Shadow style preset",
+  "category": "Classic",
+  "templateId": "staggered_3line",
+  "style": {
+   "templateId": "staggered_3line",
+   "fontId": "Outfit",
+   "fontWeight": 800,
+   "fontStyle": "normal",
+   "fontSize": 48,
+   "casing": "none",
+   "letterSpacing": 0,
+   "wordSpacing": 0,
+   "lineHeight": 1.15,
+   "align": "center",
+   "maxWidth": 0.86,
+   "fill": {
+    "type": "solid",
+    "color": "#FFFFFF"
+   },
+   "inactiveOpacity": 1,
+   "hero": {
+    "scale": 1.4,
+    "rotate": 0
+   },
+   "active": {
+    "effect": "pop",
+    "color": "#C5FF00",
+    "scale": 1.08,
+    "boxRadius": 12
+   },
+   "stroke": {
+    "enabled": true,
+    "width": 2,
+    "color": "#000000"
+   },
+   "shadows": [
+    {
+     "x": 0,
+     "y": 2.5,
+     "blur": 3.5,
+     "color": "rgba(0,0,0,0.6)"
+    }
+   ],
+   "glow": {
+    "enabled": false,
+    "color": "#FFFFFF",
+    "radius": 12,
+    "intensity": 0.8
+   },
+   "background": {
+    "type": "none",
+    "color": "#0C0A06",
+    "opacity": 0.85,
+    "padding": 16,
+    "radius": 16,
+    "blur": 0
+   },
+   "position": {
+    "x": 0.5,
+    "y": 0.72
+   },
+   "safeBox": {
+    "top": 0.041666666666666664,
+    "bottom": 0.0625,
+    "left": 0.06018518518518518,
+    "right": 0.06018518518518518
+   },
+   "rotation": 0,
+   "entrance": {
+    "type": "pop",
+    "durationMs": 220,
+    "stagger": "none",
+    "easing": "outExpo"
+   },
+   "exit": {
+    "type": "none",
+    "durationMs": 120
+   },
+   "motionIntensity": 1,
+   "emotionReactivity": 0.6,
+   "emoji": {
+    "enabled": false,
+    "size": 1,
+    "animation": "pop"
+   },
+   "templateOptions": {}
+  },
+  "settings": {
+   "maxWordsPerCard": 5,
+   "gapBehavior": "hold"
+  },
+  "legacy": true
+ }
+]

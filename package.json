@@ -1,0 +1,18 @@
+{
+  "name": "capseasy-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "scripts": {
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "start": "pnpm --filter frontend start",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "lint": "pnpm -r --if-present lint",
+    "companion:pack": "pnpm --filter @capseasy/companion pack:release"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

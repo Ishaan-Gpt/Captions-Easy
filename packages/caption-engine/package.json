@@ -1,0 +1,30 @@
+{
+  "name": "@motion-ai/caption-engine",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/CaptionEngine.tsx",
+  "types": "src/CaptionEngine.tsx",
+  "peerDependencies": {
+    "react": ">=18",
+    "remotion": ">=4"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "react": "19.2.4",
+    "remotion": "4.0.484",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.9"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "exports": {
+    ".": "./src/CaptionEngine.tsx",
+    "./core": "./src/core/index.ts"
+  },
+  "dependencies": {
+    "@capseasy/shared": "workspace:*"
+  },
+  "type": "module"
+}

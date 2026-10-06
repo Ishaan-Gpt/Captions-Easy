@@ -1,0 +1,30 @@
+import { requireUser } from "@/lib/api/auth";
+import { ApiFailure, notFound, ok, route, type Ctx } from "@/lib/api/http";
+import { PROJECT_COLUMNS, toApiProject } from "@/lib/api/projects";
+import { rateLimit } from "@/lib/api/rateLimit";
+
+/** Copies the project, its style and its captions. The new project reuses the same source video file (read-only). */
+export const POST = route(async (req: Request, { params }: Ctx<{ id: string }>) => {
+  const user = await requireUser(req);
+  await rateLimit(user.id, "project_create", 30, 3600);
+  const { id } = await params;
+  const { data: src } = await user.db
+    .from("projects")
+    .select("title, description, language, aspect_ratio, platform, look_id, template_id, style_json, settings_json, status")
+    .eq("id", id).is("deleted_at", null).maybeSingle();
+  if (!src) throw notFound("Project");
+
+  const { data: copy, error } = await user.db
+    .from("projects")
+    .insert({ ...src, owner_id: user.id, title: `${src.title} (copy)`.slice(0, 120) })
+    .select(PROJECT_COLUMNS).single();
+  if (error || !copy) throw new ApiFailure("INTERNAL", "Could not duplicate", error?.message);
+
+  const [{ data: video }, { data: doc }] = await Promise.all([
+    user.db.from("videos").select("storage_path, preview_path, status, width, height, fps, duration_ms, has_audio, original_filename, mime_type, file_size, rotation").eq("project_id", id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
+    user.db.from("caption_documents").select("doc").eq("project_id", id).maybeSingle(),
+  ]);
+  if (video) await user.db.from("videos").insert({ ...video, project_id: copy.id, owner_id: user.id });
+  if (doc) await user.db.from("caption_documents").insert({ project_id: copy.id, owner_id: user.id, doc: doc.doc });
+  return ok(toApiProject(copy), 201);
+});

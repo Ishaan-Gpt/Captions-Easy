@@ -1,0 +1,60 @@
+import React from "react";
+import { activeEffect, combineMotion, effectiveIntensity, entranceStyle, exitStyle, SPRINGS, springMs } from "../motion";
+import { fitSize } from "../measure";
+import { backgroundCss, baseTextCss, containerCss, displayText, famCss, layoutBox, scaleOf } from "../text";
+import type { PageRenderProps } from "../types";
+
+/** One word owns the frame; each word pops in on its own beat. */
+export const WordLayout: React.FC<PageRenderProps> = ({ page, timeMs, style, canvas, measure, settled }) => {
+  const sc = scaleOf(canvas);
+  const box = layoutBox(style, canvas, page.position);
+  const intensity = effectiveIntensity(style, page.emotion);
+
+  let idx = page.words.findIndex((w) => timeMs >= w.startMs && timeMs < w.endMs);
+  if (idx === -1) {
+    idx = 0;
+    page.words.forEach((w, i) => {
+      if (w.startMs <= timeMs) idx = i;
+    });
+  }
+  const word = page.words[idx];
+  if (!word) return null;
+
+  const casing = style.casing === "none" ? "upper" : style.casing;
+  const display = displayText(word, style, casing);
+  const scale = typeof style.templateOptions.sizeScale === "number" ? style.templateOptions.sizeScale : 1.35;
+  // leave room for the spoken-word growth and any 3D extrusion/shadow so the word never touches the edges
+  const size = fitSize(display, style.fontSize * scale * sc, box.width / (1 + Math.max(0, style.active.scale - 1) * Math.min(2, effectiveIntensity(style, page.emotion))) * 0.94, {
+    fontFamily: famCss(style.fontId), fontWeight: style.fontWeight, fontStyle: style.fontStyle, letterSpacing: style.letterSpacing * sc,
+  }, measure);
+
+  // the beat pop: how far it springs follows motion intensity (x emotion)
+  const pop = settled ? 1 : springMs(timeMs, word.startMs, canvas.fps, SPRINGS.punch);
+  const from = Math.max(0.3, 1 - 0.1 * intensity);
+  const rot = typeof style.templateOptions.tilt === "number" ? (idx % 2 === 0 ? -1 : 1) * style.templateOptions.tilt * pop : 0;
+  // the shown word is always the one being spoken, so the chosen spoken-word effect applies to it
+  const fx = timeMs < word.endMs ? activeEffect(style, word, timeMs, canvas.fps, sc, intensity, settled) : { css: {} };
+  const { transform: fxTransform, ...fxCss } = fx.css;
+  const emphasised = word.emphasis === "strong" || word.emphasis === "hero";
+  const css: React.CSSProperties = {
+    ...baseTextCss(style, sc, size),
+    position: "relative",
+    display: "inline-block",
+    transform: `scale(${from + pop * (1 - from)}) rotate(${rot}deg)${fxTransform ? ` ${fxTransform}` : ""}`,
+    ...(word.color ? { color: word.color, WebkitTextFillColor: word.color, backgroundImage: "none" } : {}),
+    ...(emphasised ? { color: style.active.color, WebkitTextFillColor: style.active.color, backgroundImage: "none" } : {}),
+    ...fxCss,
+  };
+
+  return (
+    <div style={containerCss(box, style.rotation)}>
+      <div style={{ ...backgroundCss(style, sc), ...combineMotion(entranceStyle(style, timeMs - word.startMs, canvas.fps, intensity, settled, size), exitStyle(style, page.endMs - timeMs, settled, size)) }}>
+        <div key={word.id} style={css}>
+          {fx.behind ? <span style={{ position: "absolute", pointerEvents: "none", ...fx.behind.css }} /> : null}
+          {display}
+          {fx.bar ? <span style={{ position: "absolute", pointerEvents: "none", ...fx.bar.css }} /> : null}
+        </div>
+      </div>
+    </div>
+  );
+};

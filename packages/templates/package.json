@@ -1,0 +1,30 @@
+{
+  "name": "@capseasy/templates",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "gen:legacy": "tsx scripts/gen-legacy-looks.ts"
+  },
+  "dependencies": {
+    "@capseasy/shared": "workspace:*",
+    "@motion-ai/caption-engine": "workspace:*",
+    "@remotion/google-fonts": "4.0.484",
+    "@remotion/layout-utils": "4.0.484",
+    "react": "19.2.4",
+    "remotion": "4.0.484"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19.2.3",
+    "react-dom": "19.2.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^4.1.9"
+  }
+}

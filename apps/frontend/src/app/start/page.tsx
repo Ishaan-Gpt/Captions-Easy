@@ -1,0 +1,108 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/services/auth/supabaseClient";
+import { projectsService } from "@/services/projects";
+import { claimPendingGuest, clearPendingGuestClaim, hadAccountHere, isGuestUser, startGuestSession, takeAfterSignIn } from "@/services/auth/guest";
+import type { Project } from "@/services/types";
+import { LogoWave } from "@/components/brand/LogoWave";
+
+/**
+ * The hub every "Start free" click and every sign-in (password, Google, email confirmation) lands on:
+ * - signed-in account: moves a pending guest project over (see guest.ts), then the page they were headed to, else the dashboard
+ * - guest coming back: their latest project
+ * - signed out on a browser that had an account: sign in (never a guest account)
+ * - brand-new visitor: a guest account and a fresh project
+ * `replace`, never `push`, so Back doesn't bounce through here.
+ */
+
+function nextUntitled(projects: Project[]) {
+  const used = projects.map((p) => /^Untitled (\d+)$/i.exec(p.title.trim())?.[1]).filter(Boolean).map(Number);
+  return `Untitled ${String((used.length ? Math.max(...used) : 0) + 1).padStart(3, "0")}`;
+}
+
+/** The session can still be arriving (OAuth / confirmation links carry it in the URL): wait briefly for it. */
+async function waitForSession(ms = 6000) {
+  const { data } = await supabase.auth.getSession();
+  if (data.session) return data.session;
+  return new Promise<Awaited<ReturnType<typeof supabase.auth.getSession>>["data"]["session"]>((resolve) => {
+    const t = setTimeout(() => {
+      sub.subscription.unsubscribe();
+      resolve(null);
+    }, ms);
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (!session) return;
+      clearTimeout(t);
+      sub.subscription.unsubscribe();
+      resolve(session);
+    });
+  });
+}
+
+export default function StartPage() {
+  const router = useRouter();
+  const [failed, setFailed] = useState(false);
+  const once = useRef(false);
+
+  // fetch the speech model files while the person is on their way to the studio (idle, and not on a metered connection)
+  useEffect(() => { void import("@/features/transcribe/browserWhisper").then((m) => m.warmSpeechModel()); }, []);
+
+  useEffect(() => {
+    if (once.current) return; // Strict Mode runs effects twice: never create two projects
+    once.current = true;
+    void (async () => {
+      const fromAuth = /[?&]code=|access_token=|token_hash=/.test(window.location.search + window.location.hash);
+      const fromAuthError = /[?&#]error(_code|_description)?=/.test(window.location.search + window.location.hash);
+      let session = await waitForSession(fromAuth ? 6000 : 400);
+      if (session && !isGuestUser(session.user)) {
+        await claimPendingGuest();
+        return router.replace(takeAfterSignIn() ?? "/dashboard");
+      }
+      // still a guest after a Google round trip (they cancelled, or Google/Supabase refused): back to the project
+      // they came from, without reopening the sign-up box, so nothing loops
+      if (session && fromAuthError) {
+        clearPendingGuestClaim();
+        const back = takeAfterSignIn();
+        if (back) {
+          const u = new URL(back, window.location.origin);
+          u.searchParams.delete("export");
+          u.searchParams.set("signin", "cancelled");
+          return router.replace(u.pathname + u.search);
+        }
+      }
+      if (!session) {
+        if (hadAccountHere()) return router.replace("/login");
+        session = (await startGuestSession()) ? (await supabase.auth.getSession()).data.session : null;
+        if (!session) return router.replace("/login?mode=signup");
+      }
+      try {
+        const projects = await projectsService.getProjects();
+        const live = projects.filter((p) => !p.archived_at && !p.deleted_at).sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
+        // a guest continues where they left off
+        const project = live[0] ?? (await projectsService.createProject(nextUntitled(projects)));
+        router.replace(`/projects/${project.id}`);
+      } catch {
+        setFailed(true);
+      }
+    })();
+  }, [router]);
+
+  return (
+    <div className="grid min-h-[100svh] place-items-center bg-[#FFFFEB] px-6 text-center">
+      {failed ? (
+        <div>
+          <p className="text-[15px] font-semibold text-[#1A1A1A]">We couldn&apos;t open your studio.</p>
+          <button onClick={() => router.replace("/dashboard")} className="mt-4 rounded-full bg-[#1A1A1A] px-5 py-2.5 text-sm font-semibold text-[#FFFFEB]">
+            Go to your dashboard
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-4">
+          <LogoWave height={40} />
+          <p className="text-[13px] font-semibold text-[#1A1A1A]/70">Opening your studio…</p>
+        </div>
+      )}
+    </div>
+  );
+}

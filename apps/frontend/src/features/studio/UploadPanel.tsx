@@ -1,0 +1,172 @@
+"use client";
+
+import * as Sentry from "@sentry/nextjs";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { preloadSpeechModel } from "@/features/transcribe/browserWhisper";
+import { getSession, startSession } from "@/features/transcribe/session";
+import { HINGLISH_AVAILABLE, PROJECT_LANGUAGE, likelySpeechLanguage, saveSpeechLanguage, savedSpeechLanguage, speechLanguageOf, type SpeechLanguage } from "@/features/transcribe/runtime";
+import { studioService } from "@/services/studio";
+import { ApiError } from "@/services/api-client";
+import { PrepareError, prepareVideo, type PrepareStage } from "@/features/upload/prepareVideo";
+import { Button } from "./controls";
+
+interface Props {
+  projectId: string;
+  onUploaded: () => void;
+  note?: string;
+  limits?: { maxBytes: number; maxDurationSec: number };
+  language?: string | null;
+}
+
+const DEFAULT_LIMITS = { maxBytes: 2 * 1024 * 1024 * 1024, maxDurationSec: 5 * 60 };
+
+/** Drag & drop / pick a video: checked and saved on this device (never uploaded), then captions start. */
+export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limits = DEFAULT_LIMITS, language = null }) => {
+  // get the speech model ready while they pick a video, so captions start the moment it's in.
+  // Desktop loads it into memory; phones only download the files (their memory is for the video).
+  // Which model writes the captions depends on what's spoken: asked here, remembered for next time.
+  const [lang, setLang] = useState<SpeechLanguage | null>(() => (speechLanguageOf(language) === "hinglish" ? "hinglish" : savedSpeechLanguage()));
+  const [pending, setPending] = useState<File | null>(null);
+  useEffect(() => {
+    preloadSpeechModel(!window.matchMedia("(max-width: 767px), (pointer: coarse) and (hover: none)").matches, lang ?? likelySpeechLanguage());
+  }, [lang]);
+  const [progress, setProgress] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [over, setOver] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [prep, setPrep] = useState<PrepareStage | null>(null);
+  const abortRef = useRef<(() => void) | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const busy = progress !== null || prep !== null;
+
+  const start = useCallback(
+    async (file: File, spoken: SpeechLanguage) => {
+      setError(null);
+      setPending(null);
+      const projectLanguage = PROJECT_LANGUAGE[spoken];
+      // saved on the project so a reload (or the next run) uses the same model
+      void studioService.savePatch(projectId, { language: projectLanguage }).catch(() => undefined);
+      setFileName(file.name);
+      const ctrl = new AbortController();
+      abortRef.current = () => ctrl.abort();
+      try {
+        // check (and if needed shrink / convert) on this device first: bad files never get uploaded
+        const ready = await prepareVideo(file, limits, setPrep, ctrl.signal);
+        setPrep(null);
+        setProgress(0);
+        // captions start as soon as the video has an id (in parallel with saving it), not after the server round trips
+        const done = await studioService.uploadVideo(projectId, ready, setProgress, (abort) => (abortRef.current = abort), (videoId) => {
+          if (!ready.hasAudio) return;
+          startSession({ projectId, videoId, file: ready.file, language: projectLanguage, info: { codec: ready.videoCodec, converted: ready.converted, previewMode: ready.previewMode, durationS: Math.round(ready.durationMs / 1000) } });
+        });
+        if (done.jobId) void getSession(projectId)?.attachJob(done.jobId);
+        setProgress(100);
+        onUploaded();
+      } catch (e) {
+        setPrep(null);
+        setProgress(null);
+        if (e instanceof DOMException && e.name === "AbortError") return;
+        // a refused file (too long, unreadable) is the user's file, not our bug: only report the unexpected
+        if (!(e instanceof PrepareError) || e.code === "CANT_CONVERT") Sentry.captureException(e, { tags: { area: "upload" } });
+        setError(e instanceof PrepareError || e instanceof ApiError || e instanceof Error ? e.message : "Upload failed. Please try again.");
+      }
+    },
+    [projectId, onUploaded, limits],
+  );
+  /** a video picked before the language was: ask first, then start */
+  const pick = (f: File) => (lang ? void start(f, lang) : setPending(f));
+  const choose = (l: SpeechLanguage) => {
+    setLang(l);
+    saveSpeechLanguage(l);
+    if (pending) void start(pending, l);
+  };
+
+  return (
+    <div className="flex h-full items-center justify-center p-6">
+      <div
+        onDragOver={(e) => { e.preventDefault(); if (!busy) setOver(true); }}
+        onDragLeave={() => setOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setOver(false);
+          const f = e.dataTransfer.files?.[0];
+          if (f && !busy) pick(f);
+        }}
+        className={`w-full max-w-xl rounded-2xl border-2 border-dashed p-10 text-center transition ${over ? "border-st-ink bg-st-lav/40" : "border-st-hover bg-st-panel"}`}
+      >
+        <div className="mb-3 text-4xl">🎬</div>
+        <h2 className="text-lg font-semibold">
+          {prep?.stage === "check" ? "Checking your video…" : prep?.stage === "convert" ? "Preparing your video…" : busy ? "Saving your video…" : "Drop your video here"}
+        </h2>
+        <p className="mt-1 text-sm text-st-muted">
+          {prep?.stage === "convert"
+            ? "Converting it so it plays in every browser. This happens on your device."
+            : note ?? `MP4, MOV or WebM, up to ${Math.round(limits.maxDurationSec / 60)} minutes. Your video stays on this device.`}
+        </p>
+
+        {prep ? (
+          <div className="mx-auto mt-6 max-w-sm">
+            <div className="mb-1 flex justify-between text-xs text-st-muted">
+              <span className="truncate pr-3">{fileName}</span>
+              <span className="tabular-nums">{prep.stage === "convert" ? `${Math.round(prep.progress * 100)}%` : ""}</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-st-raised">
+              <div className="h-full rounded-full bg-st-lav transition-all" style={{ width: prep.stage === "convert" ? `${Math.max(3, prep.progress * 100)}%` : "8%" }} />
+            </div>
+            <p className="mt-2 text-xs text-st-faint">Keep this tab open.</p>
+            <Button className="mt-4" onClick={() => abortRef.current?.()}>Cancel</Button>
+          </div>
+        ) : busy ? (
+          <div className="mx-auto mt-6 max-w-sm">
+            <div className="mb-1 flex justify-between text-xs text-st-muted">
+              <span className="truncate pr-3">{fileName}</span>
+              <span className="tabular-nums">{progress}%</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-st-raised">
+              <div className="h-full rounded-full bg-st-em transition-all" style={{ width: `${progress}%` }} />
+            </div>
+            <Button className="mt-4" onClick={() => abortRef.current?.()}>Cancel</Button>
+          </div>
+        ) : (
+          <>
+            {HINGLISH_AVAILABLE ? <LanguageChoice value={lang} onChange={choose} asking={!!pending} /> : null}
+            {pending ? (
+              <p className="mt-3 text-xs text-st-muted">Pick the language and <span className="font-medium text-st-text">{pending.name}</span> starts right away.</p>
+            ) : (
+              <Button tone="primary" className="mt-5 !px-5 !py-2.5" onClick={() => inputRef.current?.click()}>Choose a video</Button>
+            )}
+            <input ref={inputRef} type="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.webm,.mkv" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) pick(f); e.target.value = ""; }} />
+          </>
+        )}
+        {error ? <p role="alert" className="mt-4 rounded-lg border border-st-or/60 bg-st-or/15 px-3 py-2 text-sm text-st-text">{error}</p> : null}
+      </div>
+    </div>
+  );
+};
+
+const LANGS: { id: SpeechLanguage; label: string; hint: string }[] = [
+  { id: "en", label: "English", hint: "Only English is spoken" },
+  { id: "hinglish", label: "Hindi / Hinglish", hint: "Hindi, or Hindi mixed with English" },
+];
+
+/** "What's spoken in the video?" Picks the speech model; captions are always written in English letters. */
+const LanguageChoice: React.FC<{ value: SpeechLanguage | null; onChange: (l: SpeechLanguage) => void; asking: boolean }> = ({ value, onChange, asking }) => (
+  <div className={`mx-auto mt-6 max-w-sm rounded-xl p-2 text-left ${asking ? "bg-st-lav/50 ring-2 ring-st-ink" : ""}`} role="radiogroup" aria-label="Language spoken in the video">
+    <p className="mb-2 px-1 text-sm font-medium text-st-text">What language is spoken in the video?</p>
+    <div className="grid grid-cols-2 gap-2">
+      {LANGS.map((l) => (
+        <button
+          key={l.id}
+          role="radio"
+          aria-checked={value === l.id}
+          onClick={() => onChange(l.id)}
+          className={`min-h-14 rounded-xl border px-3 py-2 text-left transition ${value === l.id ? "border-st-ink bg-st-lav text-obsidian" : "border-st-line bg-st-panel hover:bg-st-lav/30"}`}
+        >
+          <span className="block text-sm font-semibold">{l.label}</span>
+          <span className="block text-[11px] leading-tight text-st-muted">{l.hint}</span>
+        </button>
+      ))}
+    </div>
+    {value === "hinglish" ? <p className="mt-2 px-1 text-[11px] text-st-muted">Captions are written in English letters, like &ldquo;yeh trick kamaal hai&rdquo;.</p> : null}
+  </div>
+);
