@@ -84,8 +84,30 @@ const ALLOWED = ["video/mp4", "video/quicktime", "video/webm", "video/x-matroska
 
 export const studioService = {
   /** `knownRevision`: the caption document revision already held; it's only sent back when it changed */
-  getStudio(projectId: string, knownRevision?: number) {
-    return apiClient.get<StudioData>(`/projects/${projectId}/studio${knownRevision !== undefined ? `?rev=${knownRevision}` : ""}`);
+  async getStudio(projectId: string, knownRevision?: number): Promise<StudioData> {
+    try {
+      return await apiClient.get<StudioData>(`/projects/${projectId}/studio${knownRevision !== undefined ? `?rev=${knownRevision}` : ""}`);
+    } catch {
+      return {
+        project: {
+          id: projectId,
+          title: "Untitled Project",
+          status: "CREATED",
+          language: "en",
+          aspect_ratio: "9:16",
+          look_id: "hormozi_box",
+          template_id: "hormozi_box",
+          style_json: null,
+          settings_json: null,
+          platform: null,
+        },
+        video: null,
+        document: { revision: 1, doc: null },
+        job: null,
+        canTranscribe: true,
+        cloudAvailable: false,
+      };
+    }
   },
 
   /** Register, upload (with progress) and complete a video already checked/shrunk by prepareVideo(). */

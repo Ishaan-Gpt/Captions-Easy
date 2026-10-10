@@ -23,6 +23,9 @@ import { SettingsPanel, StylePanel } from "./panels/StylePanel";
 import { ProcessingPanel } from "./ProcessingPanel";
 import { StudioPlayer } from "./StudioPlayer";
 import { Timeline } from "./Timeline";
+import { EnterpriseTimeline } from "./enterprise-timeline/EnterpriseTimeline";
+import { VFXNodeGraph } from "./vfx-node-graph/VFXNodeGraph";
+import { VideoScopes } from "./color-science/VideoScopes";
 import { UploadPanel } from "./UploadPanel";
 import { SignupGate } from "./SignupGate";
 import { projectsService } from "@/services/projects";
@@ -94,6 +97,8 @@ export default function StudioPage({ projectId }: { projectId: string }) {
   }, [phase, refetchStudio]);
   const desktop = useIsDesktop();
 
+  type WorkspaceMode = "captions" | "timeline" | "vfx" | "color";
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("captions");
   const [sideTab, setSideTab] = useState<SideTab>("style");
   const [mobileTab, setMobileTab] = useState<MobileTab>("captions");
   const [timeMs, setTimeMs] = useState(0);
@@ -137,7 +142,13 @@ export default function StudioPage({ projectId }: { projectId: string }) {
   const playerRef = useRef<PlayerRef>(null);
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) router.replace(`/login?redirect=${encodeURIComponent(`/projects/${projectId}`)}`);
+    if (!authService.isAuthenticated()) {
+      void (async () => {
+        const { startGuestSession } = await import("@/services/auth/guest");
+        const ok = await startGuestSession();
+        if (!ok) router.replace(`/login?redirect=${encodeURIComponent(`/projects/${projectId}`)}`);
+      })();
+    }
   }, [router, projectId]);
 
   // the video plays from this device; Supabase only stores the captions
@@ -257,6 +268,32 @@ export default function StudioPage({ projectId }: { projectId: string }) {
           </span>
         ) : null}
       </div>
+
+      {hasEditor ? (
+        <div className="hidden items-center gap-1 rounded-lg border border-st-line bg-st-raised p-0.5 md:flex" role="tablist" aria-label="Studio Workspace Mode">
+          {(
+            [
+              { id: "captions", label: "Captions Studio" },
+              { id: "timeline", label: "Multi-Track Timeline" },
+              { id: "vfx", label: "VFX Node Graph" },
+              { id: "color", label: "Color Scopes" },
+            ] as const
+          ).map((m) => (
+            <button
+              key={m.id}
+              role="tab"
+              aria-selected={workspaceMode === m.id}
+              onClick={() => setWorkspaceMode(m.id)}
+              className={`rounded-md px-3 py-1 text-xs font-semibold tracking-wide transition ${
+                workspaceMode === m.id ? "bg-st-ink text-st-panel shadow-sm" : "text-st-muted hover:text-st-text"
+              }`}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <div className="flex items-center gap-1.5 sm:gap-2">
         {hasEditor ? (
           <>
@@ -466,6 +503,53 @@ export default function StudioPage({ projectId }: { projectId: string }) {
       <div className="min-h-0 flex-1">{captions}</div>
     </section>
   );
+
+  // ---------- Enterprise Workspace Modes
+  if (workspaceMode === "timeline") {
+    return (
+      <div className="studio flex h-[100dvh] flex-col">
+        {header}
+        <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)_minmax(320px,50%)]">
+          <section aria-label="Preview" className="min-h-0 border-b border-st-line bg-st-bg">
+            {stage}
+          </section>
+          <section aria-label="Multi-track Timeline" className="min-h-0">
+            <EnterpriseTimeline durationMs={durationMs} timeMs={timeMs} playing={playing} onSeek={seek} />
+          </section>
+        </div>
+        {overlays}
+      </div>
+    );
+  }
+
+  if (workspaceMode === "vfx") {
+    return (
+      <div className="studio flex h-[100dvh] flex-col">
+        {header}
+        <div className="min-h-0 flex-1">
+          <VFXNodeGraph />
+        </div>
+        {overlays}
+      </div>
+    );
+  }
+
+  if (workspaceMode === "color") {
+    return (
+      <div className="studio flex h-[100dvh] flex-col">
+        {header}
+        <div className="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-950">
+          <section aria-label="Preview" className="min-h-0 rounded-lg overflow-hidden border border-neutral-800 bg-black">
+            {stage}
+          </section>
+          <section aria-label="Color Scopes" className="min-h-0">
+            <VideoScopes />
+          </section>
+        </div>
+        {overlays}
+      </div>
+    );
+  }
 
   // ---------- desktop, PORTRAIT video: captions + timeline stacked on the left, a tall preview in the middle
   // that uses the full height (like pro short-form editors), properties on the right

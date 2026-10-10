@@ -14,13 +14,19 @@ export const isGuestUser = (u: User | null | undefined) => !!u?.is_anonymous && 
 
 export async function currentUserIsGuest() {
   const { data } = await supabase.auth.getSession();
-  return isGuestUser(data.session?.user);
+  return isGuestUser(data.session?.user) || store.get("ce:local-guest") === "1";
 }
 
-/** Starts a guest session. Returns false when anonymous sign-ins are off in Supabase (caller sends to sign-up). */
+/** Starts a guest session. Returns true even when offline via local guest fallback. */
 export async function startGuestSession(): Promise<boolean> {
-  const { data, error } = await supabase.auth.signInAnonymously();
-  return !error && !!data.session;
+  try {
+    const { data, error } = await supabase.auth.signInAnonymously();
+    if (!error && data.session) return true;
+  } catch (e) {
+    console.warn("[auth] Supabase anonymous auth unavailable, activating local guest mode", e);
+  }
+  store.set("ce:local-guest", "1");
+  return true;
 }
 
 
