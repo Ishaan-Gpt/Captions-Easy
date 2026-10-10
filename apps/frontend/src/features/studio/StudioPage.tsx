@@ -26,6 +26,8 @@ import { Timeline } from "./Timeline";
 import { EnterpriseTimeline } from "./enterprise-timeline/EnterpriseTimeline";
 import { VFXNodeGraph } from "./vfx-node-graph/VFXNodeGraph";
 import { VideoScopes } from "./color-science/VideoScopes";
+import { MotionCompositorStudio } from "./motion-graphics/MotionCompositorStudio";
+import { DAWStudioPanel } from "./daw/DAWStudioPanel";
 import { UploadPanel } from "./UploadPanel";
 import { SignupGate } from "./SignupGate";
 import { projectsService } from "@/services/projects";
@@ -97,7 +99,7 @@ export default function StudioPage({ projectId }: { projectId: string }) {
   }, [phase, refetchStudio]);
   const desktop = useIsDesktop();
 
-  type WorkspaceMode = "captions" | "timeline" | "vfx" | "color";
+  type WorkspaceMode = "captions" | "timeline" | "vfx" | "color" | "motion" | "daw";
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("captions");
   const [sideTab, setSideTab] = useState<SideTab>("style");
   const [mobileTab, setMobileTab] = useState<MobileTab>("captions");
@@ -277,6 +279,8 @@ export default function StudioPage({ projectId }: { projectId: string }) {
               { id: "timeline", label: "Multi-Track Timeline" },
               { id: "vfx", label: "VFX Node Graph" },
               { id: "color", label: "Color Scopes" },
+              { id: "motion", label: "Visual Compositor" },
+              { id: "daw", label: "DAW & Audio" },
             ] as const
           ).map((m) => (
             <button
@@ -545,6 +549,30 @@ export default function StudioPage({ projectId }: { projectId: string }) {
           <section aria-label="Color Scopes" className="min-h-0">
             <VideoScopes />
           </section>
+        </div>
+        {overlays}
+      </div>
+    );
+  }
+
+  if (workspaceMode === "motion") {
+    return (
+      <div className="studio flex h-[100dvh] flex-col">
+        {header}
+        <div className="min-h-0 flex-1">
+          <MotionCompositorStudio />
+        </div>
+        {overlays}
+      </div>
+    );
+  }
+
+  if (workspaceMode === "daw") {
+    return (
+      <div className="studio flex h-[100dvh] flex-col">
+        {header}
+        <div className="min-h-0 flex-1">
+          <DAWStudioPanel />
         </div>
         {overlays}
       </div>

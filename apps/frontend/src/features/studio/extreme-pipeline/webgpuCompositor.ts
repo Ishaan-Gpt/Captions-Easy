@@ -14,14 +14,29 @@ export class WebGPUCompositor {
   private context: GPUCanvasContextRef | null = null;
   private lutTexture: GPUTextureRef | null = null;
 
+  private canvasRef: HTMLCanvasElement | null = null;
+  private isDeviceLost: boolean = false;
+
   public async init(canvas: HTMLCanvasElement): Promise<boolean> {
     if (typeof navigator === "undefined" || !("gpu" in navigator)) return false;
     try {
+      this.canvasRef = canvas;
       const gpu = (navigator as any).gpu;
       if (!gpu) return false;
       const adapter = await gpu.requestAdapter();
       if (!adapter) return false;
       this.device = await adapter.requestDevice();
+
+      if (this.device && this.device.lost) {
+        this.device.lost.then((info: any) => {
+          console.warn("WebGPU device lost:", info?.message || info);
+          this.isDeviceLost = true;
+          this.device = null;
+          if (this.canvasRef) {
+            void this.init(this.canvasRef); // Automatic seamless device lost recovery
+          }
+        }).catch(() => undefined);
+      }
 
       this.context = canvas.getContext("webgpu") as any;
       if (this.context && this.device) {
@@ -31,6 +46,7 @@ export class WebGPUCompositor {
           alphaMode: "premultiplied",
         });
       }
+      this.isDeviceLost = false;
       return true;
     } catch (e) {
       console.warn("WebGPU initialization unavailable:", e);
