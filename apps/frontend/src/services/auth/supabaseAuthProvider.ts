@@ -149,6 +149,7 @@ export const supabaseAuthProvider: AuthProvider = {
   },
 
   isAuthenticated() {
+    if (typeof window !== "undefined" && localStorage.getItem("ce:local-guest") === "1") return true;
     return !!activeToken || !!getPersistedToken();
   },
 

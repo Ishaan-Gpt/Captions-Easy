@@ -202,6 +202,16 @@ export default function AuthShell({
       {/* Right form section */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-16 py-10 lg:py-12 bg-white">
         <div className="w-full max-w-[420px] mx-auto flex flex-col">
+          {/* Top navigation link */}
+          <div className="mb-6 flex items-center justify-between">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-neutral-900 transition"
+            >
+              <span>←</span> Back to home
+            </Link>
+          </div>
+
           {/* Header */}
           <div className="mb-7">
             <h1 className="text-[28px] sm:text-[32px] font-bold tracking-tight text-neutral-900 leading-tight">

@@ -72,9 +72,7 @@ export default function StartPage() {
         }
       }
       if (!session) {
-        if (hadAccountHere()) return router.replace("/login");
         session = (await startGuestSession()) ? (await supabase.auth.getSession()).data.session : null;
-        if (!session) return router.replace("/login?mode=signup");
       }
       try {
         const projects = await projectsService.getProjects();
@@ -83,7 +81,8 @@ export default function StartPage() {
         const project = live[0] ?? (await projectsService.createProject(nextUntitled(projects)));
         router.replace(`/projects/${project.id}`);
       } catch {
-        setFailed(true);
+        const fallbackId = "guest-" + Date.now().toString(36);
+        router.replace(`/projects/${fallbackId}`);
       }
     })();
   }, [router]);
