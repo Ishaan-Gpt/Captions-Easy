@@ -260,6 +260,25 @@ export function exitStyle(style: CaptionStyleV2, msUntilEnd: number, settled?: b
 /** When a word appears on its card: derivePages schedules it a little ahead of speech (overlapping its neighbours). */
 export const showAt = (w: { startMs: number; revealMs?: number }) => w.revealMs ?? w.startMs;
 
+/**
+ * A word's own entrance (opt-in role entry, Word.entry) on top of its card's: "pop" springs up from small, "slam"
+ * drops in from big, "rise" lifts from below. Scaled by motion intensity; settles to identity.
+ */
+export function wordEntryTransform(entry: "pop" | "slam" | "rise", timeMs: number, atMs: number, fps: number, intensity: number): { transform?: string; opacity?: number } {
+  if (timeMs < atMs) return {};
+  const k = Math.min(2, Math.max(0, intensity));
+  if (entry === "pop") {
+    const s = springMs(timeMs, atMs, fps, SPRINGS.bouncy);
+    return { transform: `scale(${(1 - 0.45 * k + 0.45 * k * s).toFixed(4)})` };
+  }
+  if (entry === "slam") {
+    const s = springMs(timeMs, atMs, fps, SPRINGS.punch);
+    return { transform: `scale(${(1 + 0.7 * k * (1 - s)).toFixed(4)})`, opacity: Math.min(1, 0.2 + s) };
+  }
+  const s = springMs(timeMs, atMs, fps, SPRINGS.smooth);
+  return { transform: `translateY(${(0.5 * k * (1 - s)).toFixed(4)}em)`, opacity: Math.min(1, s * 1.4) };
+}
+
 /** Progressive per-word reveal used by "progressive" reveal mode (legacy behaviour). */
 export const wordReveal = (timeMs: number, startMs: number) => progress(timeMs - startMs, 130);
 

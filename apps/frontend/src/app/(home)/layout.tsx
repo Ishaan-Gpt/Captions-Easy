@@ -9,6 +9,18 @@ export const metadata: Metadata = {
 };
 
 const structuredData = [
+  // who makes it and what the site is: gives Google the brand name and logo for the search result
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "CaptionsEasy",
+    url: SITE_URL,
+    logo: `${SITE_URL}/brand/captionseasy-icon-512.png`,
+    email: "hello@captionseasy.com",
+    // add the YouTube / Instagram / X profiles here as they go live (public profiles only)
+    sameAs: ["https://github.com/Ishaan-Gpt/Captions-Easy", "https://www.npmjs.com/package/captionseasy"],
+  },
+  { "@context": "https://schema.org", "@type": "WebSite", name: "CaptionsEasy", url: SITE_URL },
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",

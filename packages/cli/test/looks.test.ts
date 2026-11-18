@@ -6,7 +6,7 @@ import { CaptionsEasyError } from "../src/errors";
 describe("listLooks", () => {
   it("lists the gallery with permanent numbers, no retired looks", () => {
     const all = listLooks();
-    expect(all.length).toBe(99);
+    expect(all.length).toBe(105);
     expect(all[0]).toMatchObject({ number: 1, id: "metal_script", section: "viral" });
     expect(new Set(all.map((l) => l.number)).size).toBe(all.length);
     expect(all.some((l) => l.number === 46)).toBe(false); // retired

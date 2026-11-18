@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LegalDoc, Sec } from "@/components/legal/Doc";
 import credits from "../../../../public/hero/credits.json";
 
-export const metadata: Metadata = { title: "Credits · CaptionsEasy", description: "Sources and licences of the footage shown on the CaptionsEasy website." };
+export const metadata: Metadata = { title: "Credits · CaptionsEasy", description: "Sources and licences of the footage shown on the CaptionsEasy website.", alternates: { canonical: "/credits" } };
 
 type Credit = { title: string; license: string; source: string; lookName: string };
 

@@ -5,6 +5,13 @@ export const EmotionSchema = z.enum([
 ]);
 export type Emotion = z.infer<typeof EmotionSchema>;
 
+/** What a word does in its sentence (opt-in, see packages/cli/docs/composition.md). */
+export const WORD_ROLES = ["connector", "key", "title", "number", "name", "emphasis"] as const;
+export const WordRoleSchema = z.enum(WORD_ROLES);
+export type WordRole = z.infer<typeof WordRoleSchema>;
+/** A word's own entrance on top of its card's (role entry); honoured by layouts that draw words individually. */
+export const WORD_ENTRIES = ["pop", "slam", "rise"] as const;
+
 export const WordSchema = z.object({
   id: z.string().min(1),
   text: z.string(),
@@ -17,6 +24,12 @@ export const WordSchema = z.object({
   hidden: z.boolean().optional(),
   emphasis: z.enum(["none", "strong", "hero"]).optional(),
   color: z.string().optional(),
+  /** opt-in word role; absent = plain body text (every look renders exactly as before) */
+  role: WordRoleSchema.optional(),
+  /** opt-in size relative to the card's text (role size tier); absent = 1 */
+  scale: z.number().min(0.4).max(3).optional(),
+  /** opt-in own entrance for this word (role entry); absent = the card's entrance only */
+  entry: z.enum(WORD_ENTRIES).optional(),
   emoji: z
     .object({ char: z.string(), position: z.enum(["before", "after", "above"]) })
     .nullable()

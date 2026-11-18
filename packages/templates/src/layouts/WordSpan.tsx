@@ -1,6 +1,6 @@
 import React from "react";
 import type { CaptionStyleV2, Word } from "@capseasy/shared";
-import { activeEffect, combineMotion, entranceStyle, isLetterAnimator, letterAmounts, letterCss, letterSpeed, letterTrackEm, progress, showAt, splitsLetters, staggerDelayMs, staggerUnit, wordReveal } from "../motion";
+import { activeEffect, combineMotion, entranceStyle, isLetterAnimator, wordEntryTransform, letterAmounts, letterCss, letterSpeed, letterTrackEm, progress, showAt, splitsLetters, staggerDelayMs, staggerUnit, wordReveal } from "../motion";
 import type { Canvas } from "../types";
 import { scaleOf, wordGapCss } from "../text";
 
@@ -53,6 +53,17 @@ export const WordSpan: React.FC<WordSpanProps> = ({
     // box looks: active.color is the text ON the box (often black), so an unboxed key word takes the box colour
     const key = style.active.effect === "box" ? style.active.boxColor ?? style.active.color : style.active.color;
     Object.assign(css, { color: key, WebkitTextFillColor: key, backgroundImage: "none" });
+  }
+
+  // opt-in role levers (absent on every word unless the caller asked for roles): own size and own entrance
+  if (word.scale !== undefined && word.scale !== 1) {
+    const px = parseFloat(String(baseCss.fontSize ?? ""));
+    if (px) css.fontSize = `${(px * word.scale).toFixed(2)}px`;
+  }
+  if (word.entry && !settled) {
+    const own = wordEntryTransform(word.entry, timeMs, showAt(word), canvas.fps, intensity);
+    if (own.transform) css.transform = `${css.transform} ${own.transform}`;
+    if (own.opacity !== undefined) css.opacity = Number(css.opacity ?? 1) * own.opacity;
   }
 
   if (pastColor && timeMs >= word.endMs) Object.assign(css, { color: pastColor, WebkitTextFillColor: pastColor, backgroundImage: "none", opacity: 1 });

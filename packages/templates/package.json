@@ -8,7 +8,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
-    "gen:legacy": "tsx scripts/gen-legacy-looks.ts"
+    "gen:legacy": "tsx scripts/gen-legacy-looks.ts",
+    "gen:seo-looks": "tsx scripts/gen-seo-looks.ts"
   },
   "dependencies": {
     "@capseasy/shared": "workspace:*",

@@ -10,7 +10,11 @@ export type CaptionsEasyErrorCode =
   | "NO_AUDIO"
   | "NO_VIDEO"
   | "TRANSCRIBE_FAILED"
-  | "RENDER_FAILED";
+  | "RENDER_FAILED"
+  | "BAD_THEME"
+  | "BAD_TRACKS"
+  /** a Node-only feature (files, rendering, transcription) was called in a browser or worker */
+  | "NODE_ONLY";
 
 export class CaptionsEasyError extends Error {
   readonly code: CaptionsEasyErrorCode;

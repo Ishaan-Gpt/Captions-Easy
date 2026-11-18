@@ -122,13 +122,27 @@ const DISPLAY: Record<string, { name: string; tags: string[] }> = {
   serif_pop_classic: { name: "Script Hero Pop", tags: ["3 lines", "Script"] },
   cartoon_stack_classic: { name: "Cartoon 3-Line", tags: ["3 lines", "Handwritten"] },
 };
-const named = (l: LookDefinition): LookDefinition => ({ ...l, ...DISPLAY[l.id] });
+/**
+ * A look whose complete style is resolved (two schema parses) on first read, then kept. Resolving all ~130 looks at
+ * import cost ~260 parses before the caller had asked for one; the getter is enumerable, so spreads and JSON still
+ * see `style` exactly as before.
+ */
+type LookSeedDef = Omit<LookDefinition, "style"> & { makeStyle: () => CaptionStyleV2 };
+function lazyLook({ makeStyle, ...rest }: LookSeedDef): LookDefinition {
+  let style: CaptionStyleV2 | undefined;
+  return Object.defineProperty(rest, "style", { enumerable: true, configurable: true, get: () => (style ??= makeStyle()) }) as LookDefinition;
+}
+const named = <T extends { id: string }>(l: T): T => ({ ...l, ...DISPLAY[l.id] });
+const seedOf = (l: { style: unknown }) => {
+  const { style: _style, ...rest } = l as LookDefinition;
+  return rest;
+};
 
-const ALL_LOOKS: LookDefinition[] = [
-  ...NEW_LOOKS.filter((l) => CURATED_NEW.has(l.id)).map((l) => named({ ...l, style: resolveStyle({ ...l.style, templateId: l.templateId }) })),
+const ALL_LOOKS: LookSeedDef[] = [
+  ...NEW_LOOKS.filter((l) => CURATED_NEW.has(l.id)).map((l) => named({ ...seedOf(l), makeStyle: () => resolveStyle({ ...l.style, templateId: l.templateId }) } as LookSeedDef)),
   // pack looks carry their own gallery name and tags
-  ...PACK_LOOKS.map((l) => ({ ...l, style: resolveStyle({ ...l.style, templateId: l.templateId }) })),
-  ...(legacyLooks as unknown as LookDefinition[]).filter((l) => CURATED_LEGACY.has(l.id)).map((l) => named({ ...l, category: "Classic", style: CaptionStyleSchema.parse(deepMerge(deepMerge(l.style, LEGACY_FIXES[l.id]), { emoji: { enabled: EMOJI_ENABLED } })) })),
+  ...PACK_LOOKS.map((l) => ({ ...seedOf(l), makeStyle: () => resolveStyle({ ...l.style, templateId: l.templateId }) }) as LookSeedDef),
+  ...(legacyLooks as unknown as LookDefinition[]).filter((l) => CURATED_LEGACY.has(l.id)).map((l) => named({ ...seedOf(l), category: "Classic", makeStyle: () => CaptionStyleSchema.parse(deepMerge(deepMerge(l.style, LEGACY_FIXES[l.id]), { emoji: { enabled: EMOJI_ENABLED } })) } as LookSeedDef)),
 ];
 
 /** Gallery sections, in display order. "All" lists these first (in this order), then every other look. */
@@ -139,7 +153,7 @@ export const LOOK_SECTIONS: { id: string; label: string; lookIds: string[] }[] =
 ].map((s) => ({ ...s, lookIds: s.lookIds.filter((id) => !isRetiredLook(id)) })).filter((s) => s.lookIds.length);
 const featured = LOOK_SECTIONS.flatMap((s) => s.lookIds);
 const rank = (id: string) => (featured.includes(id) ? featured.indexOf(id) : featured.length);
-const NUMBERED: LookDefinition[] = [...ALL_LOOKS].sort((a, b) => rank(a.id) - rank(b.id)).map((l) => ({ ...l, number: lookNumber(l.id) }));
+const NUMBERED: LookDefinition[] = [...ALL_LOOKS].sort((a, b) => rank(a.id) - rank(b.id)).map((l) => lazyLook({ ...l, number: lookNumber(l.id) }));
 /** the gallery: every look except retired ones (see looks/numbers.ts) */
 export const LOOKS: LookDefinition[] = NUMBERED.filter((l) => !isRetiredLook(l.id));
 

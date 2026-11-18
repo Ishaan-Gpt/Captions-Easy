@@ -1,0 +1,5 @@
+dist/
+.regression/
+.tmp/
+.meta.json
+.dts-tmp/

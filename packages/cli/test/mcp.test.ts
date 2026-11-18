@@ -15,7 +15,9 @@ describe("MCP server (stdio JSON-RPC)", () => {
     expect(init.result.instructions).toMatch(/build_captions/);
     expect(await handle({ jsonrpc: "2.0", method: "notifications/initialized" })).toBeNull();
     const list = (await handle({ jsonrpc: "2.0", id: 2, method: "tools/list" })) as { result: { tools: { name: string; inputSchema: { type: string } }[] } };
-    expect(list.result.tools.map((t) => t.name)).toEqual(["list_looks", "describe_look", "build_captions", "caption_video", "transcribe"]);
+    expect(list.result.tools.map((t) => t.name)).toEqual(["recommend_looks", "list_looks", "describe_look", "build_captions", "caption_video", "plan_tracks", "list_themes", "describe_theme", "derive_look", "safe_zones", "transcribe"]);
+    const cv = list.result.tools.find((t) => t.name === "caption_video") as unknown as { inputSchema: { properties: { overlay_format: { enum: string[] } } } };
+    expect(cv.inputSchema.properties.overlay_format.enum).toEqual(["mov", "webm", "png-sequence"]);
     for (const t of list.result.tools) expect(t.inputSchema.type).toBe("object");
     expect(((await handle({ jsonrpc: "2.0", id: 3, method: "nope" })) as { error: { code: number } }).error.code).toBe(-32601);
   });

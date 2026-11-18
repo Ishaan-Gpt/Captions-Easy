@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LegalDoc, Sec } from "@/components/legal/Doc";
 import { LEGAL } from "@/lib/legal";
 
-export const metadata: Metadata = { title: "Copyright & Takedowns · CaptionsEasy", description: "How to report copyright infringement to CaptionsEasy and how counter-notices work." };
+export const metadata: Metadata = { title: "Copyright & Takedowns · CaptionsEasy", description: "How to report copyright infringement to CaptionsEasy and how counter-notices work.", alternates: { canonical: "/copyright" } };
 
 export default function CopyrightPage() {
   return (

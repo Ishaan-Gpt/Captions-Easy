@@ -2,7 +2,8 @@
 
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { Player, type PlayerRef } from "@remotion/player";
-import { CaptionedVideo, type CaptionedVideoInput } from "@capseasy/compositions";
+import * as Sentry from "@sentry/nextjs";
+import { CaptionedVideo, PREVIEW_VIDEO_ERROR_EVENT, type CaptionedVideoInput } from "@capseasy/compositions";
 import { Pause, Play } from "lucide-react";
 import { fmtTime } from "./controls";
 
@@ -37,6 +38,16 @@ export const StudioPlayer = forwardRef<PlayerRef, Props>(function StudioPlayer({
     if (typeof ref === "function") ref(r);
     else if (ref) (ref as React.MutableRefObject<PlayerRef | null>).current = r;
   };
+
+  // the preview's video couldn't be read even after quiet reloads (it shows "Reload preview"): a warning, not a crash
+  useEffect(() => {
+    const onVideoError = (e: Event) => {
+      const detail = (e as CustomEvent<{ message?: string; reloads?: number }>).detail ?? {};
+      Sentry.captureMessage("preview: video unreadable after reloads", { level: "warning", extra: detail });
+    };
+    window.addEventListener(PREVIEW_VIDEO_ERROR_EVENT, onVideoError);
+    return () => window.removeEventListener(PREVIEW_VIDEO_ERROR_EVENT, onVideoError);
+  }, []);
 
   // ~15 Hz time feed so the caption list / timeline follow playback without re-rendering every frame
   useEffect(() => {

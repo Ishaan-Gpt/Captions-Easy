@@ -12,14 +12,16 @@ import { LINES_LOOKS, LINES_TEMPLATES } from "./lines";
 import { PLATES_LOOKS, PLATES_TEMPLATES } from "./plates";
 import { PREMIUM_A_LOOKS, PREMIUM_A_TEMPLATES } from "./premium-a";
 import { PREMIUM_B_LOOKS, PREMIUM_B_TEMPLATES } from "./premium-b";
+import { PREMIUM_C_LOOKS, PREMIUM_C_TEMPLATES } from "./premium-c";
+import { PREMIUM_MOOVI_LOOKS, PREMIUM_MOOVI_TEMPLATES } from "./premium-moovi";
 import { TRENDING_LOOKS, TRENDING_TEMPLATES } from "./trending";
 import { TYPO_LOOKS, TYPO_TEMPLATES } from "./typo";
 
-export const PACK_TEMPLATES: TemplateDefinition[] = [...LINES_TEMPLATES, ...TYPO_TEMPLATES, ...CREATOR_TEMPLATES, ...GRAPHIC_TEMPLATES, ...DYNAMIC_TEMPLATES, ...TRENDING_TEMPLATES, ...PLATES_TEMPLATES, ...PREMIUM_A_TEMPLATES, ...PREMIUM_B_TEMPLATES];
+export const PACK_TEMPLATES: TemplateDefinition[] = [...LINES_TEMPLATES, ...TYPO_TEMPLATES, ...CREATOR_TEMPLATES, ...GRAPHIC_TEMPLATES, ...DYNAMIC_TEMPLATES, ...TRENDING_TEMPLATES, ...PLATES_TEMPLATES, ...PREMIUM_A_TEMPLATES, ...PREMIUM_B_TEMPLATES, ...PREMIUM_C_TEMPLATES, ...PREMIUM_MOOVI_TEMPLATES];
 
 /** gallery sections for the pack, in display order (each lists its looks in the order they're defined) */
 export const PACK_SECTIONS: { id: string; label: string; looks: LookSeed[] }[] = [
-  { id: "premium", label: "Premium motion", looks: [...PREMIUM_A_LOOKS, ...PREMIUM_B_LOOKS] },
+  { id: "premium", label: "Premium motion", looks: [...PREMIUM_MOOVI_LOOKS, ...PREMIUM_A_LOOKS, ...PREMIUM_B_LOOKS, ...PREMIUM_C_LOOKS] },
   { id: "trending", label: "Trending", looks: [...TRENDING_LOOKS, ...PLATES_LOOKS] },
   { id: "creator", label: "Creator", looks: CREATOR_LOOKS },
   { id: "dynamic", label: "Dynamic", looks: DYNAMIC_LOOKS },

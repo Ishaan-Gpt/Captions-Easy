@@ -1,0 +1,1199 @@
+{
+ "metal_script": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "soft_glow": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "neon_duo": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "serif_behind": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "ice_duo": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "serif_accent_glow": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "staggered_splash": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "glow_stack_classic": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "vintage_cinematic": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "serif_pop_classic": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "kinetic_mix": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "hormozi_box": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "beast_bounce": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "comic_burst": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "chat_bubble": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "explainer": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "highlighter_card": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "tri_color_keywords": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "gold_bevel_caps": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "solid_label_card": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "tilted_label_stack": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "cream_strip_lines": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "tilted_rising_rows": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "whip_in_cards": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "light_to_bold": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "orange_stamp_hoist": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "red_plate_ticker": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "sand_word_tiles": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "color_block_cutin": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "motion_blur_whip": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "fat_bar_pop": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_skew_ice": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_shine_title": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_neon_title": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_gloss_serif": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_golden_glow": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_shine_band": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_glide_stack": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_shine_sweep": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_arcade_door": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_block_middle": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_three_part": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_fusion_type": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "creator_sparkle_script": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "creator_pastel_bubble": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "estate_blend_word": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "estate_blend_subline": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "estate_blend_overlay": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "estate_blend_stack": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_estate_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_classic_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_creator_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_simple_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_doctor_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "dyn_luxe_cycle": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_banded_word": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_rotating_layouts": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_ghost_stack": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_huge_script": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_six_slot": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_red_neon": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_big_small": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_red_block_wipe": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_punch_slide": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_scatter_fly": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_longest_big": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_spotlight_sides": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_gilded_headline": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "typo_editorial_indent": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "plain_lowercase": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "fade_in_words": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "stacked_slam": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "script_accent_pink": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "italic_glow_word": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "glow_serif_popin": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "cycling_color_pop": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "gold_word_lift": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "mint_caps_pop": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "yellow_jump_box": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "hollow_caps_fill": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "karaoke_pill": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "selection_highlight": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "cyan_bloom": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "slanted_shine": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "peak_gradient": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "olive_word_pill": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "knockout_word": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "die_cut_sticker": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "ransom_cutouts": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "ransom_flicker": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "torn_paper_cutout": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "neon_frame_lines": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "phone_notification": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "mint_chat_pop": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "mint_chat_pop_left": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "karaoke_fill": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "pop_clean": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "gradient_pop": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "outline_fill": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "bold_pill": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "wave_bounce": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "storytime": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "scribble": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "minimal_pro": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "netflix_sub": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "lower_third": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "read_along": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "luxe_serif": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "motivational": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "film_noir": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "retro_vhs": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "retro_3d": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "neon_sign": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "terminal": {
+  "levers": {
+   "emphasis": false,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "gaming_hud": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "desi_clean": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "cartoon_stack_classic": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": true,
+   "entry": true
+  },
+  "wholeWords": true
+ },
+ "difference_invert": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "cinematic_track_in": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "rgb_split_slam": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "letter_cascade": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "light_slit_reveal": {
+  "levers": {
+   "emphasis": false,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "flip_3d_type": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "glitch_slice": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "chrome_sweep": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "echo_zoom": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "kinetic_camera": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "editorial_3d_stack": {
+  "levers": {
+   "emphasis": true,
+   "color": true,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": false
+ },
+ "moovi_caption_1_1": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "moovi_caption_1_2": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "moovi_caption_2": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "moovi_caption_3": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ },
+ "moovi_caption_4": {
+  "levers": {
+   "emphasis": true,
+   "color": false,
+   "size": false,
+   "entry": false
+  },
+  "wholeWords": true
+ }
+}

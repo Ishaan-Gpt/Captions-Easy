@@ -1,7 +1,7 @@
 {
   "name": "captionseasy-render",
-  "version": "0.1.0",
-  "description": "Rendering add-on for captionseasy: burns CaptionsEasy captions into a video (MP4) or exports a transparent overlay (.mov ProRes 4444 / .webm VP9) with Remotion, locally.",
+  "version": "0.2.0",
+  "description": "Rendering add-on for captionseasy: burns CaptionsEasy captions into a video (MP4) or exports a transparent overlay (.mov ProRes 4444, .webm VP9 or a PNG sequence) with Remotion, locally. Renders themes, multi-look tracks, word roles and Hinglish.",
   "license": "MIT",
   "author": "Ishaan Gupta",
   "bugs": {
@@ -40,6 +40,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "scripts": {

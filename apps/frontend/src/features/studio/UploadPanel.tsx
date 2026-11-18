@@ -8,6 +8,7 @@ import { HINGLISH_AVAILABLE, PROJECT_LANGUAGE, likelySpeechLanguage, saveSpeechL
 import { studioService } from "@/services/studio";
 import { track } from "@/lib/track";
 import { ApiError } from "@/services/api-client";
+import { OFFLINE_MESSAGE, isNetworkError, waitForOnline } from "@/lib/network";
 import { PrepareError, prepareVideo, type PrepareStage } from "@/features/upload/prepareVideo";
 import { Check, Film, ShieldCheck, Sparkles, Upload } from "lucide-react";
 import { Button } from "./controls";
@@ -37,6 +38,8 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
   const [over, setOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [prep, setPrep] = useState<PrepareStage | null>(null);
+  /** the connection dropped mid-upload: the checked video is kept and the upload resumes when they're back online */
+  const [waitingNet, setWaitingNet] = useState(false);
   const abortRef = useRef<(() => void) | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const busy = progress !== null || prep !== null;
@@ -57,19 +60,44 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
         setPrep(null);
         setProgress(0);
         // captions start as soon as the video has an id (in parallel with saving it), not after the server round trips
-        const done = await studioService.uploadVideo(projectId, ready, setProgress, (abort) => (abortRef.current = abort), (videoId) => {
-          if (!ready.hasAudio) return;
-          track("video_added", { language: projectLanguage ?? "en", durationS: Math.round(ready.durationMs / 1000) });
-          startSession({ projectId, videoId, file: ready.file, language: projectLanguage, info: { codec: ready.videoCodec, converted: ready.converted, previewMode: ready.previewMode, durationS: Math.round(ready.durationMs / 1000) } });
-        });
+        let registered: string | null = null;
+        const upload = () =>
+          registered
+            ? studioService.finishVideo(registered, ready.file, setProgress)
+            : studioService.uploadVideo(projectId, ready, setProgress, (abort) => (abortRef.current = abort), (videoId) => {
+                registered = videoId;
+                if (!ready.hasAudio) return;
+                track("video_added", { language: projectLanguage ?? "en", durationS: Math.round(ready.durationMs / 1000) });
+                startSession({ projectId, videoId, file: ready.file, language: projectLanguage, info: { codec: ready.videoCodec, converted: ready.converted, previewMode: ready.previewMode, durationS: Math.round(ready.durationMs / 1000) } });
+              });
+        // the API client already retries a dropped connection for a couple of minutes; past that, keep the checked
+        // video and carry on by itself once the browser is back online (they can still cancel)
+        let done: Awaited<ReturnType<typeof upload>>;
+        for (let round = 0; ; round++) {
+          try {
+            done = await upload();
+            break;
+          } catch (e) {
+            if (!isNetworkError(e) || ctrl.signal.aborted || round >= 5) throw e;
+            setWaitingNet(true);
+            await waitForOnline(ctrl.signal, 24 * 3_600_000);
+            await new Promise((r) => setTimeout(r, 2000 * (round + 1)));
+            setWaitingNet(false);
+          }
+        }
         if (done.jobId) void getSession(projectId)?.attachJob(done.jobId);
         setProgress(100);
         onUploaded();
       } catch (e) {
         setPrep(null);
         setProgress(null);
+        setWaitingNet(false);
         if (e instanceof DOMException && e.name === "AbortError") return;
-        // a refused file (too long, unreadable) is the user's file, not our bug: only report the unexpected
+        // a refused file (too long, unreadable) or a lost connection is not our bug: only report the unexpected
+        if (isNetworkError(e)) {
+          setError("We couldn't reach CaptionsEasy for a while. Check your internet, then pick the video again.");
+          return;
+        }
         if (!(e instanceof PrepareError) || e.code === "CANT_CONVERT") Sentry.captureException(e, { tags: { area: "upload" } });
         setError(e instanceof PrepareError || e instanceof ApiError || e instanceof Error ? e.message : "Upload failed. Please try again.");
       }
@@ -105,8 +133,12 @@ export const UploadPanel: React.FC<Props> = ({ projectId, onUploaded, note, limi
         </h2>
         <p className="mt-1 text-sm text-st-muted">
           {prep?.stage === "convert"
-            ? "Converting it so it plays in every browser. This happens on your device."
-            : note ?? (busy ? "" : "or choose one from your device")}
+            ? prep.reason === "size"
+              ? "It's larger than 4K, so we're making a 4K copy for smooth editing and export. This happens on your device."
+              : "Converting it so it plays in every browser. This happens on your device."
+            : waitingNet
+              ? OFFLINE_MESSAGE
+              : note ?? (busy ? "" : "or choose one from your device")}
         </p>
 
         {prep ? (

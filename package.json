@@ -10,7 +10,8 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
     "lint": "pnpm -r --if-present lint",
-    "companion:pack": "pnpm --filter @capseasy/companion pack:release"
+    "companion:pack": "pnpm --filter @capseasy/companion pack:release",
+    "release:build": "node packages/cli/scripts/build.mjs core render transcribe web && node packages/cli/scripts/check-dist.mjs"
   },
   "devDependencies": {
     "typescript": "^5.6.0"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { cancelRender, continueRender, delayRender } from "remotion";
 import { fontStack, getFontEntry } from "./fontCatalog";
+import { DEVANAGARI_UNICODE_RANGE, activateDevanagariFallback, devanagariAlias, parseScriptFallbackKey } from "./scriptFonts";
 
 type GoogleFontModule = {
   getInfo?: () => { fonts: Record<string, Record<string, unknown>> };
@@ -84,10 +85,52 @@ const LOADERS: Record<string, () => Promise<unknown>> = {
   Unbounded: () => import("@remotion/google-fonts/Unbounded"),
   "Tilt Neon": () => import("@remotion/google-fonts/TiltNeon"),
   VT323: () => import("@remotion/google-fonts/VT323"),
+  // Moovi's premium captions
+  Antonio: () => import("@remotion/google-fonts/Antonio"),
+  "League Gothic": () => import("@remotion/google-fonts/LeagueGothic"),
+  Sacramento: () => import("@remotion/google-fonts/Sacramento"),
 };
 
+/**
+ * Devanagari fallback families (all OFL, via @remotion/google-fonts). Kept apart from LOADERS so KNOWN_FONTS (the
+ * fonts a look/override may pick) is unchanged; Baloo 2 and Mukta are in both. Loaded only for caption tracks that
+ * contain Devanagari, under a Devanagari-only alias (see scriptFonts.ts).
+ */
+const SCRIPT_LOADERS: Record<string, () => Promise<unknown>> = {
+  "Baloo 2": () => import("@remotion/google-fonts/Baloo2"),
+  Mukta: () => import("@remotion/google-fonts/Mukta"),
+  Hind: () => import("@remotion/google-fonts/Hind"),
+  "Noto Sans Devanagari": () => import("@remotion/google-fonts/NotoSansDevanagari"),
+  "Tiro Devanagari Hindi": () => import("@remotion/google-fonts/TiroDevanagariHindi"),
+  Poppins: () => import("@remotion/google-fonts/Poppins"),
+};
+
+type FontInfo = { fonts: Record<string, Record<string, Record<string, string>>> };
+
+/** Register a partner's devanagari subset under its alias (unicode-range limited), then activate it in font stacks. */
+async function loadDevanagariFallback(partner: string): Promise<void> {
+  const loader = SCRIPT_LOADERS[partner];
+  if (!loader || !hasDom()) return; // Node / unknown partner: stacks stay as they are
+  const mod = (await loader()) as { getInfo: () => FontInfo };
+  const info = mod.getInfo();
+  const alias = devanagariAlias(partner);
+  const faces: Promise<FontFace>[] = [];
+  for (const [style, weights] of Object.entries(info.fonts)) {
+    if (style !== "normal") continue;
+    for (const [weight, subsets] of Object.entries(weights)) {
+      const url = subsets.devanagari;
+      if (!url || !CAPTION_WEIGHTS.includes(weight)) continue;
+      const face = new FontFace(alias, `url(${url})`, { weight, style: "normal", unicodeRange: DEVANAGARI_UNICODE_RANGE });
+      document.fonts.add(face);
+      faces.push(face.load());
+    }
+  }
+  await Promise.all(faces);
+  activateDevanagariFallback(partner);
+}
+
 /** families whose looks set words in true italics (not the browser's slanted fake) */
-const ITALIC_FAMILIES = new Set(["Instrument Serif", "Playfair Display", "Cormorant Garamond", "Bodoni Moda", "Merriweather", "Kanit", "Josefin Sans", "Montserrat", "Lato", "Fraunces", "Jost"]);
+const ITALIC_FAMILIES = new Set(["Instrument Serif", "Playfair Display", "Cormorant Garamond", "Bodoni Moda", "Merriweather", "Kanit", "Josefin Sans", "Montserrat", "Lato", "Fraunces", "Jost", "Plus Jakarta Sans"]);
 
 export const KNOWN_FONTS = Object.keys(LOADERS).filter((f) => f !== "Noto Color Emoji");
 export const EMOJI_FONT = "Noto Color Emoji";
@@ -142,6 +185,14 @@ async function loadHosted(family: string, id: string, weights: number[]): Promis
 export function loadFontFamily(family: string): Promise<void> {
   const existing = started.get(family);
   if (existing) return existing;
+  const partner = parseScriptFallbackKey(family);
+  if (partner !== null) {
+    const p = loadDevanagariFallback(partner).catch(() => {
+      started.delete(family); // a missing fallback never blocks the render: the system draws the glyphs
+    });
+    started.set(family, p);
+    return p;
+  }
   const loader = LOADERS[family];
   const entry = getFontEntry(family);
   const p = (async () => {

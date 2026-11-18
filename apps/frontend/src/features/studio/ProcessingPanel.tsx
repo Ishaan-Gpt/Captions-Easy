@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { OFFLINE_MESSAGE } from "@/lib/network";
 import { canTranscribeInBrowser, isSpeechModelSaved, type BrowserStatus } from "@/features/transcribe/browserWhisper";
 import { getSession, startSession, useSessionView, type SessionView } from "@/features/transcribe/session";
 import { getLocalVideo } from "@/features/upload/localVideos";
@@ -232,12 +233,18 @@ const WritingCaptions: React.FC<{ view: SessionView; isPhone: boolean; onStop: (
   const elapsed = (now - view.startedAt) / 1000;
   const shown = Math.max(2, Math.round(display));
   const eta = view.etaSec ?? (shown > 12 && elapsed > 6 ? (elapsed * (100 - shown)) / shown : null);
-  const title = !status ? (firstTime ? "Building your experience for the first time…" : "Warming up…") : status.stage === "load" && firstTime ? "Building your experience for the first time…" : STAGE_TEXT[status.stage];
+  const title = view.waitingForNetwork
+    ? "Waiting for your connection…"
+    : !status
+      ? (firstTime ? "Building your experience for the first time…" : "Warming up…")
+      : status.stage === "load" && firstTime
+        ? "Building your experience for the first time…"
+        : STAGE_TEXT[status.stage];
   return (
     <Center>
       <Bars />
       <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="mt-1 text-sm font-medium text-st-text/70" aria-live="polite">{VERBS[verb % VERBS.length]}…</p>
+      <p className="mt-1 text-sm font-medium text-st-text/70" aria-live="polite">{view.waitingForNetwork ? OFFLINE_MESSAGE : `${VERBS[verb % VERBS.length]}…`}</p>
       <div className="mx-auto mt-5 h-2 w-72 max-w-full overflow-hidden rounded-full bg-st-line">
         <div className="h-full rounded-full bg-st-em transition-all duration-500" style={{ width: `${shown}%` }} />
       </div>

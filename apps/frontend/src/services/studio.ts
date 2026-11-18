@@ -108,17 +108,24 @@ export const studioService = {
         mime,
         probe: { durationMs: v.durationMs, width: v.width, height: v.height, rotation: v.rotation, videoCodec: v.videoCodec, audioCodec: v.audioCodec, hasAudio: v.hasAudio, previewMode: v.previewMode, needsCompat: v.needsCompat },
       },
+      // a repeat after a lost response at worst leaves an unused video row; losing the upload is worse
+      retry: true,
     });
     // the video stays on this device: saved in the browser, never uploaded
     onAbortReady?.(() => undefined);
     onRegistered?.(reg.videoId);
+    return this.finishVideo(reg.videoId, file, onProgress);
+  },
+
+  /** The part of uploadVideo after the video has an id: safe to run again (resuming after a dropped connection). */
+  async finishVideo(videoId: string, file: File, onProgress: (pct: number) => void): Promise<{ jobId: string | null; videoId: string; noAudio?: boolean }> {
     // saving the copy and creating the transcribe job don't depend on each other
     const [, done] = await Promise.all([
-      saveLocalVideo(reg.videoId, file),
-      apiClient.post<{ jobId: string | null; noAudio?: boolean }>(`/videos/${reg.videoId}/complete`, { json: { needsProxy: false } }),
+      saveLocalVideo(videoId, file),
+      apiClient.post<{ jobId: string | null; noAudio?: boolean }>(`/videos/${videoId}/complete`, { json: { needsProxy: false }, retry: true }), // idempotent per video
     ]);
     onProgress(100);
-    return { ...done, videoId: reg.videoId };
+    return { ...done, videoId };
   },
 
   async saveDocument(projectId: string, expectedRevision: number, doc: CaptionDoc): Promise<number> {

@@ -27,6 +27,9 @@ export const LOOK_NUMBER_ORDER: readonly string[] = [
   // Premium motion (After Effects-grade)
   "difference_invert", "cinematic_track_in", "rgb_split_slam", "letter_cascade", "light_slit_reveal",
   "flip_3d_type", "glitch_slice", "chrome_sweep", "echo_zoom", "kinetic_camera",
+  "editorial_3d_stack",
+  // Moovi's premium captions (Premium Caption 1.1, 1.2, 2, 3, 4)
+  "moovi_caption_1_1", "moovi_caption_1_2", "moovi_caption_2", "moovi_caption_3", "moovi_caption_4",
 ];
 
 /**

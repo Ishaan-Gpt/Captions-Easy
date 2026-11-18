@@ -223,12 +223,18 @@ importers:
       '@remotion/layout-utils':
         specifier: 4.0.484
         version: 4.0.484
+      '@remotion/player':
+        specifier: 4.0.484
+        version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@types/node':
         specifier: ^20
         version: 20.19.43
       '@types/react':
         specifier: ^19
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
       captionseasy-render:
         specifier: workspace:*
         version: link:../cli-render
@@ -244,6 +250,9 @@ importers:
       react:
         specifier: 19.2.4
         version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
       remotion:
         specifier: 4.0.484
         version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -508,6 +517,75 @@ importers:
       vitest:
         specifier: ^4.1.9
         version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@20.19.43)(jsdom@29.1.1)(vite@8.1.0(@types/node@20.19.43)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15))
+
+  packages/web:
+    devDependencies:
+      '@capseasy/compositions':
+        specifier: workspace:*
+        version: link:../compositions
+      '@capseasy/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@capseasy/templates':
+        specifier: workspace:*
+        version: link:../templates
+      '@motion-ai/caption-engine':
+        specifier: workspace:*
+        version: link:../caption-engine
+      '@remotion/bundler':
+        specifier: 4.0.484
+        version: 4.0.484(@swc/helpers@0.5.15)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@remotion/google-fonts':
+        specifier: 4.0.484
+        version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@remotion/layout-utils':
+        specifier: 4.0.484
+        version: 4.0.484
+      '@remotion/renderer':
+        specifier: 4.0.484
+        version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@remotion/web-renderer':
+        specifier: 4.0.484
+        version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@types/node':
+        specifier: ^20
+        version: 20.19.43
+      '@types/react':
+        specifier: ^19
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.17)
+      captionseasy:
+        specifier: workspace:*
+        version: link:../cli
+      esbuild:
+        specifier: ^0.28.1
+        version: 0.28.1
+      mediabunny:
+        specifier: 1.47.0
+        version: 1.47.0
+      puppeteer-core:
+        specifier: 24.43.1
+        version: 24.43.1
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
+      remotion:
+        specifier: 4.0.484
+        version: 4.0.484(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^4.1.9
+        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@20.19.43)(jsdom@29.1.1)(vite@8.1.0(@types/node@20.19.43)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15))
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
 
 packages:
 

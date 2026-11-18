@@ -31,6 +31,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      // private and machine routes never appear in search, even when something links to them (robots.txt only stops crawling)
+      ...["/dashboard/:path*", "/settings/:path*", "/projects/:path*", "/api/:path*", "/health/:path*", "/install.sh", "/install.ps1", "/monitoring/:path*"].map(
+        (source) => ({ source, headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] })
+      ),
       // Cross-origin isolation (COOP/COEP) was tried for multi-threaded WASM and removed: on some Android phones the
       // speech worker failed to start at all (Sentry SENTRY-COPPER-QUEEN-5). Re-enable only after testing on real phones.
     ];

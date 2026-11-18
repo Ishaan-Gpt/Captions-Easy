@@ -1,0 +1,712 @@
+{
+ "total": 105,
+ "looks": [
+  {
+   "id": "metal_script",
+   "slug": "metal-script",
+   "name": "Metal Slam + Script",
+   "number": 1,
+   "description": "Brushed-metal caps slam in letter by letter with a crack of light, then the key word is written on in a green script",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Letter slam",
+    "Script"
+   ],
+   "font": "Anton"
+  },
+  {
+   "id": "soft_glow",
+   "slug": "soft-glow",
+   "name": "Soft Glow",
+   "number": 2,
+   "description": "Rounded lowercase words rising out of a blur with a soft white bloom",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Glow",
+    "Rise"
+   ],
+   "font": "Nunito"
+  },
+  {
+   "id": "neon_duo",
+   "slug": "neon-duo",
+   "name": "Neon Caps + Script",
+   "number": 3,
+   "description": "Red neon caps lit from inside, with a white italic line laid over them",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Neon",
+    "Italic serif"
+   ],
+   "font": "Anton"
+  },
+  {
+   "id": "serif_behind",
+   "slug": "serif-behind",
+   "name": "Giant Serif Behind",
+   "number": 4,
+   "description": "The key word burns huge in red serif behind the rest of the line",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Big word",
+    "Glow"
+   ],
+   "font": "Playfair Display"
+  },
+  {
+   "id": "ice_duo",
+   "slug": "ice-duo",
+   "name": "Italic Over Ice Caps",
+   "number": 5,
+   "description": "An italic serif word resting on glowing ice-blue caps",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Italic serif",
+    "Glow"
+   ],
+   "font": "Montserrat"
+  },
+  {
+   "id": "serif_accent_glow",
+   "slug": "serif-accent-glow",
+   "name": "Serif Accent Glow",
+   "number": 6,
+   "description": "Clean bold words with the key word in italic serif, all in a soft halo of light",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "Halo",
+    "Italic word"
+   ],
+   "font": "Manrope"
+  },
+  {
+   "id": "staggered_splash",
+   "slug": "staggered-splash",
+   "name": "3-Line Stagger",
+   "number": 7,
+   "description": "Outfit font with multi-line staggered layout & neon green active word",
+   "category": "Classic",
+   "section": "Viral",
+   "tags": [
+    "3 lines",
+    "Big middle word"
+   ],
+   "font": "Outfit"
+  },
+  {
+   "id": "glow_stack_classic",
+   "slug": "glow-stack-classic",
+   "name": "3-Line Glow Hero",
+   "number": 8,
+   "description": "Rounded Baloo 2 body text with a flat deep-blue glowing hero word",
+   "category": "Classic",
+   "section": "Viral",
+   "tags": [
+    "3 lines",
+    "Glow"
+   ],
+   "font": "Baloo 2"
+  },
+  {
+   "id": "vintage_cinematic",
+   "slug": "vintage-cinematic",
+   "name": "Giant Italic Hero",
+   "number": 9,
+   "description": "Playfair Display font with vibrant emerald green hero word",
+   "category": "Classic",
+   "section": "Viral",
+   "tags": [
+    "3 lines",
+    "Serif hero"
+   ],
+   "font": "Playfair Display"
+  },
+  {
+   "id": "serif_pop_classic",
+   "slug": "serif-pop-classic",
+   "name": "Script Hero Pop",
+   "number": 10,
+   "description": "Bold brush-script hero word with the signature yellow pop dot",
+   "category": "Classic",
+   "section": "Viral",
+   "tags": [
+    "3 lines",
+    "Script"
+   ],
+   "font": "Playfair Display"
+  },
+  {
+   "id": "kinetic_mix",
+   "slug": "kinetic-mix",
+   "name": "Kinetic Big Word",
+   "number": 11,
+   "description": "Stacked words; the key word huge, tilted and yellow",
+   "category": "Cinematic",
+   "section": "Viral",
+   "tags": [
+    "Stacked",
+    "Tilt"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "hormozi_box",
+   "slug": "hormozi-box",
+   "name": "Jumping Box",
+   "number": 12,
+   "description": "Montserrat caps with a green box that jumps word to word",
+   "category": "Viral",
+   "section": "Popular",
+   "tags": [
+    "Caps",
+    "Box highlight"
+   ],
+   "font": "Montserrat"
+  },
+  {
+   "id": "beast_bounce",
+   "slug": "beast-bounce",
+   "name": "Bouncy Single Word",
+   "number": 13,
+   "description": "Chunky yellow words with a hard shadow and alternating tilt",
+   "category": "Viral",
+   "section": "Popular",
+   "tags": [
+    "One word",
+    "3D shadow"
+   ],
+   "font": "Luckiest Guy"
+  },
+  {
+   "id": "comic_burst",
+   "slug": "comic-burst",
+   "name": "Comic Tilt",
+   "number": 14,
+   "description": "Comic-book Bangers with a red drop shadow and a big tilt",
+   "category": "Fun",
+   "section": "Popular",
+   "tags": [
+    "One word",
+    "Tilt",
+    "Shadow"
+   ],
+   "font": "Bangers"
+  },
+  {
+   "id": "chat_bubble",
+   "slug": "chat-bubble",
+   "name": "Chat Bubble",
+   "number": 15,
+   "description": "iMessage-style blue bubbles",
+   "category": "Fun",
+   "section": "Popular",
+   "tags": [
+    "Bubble",
+    "Messages"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "explainer",
+   "slug": "explainer",
+   "name": "Underline Sweep",
+   "number": 16,
+   "description": "Lexend (built for readability) with an underline sweep",
+   "category": "Education",
+   "section": "Popular",
+   "tags": [
+    "Readable",
+    "Underline"
+   ],
+   "font": "Lexend"
+  },
+  {
+   "id": "highlighter_card",
+   "slug": "highlighter-card",
+   "name": "Yellow Highlighter",
+   "number": 17,
+   "description": "Dark text on a white card with a yellow marker",
+   "category": "Education",
+   "section": "Popular",
+   "tags": [
+    "Card",
+    "Marker"
+   ],
+   "font": "Lexend"
+  },
+  {
+   "id": "moovi_caption_1_1",
+   "slug": "moovi-caption-1-1",
+   "name": "Premium Caption 1.1",
+   "number": 129,
+   "description": "Two tiers of rounded caps: a white lead line over the spoken key word, lit in your accent with a lens bloom; each word pops in soft and snaps sharp with a small bounce",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Lit key word",
+    "Caps",
+    "Bloom"
+   ],
+   "font": "Russo One"
+  },
+  {
+   "id": "moovi_caption_1_2",
+   "slug": "moovi-caption-1-2",
+   "name": "Premium Caption 1.2",
+   "number": 130,
+   "description": "A sentence-case white lead over a slanted, lit caps key word in your accent, blooming like a lens flare; each word pops in soft and snaps sharp",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Lit key word",
+    "Slant",
+    "Bloom"
+   ],
+   "font": "Poppins"
+  },
+  {
+   "id": "moovi_caption_2",
+   "slug": "moovi-caption-2",
+   "name": "Premium Caption 2",
+   "number": 131,
+   "description": "Three tiers in an After Effects glow: a white italic lead, the key words tall in gold condensed caps, and a lighter italic tail; every word fades in out of a heavy blur",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Gold key",
+    "Italic mix",
+    "Glow"
+   ],
+   "font": "Plus Jakarta Sans"
+  },
+  {
+   "id": "moovi_caption_3",
+   "slug": "moovi-caption-3",
+   "name": "Premium Caption 3",
+   "number": 132,
+   "description": "A stacked card: small white connector words, content words a size up, and the highlight huge as a shiny negative of the video under it, so the background decides its colour",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Shiny negative",
+    "Stack",
+    "Lowercase"
+   ],
+   "font": "Montserrat"
+  },
+  {
+   "id": "moovi_caption_4",
+   "slug": "moovi-caption-4",
+   "name": "Premium Caption 4",
+   "number": 133,
+   "description": "A poster card: the key word giant in tall condensed caps, glossy and extruded in 3D, rising letter by letter, with a handwritten script lead and a white sans line",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Poster",
+    "3D key word",
+    "Script mix"
+   ],
+   "font": "Poppins"
+  },
+  {
+   "id": "difference_invert",
+   "slug": "difference-invert",
+   "name": "Difference",
+   "number": 118,
+   "description": "Bold caps that invert the video behind them, with a difference bar that sweeps in and rides the spoken word",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Difference blend",
+    "Invert bar",
+    "Letter rise"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "cinematic_track_in",
+   "slug": "cinematic-track-in",
+   "name": "Cinematic Track-In",
+   "number": 119,
+   "description": "Thin wide caps condense out of a blur like a film title, the key word heavier, then a glint of light crosses",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Tracking",
+    "Title sequence",
+    "Light glint"
+   ],
+   "font": "Jost"
+  },
+  {
+   "id": "rgb_split_slam",
+   "slug": "rgb-split-slam",
+   "name": "RGB Split Slam",
+   "number": 120,
+   "description": "Condensed caps slam in with red and cyan channels converging on the hit, a short shake, and a re-split kick on each spoken word",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Slam",
+    "RGB split",
+    "Shake"
+   ],
+   "font": "Anton"
+  },
+  {
+   "id": "letter_cascade",
+   "slug": "letter-cascade",
+   "name": "Letter Cascade",
+   "number": 121,
+   "description": "Letters pour in one frame apart on a soft spring with speed blur, and fall away letter by letter",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Per letter",
+    "Spring",
+    "Motion blur"
+   ],
+   "font": "Outfit"
+  },
+  {
+   "id": "light_slit_reveal",
+   "slug": "light-slit-reveal",
+   "name": "Light Slit Reveal",
+   "number": 122,
+   "description": "A slit of light sweeps across and uncovers each line, from alternate sides card to card",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Light sweep",
+    "Mask reveal",
+    "Serif"
+   ],
+   "font": "Bodoni Moda"
+  },
+  {
+   "id": "flip_3d_type",
+   "slug": "flip-3d-type",
+   "name": "3D Drum Flip",
+   "number": 123,
+   "description": "Letters roll up out of depth on a lit 3D drum, settle with a soft overshoot, and the spoken word pops forward",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "3D flip",
+    "Letter cascade",
+    "Caps"
+   ],
+   "font": "Big Shoulders"
+  },
+  {
+   "id": "glitch_slice",
+   "slug": "glitch-slice",
+   "name": "Signal Tear",
+   "number": 124,
+   "description": "Words tear in as sliced, RGB-split frames, snap clean, and the key word re-tears when spoken",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Glitch",
+    "RGB split",
+    "Caps"
+   ],
+   "font": "Space Grotesk"
+  },
+  {
+   "id": "chrome_sweep",
+   "slug": "chrome-sweep",
+   "name": "Liquid Chrome",
+   "number": 125,
+   "description": "Bevelled chrome caps with a specular sweep and a gold key word that catches the light when spoken",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Chrome",
+    "Light sweep",
+    "Wide caps"
+   ],
+   "font": "Unbounded"
+  },
+  {
+   "id": "echo_zoom",
+   "slug": "echo-zoom",
+   "name": "Afterimage Zoom",
+   "number": 126,
+   "description": "Words fly in from the camera trailing tinted echoes that collapse into them, then zoom out through the lens",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Echo trails",
+    "Zoom",
+    "Caps"
+   ],
+   "font": "Inter Tight"
+  },
+  {
+   "id": "kinetic_camera",
+   "slug": "kinetic-camera",
+   "name": "Kinetic Camera",
+   "number": 127,
+   "description": "A kinetic type lockup with a virtual camera that whips in and focuses each word as it is spoken",
+   "category": "Premium",
+   "section": "Premium motion",
+   "tags": [
+    "Camera moves",
+    "Big word",
+    "Serif mix"
+   ],
+   "font": "Inter Tight"
+  },
+  {
+   "id": "tri_color_keywords",
+   "slug": "tri-color-keywords",
+   "name": "Three-Colour Keywords",
+   "number": 18,
+   "description": "Heavy white caps in a soft dark halo; key words light up green, yellow or red in turn",
+   "category": "Trending",
+   "section": "Trending",
+   "tags": [
+    "Caps",
+    "Keyword colours",
+    "Halo"
+   ],
+   "font": "Montserrat"
+  },
+  {
+   "id": "gold_bevel_caps",
+   "slug": "gold-bevel-caps",
+   "name": "Gold Bevel Caps",
+   "number": 19,
+   "description": "Big condensed caps in shaded gold with a bevel edge; a lone word grows 1.4×",
+   "category": "Trending",
+   "section": "Trending",
+   "tags": [
+    "Gold",
+    "Bevel",
+    "Two words"
+   ],
+   "font": "Anton"
+  },
+  {
+   "id": "solid_label_card",
+   "slug": "solid-label-card",
+   "name": "Solid Label Card",
+   "number": 20,
+   "description": "Dark caps on a solid yellow card that pops in; every third card bounces its key word on a wiggling box",
+   "category": "Trending",
+   "section": "Trending",
+   "tags": [
+    "Box",
+    "Solo word",
+    "Caps"
+   ],
+   "font": "Anton"
+  },
+  {
+   "id": "tilted_label_stack",
+   "slug": "tilted-label-stack",
+   "name": "Tilted Label Stack",
+   "number": 21,
+   "description": "Two lines on stacked labels, black then green; the green one tilted and tucked under, both bouncing in",
+   "category": "Trending",
+   "section": "Trending",
+   "tags": [
+    "Labels",
+    "Tilt",
+    "Elastic"
+   ],
+   "font": "Montserrat"
+  },
+  {
+   "id": "cream_strip_lines",
+   "slug": "cream-strip-lines",
+   "name": "Cream Strip Lines",
+   "number": 22,
+   "description": "Left-aligned lines on cream strips with the spoken word in red; every third card rocks one word on red",
+   "category": "Trending",
+   "section": "Trending",
+   "tags": [
+    "Strips",
+    "Red word",
+    "Left aligned"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "gradient_pop",
+   "slug": "gradient-pop",
+   "name": "Gradient Word",
+   "number": 98,
+   "description": "One word at a time in a sunset gradient",
+   "category": "Viral",
+   "section": "Viral",
+   "tags": [
+    "One word",
+    "Gradient"
+   ],
+   "font": "Poppins"
+  },
+  {
+   "id": "wave_bounce",
+   "slug": "wave-bounce",
+   "name": "Hopping Word",
+   "number": 101,
+   "description": "Playful Fredoka; the spoken word hops",
+   "category": "Fun",
+   "section": "Fun",
+   "tags": [
+    "Bounce",
+    "Rounded"
+   ],
+   "font": "Fredoka"
+  },
+  {
+   "id": "storytime",
+   "slug": "storytime",
+   "name": "Pastel Box",
+   "number": 102,
+   "description": "Soft rounded words with a pastel box on the spoken word",
+   "category": "Fun",
+   "section": "Fun",
+   "tags": [
+    "Box highlight",
+    "Soft"
+   ],
+   "font": "Nunito"
+  },
+  {
+   "id": "scribble",
+   "slug": "scribble",
+   "name": "Marker Scribble",
+   "number": 103,
+   "description": "Hand-written marker words with a yellow highlight",
+   "category": "Fun",
+   "section": "Fun",
+   "tags": [
+    "Handwritten",
+    "Marker"
+   ],
+   "font": "Permanent Marker"
+  },
+  {
+   "id": "minimal_pro",
+   "slug": "minimal-pro",
+   "name": "Dim Until Spoken",
+   "number": 104,
+   "description": "Calm Inter; upcoming words dimmed, soft blur pill",
+   "category": "Clean",
+   "section": "Clean",
+   "tags": [
+    "Minimal",
+    "Pill"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "netflix_sub",
+   "slug": "netflix-sub",
+   "name": "Classic Subtitle",
+   "number": 105,
+   "description": "Film-style white subtitles with a soft shadow, no motion",
+   "category": "Clean",
+   "section": "Clean",
+   "tags": [
+    "Subtitle",
+    "Still"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "read_along",
+   "slug": "read-along",
+   "name": "Read-Along Light Up",
+   "number": 107,
+   "description": "Full line visible; words light up white as they're read",
+   "category": "Clean",
+   "section": "Clean",
+   "tags": [
+    "Full line",
+    "Dimmed"
+   ],
+   "font": "Inter"
+  },
+  {
+   "id": "luxe_serif",
+   "slug": "luxe-serif",
+   "name": "Italic Serif Wipe",
+   "number": 108,
+   "description": "Italic Cormorant revealed with a slow wipe",
+   "category": "Luxury",
+   "section": "Luxury",
+   "tags": [
+    "Serif",
+    "Wipe"
+   ],
+   "font": "Cormorant Garamond"
+  },
+  {
+   "id": "motivational",
+   "slug": "motivational",
+   "name": "Wide Tracked Word",
+   "number": 109,
+   "description": "Tall Bebas Neue with wide tracking, one word at a time",
+   "category": "Cinematic",
+   "section": "Cinematic",
+   "tags": [
+    "One word",
+    "Tall caps"
+   ],
+   "font": "Bebas Neue"
+  },
+  {
+   "id": "retro_vhs",
+   "slug": "retro-vhs",
+   "name": "VHS Colour Split",
+   "number": 111,
+   "description": "Pixel VT323 with a red/cyan colour split",
+   "category": "Retro",
+   "section": "Retro",
+   "tags": [
+    "Pixel",
+    "Retro"
+   ],
+   "font": "VT323"
+  },
+  {
+   "id": "terminal",
+   "slug": "terminal",
+   "name": "Typewriter Terminal",
+   "number": 114,
+   "description": "Green monospace typed out with a blinking cursor",
+   "category": "Tech",
+   "section": "Tech",
+   "tags": [
+    "Mono",
+    "Cursor"
+   ],
+   "font": "JetBrains Mono"
+  },
+  {
+   "id": "cartoon_stack_classic",
+   "slug": "cartoon-stack-classic",
+   "name": "Cartoon 3-Line",
+   "number": 117,
+   "description": "Playful Fredoka font with a thick border and handwritten Caveat top text",
+   "category": "Classic",
+   "section": "Classic",
+   "tags": [
+    "3 lines",
+    "Handwritten"
+   ],
+   "font": "Caveat"
+  }
+ ]
+}

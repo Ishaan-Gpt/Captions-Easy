@@ -27,6 +27,8 @@ const RING_MS = 480;
 
 /** how far a flying word's zoom origin sits toward the card centre (0 = its own centre): mostly in place, a hint of convergence */
 const RADIAL = 0.22;
+/** a landing word opens its line by up to this share of its width (see `room`) */
+const ROOM_MAX = 0.22;
 
 interface State {
   /** the word's own fly-in scale (about its slot) */
@@ -43,7 +45,16 @@ export const EchoZoomLayout: React.FC<PageRenderProps> = (p) => {
   const texts = page.words.map((w) => displayText(w, style));
   const spec = specOf(style, sc);
   const gapPx = style.wordSpacing * sc + (style.stroke.enabled ? style.stroke.width * sc : 0);
-  const pl = placeLines(page, texts, spec, base, GAP_EM, gapPx, style.lineHeight, box.width / (1 + 0.025 * k), measure);
+  // fit (0.2.0 fix): the settled line, grown by the camera push, the spoken bump and the landing word's overshoot room,
+  // stays inside the caption box (it used to fit the bare line only, so long lines touched or ran past the frame)
+  const motion = (1 + 0.025 * k) * (1 + 0.07 * k);
+  const fitW = box.width / motion;
+  let pl = placeLines(page, texts, spec, base, GAP_EM, gapPx, style.lineHeight, fitW, measure);
+  for (let n = 0; n < 4; n++) {
+    const grown = Math.max(0, ...pl.lines.map((l) => l.reduce((a, pw) => a + pw.width, 0) + (l.length - 1) * pl.gap + ROOM_MAX * Math.max(0, ...l.map((pw) => pw.width))));
+    if (grown <= fitW + 0.5) break;
+    pl = placeLines(page, texts, spec, base, GAP_EM, gapPx, style.lineHeight, (fitW * pl.width) / grown, measure);
+  }
   const size = pl.size;
   const mul = size / base;
   const keyI = keyWordIndex(page);
@@ -58,6 +69,12 @@ export const EchoZoomLayout: React.FC<PageRenderProps> = (p) => {
   const exitStart = page.endMs - exitMs;
   const sIn0 = 1 + 4.5 * k;
   const sOut1 = 1 + 5 * k;
+  // the frame's room either side of the caption centre (the camera axis), less a hair: a word thrown in from the
+  // camera is capped so it (and its echoes) never spills off the frame while entering; the exit zoom is not capped
+  const cxFrame = (page.position?.x ?? style.position.x) * p.canvas.width;
+  const half = (Math.min(cxFrame, p.canvas.width - cxFrame) * 0.98) / push;
+  /** largest entering scale that keeps a word (slot centre cx, width w) inside the frame */
+  const sCap = (cx: number, w: number) => Math.max(1 + 0.07 * k, (half - Math.abs(cx) * (1 - RADIAL)) / (Math.abs(cx) * RADIAL + w / 2));
 
   return (
     <Frame p={p} size={size}>
@@ -72,12 +89,13 @@ export const EchoZoomLayout: React.FC<PageRenderProps> = (p) => {
               if (settled) return <span key={pw.w.id} style={{ display: "inline-block", marginRight: gap }}>{clean}</span>;
               const t0 = appearAt(pw.w);
               const rot0 = (rand(seed, pw.i) < 0.5 ? -1 : 1) * (4 + rand(seed, pw.i + 50) * 5) * k;
+              const cap = sCap(pw.cx, pw.width);
               const state = (t: number): State => {
                 const pin = clamp01((t - t0) / ENTER_MS);
                 const ue = exitMs > 0 ? clamp01((t - exitStart) / exitMs) : 0;
                 const bump = 1 + (key ? 0.07 : 0.035) * k * impulse(t - pw.w.startMs, 95);
                 return {
-                  s: logZoom(sIn0, pin, 4.5) * bump,
+                  s: Math.min(logZoom(sIn0, pin, 4.5), cap) * bump,
                   c: Math.pow(sOut1, Math.pow(ue, 2.6)),
                   r: rot0 * (1 - AE.out(pin)),
                   // the first, biggest frames of the throw stay transparent: only the echoes hint at them
@@ -118,7 +136,7 @@ export const EchoZoomLayout: React.FC<PageRenderProps> = (p) => {
               }
               // a landing word makes room: the line opens by its overshoot (capped) and closes as it settles, so it never
               // lands on its neighbours (the re-flow is part of the motion)
-              const room = timeMs >= t0 && now.s > 1.0005 ? ((Math.min(now.s - 1, 0.22) * pw.width) / 2) * smoothstep(0, 0.15, (timeMs - t0) / ENTER_MS) : 0;
+              const room = timeMs >= t0 && now.s > 1.0005 ? ((Math.min(now.s - 1, ROOM_MAX) * pw.width) / 2) * smoothstep(0, 0.15, (timeMs - t0) / ENTER_MS) : 0;
               const moving = Math.abs(now.s - 1) > 0.0005 || Math.abs(now.c - 1) > 0.0005 || Math.abs(now.r) > 0.01;
               return (
                 <span key={pw.w.id} style={{ position: "relative", display: "inline-block", marginLeft: room || undefined, marginRight: (gap ?? 0) + room || undefined }}>

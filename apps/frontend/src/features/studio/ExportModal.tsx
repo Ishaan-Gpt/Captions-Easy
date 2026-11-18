@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import React, { useEffect, useRef, useState } from "react";
 import type { CaptionedVideoInput } from "@capseasy/compositions";
 import { canExportInBrowser, exportMp4InBrowser, saveBlob } from "./browserExport";
+import { browserExportSize } from "./exportSize";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { studioService, type ExportKind, type ExportRow } from "@/services/studio";
 import { ApiError } from "@/services/api-client";
@@ -61,6 +62,9 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
     const even = (n: number) => Math.max(2, Math.round((n * k) / 2) * 2);
     return { width: even(video.width), height: even(video.height) };
   };
+  // the in-browser MP4 also never goes above what browsers can encode (an 8K source comes out at 4K)
+  const webSize = browserExportSize(video.width, video.height, res === "source" ? undefined : Number(res));
+  const webMax = browserExportSize(video.width, video.height);
   const trimValid = !trim || (endS - startS >= 0.5 && startS >= 0 && endS <= totalS + 0.05);
 
   // MP4 is made in this tab
@@ -72,12 +76,12 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
   const abort = useRef<AbortController | null>(null);
   useEffect(() => {
     let alive = true;
-    void canExportInBrowser(video.width, video.height).then((r) => alive && setWeb(r));
+    void canExportInBrowser(webMax.width, webMax.height).then((r) => alive && setWeb(r));
     return () => {
       alive = false;
       abort.current?.abort();
     };
-  }, [video.width, video.height]);
+  }, [webMax.width, webMax.height]);
   const webReady = !!web?.ok && !!renderInput?.src;
 
   const [restarted, setRestarted] = useState(false);
@@ -109,7 +113,6 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
     }, 5000);
     try {
       await flushSave();
-      const d = dims();
       const started = clock();
       const blob = await exportMp4InBrowser({
         input: renderInput,
@@ -117,7 +120,7 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
         height: video.height,
         fps: video.fps,
         durationMs: video.durationMs,
-        scale: d ? d.width / video.width : 1,
+        scale: webSize.scale,
         range: trim ? { startMs: Math.round(startS * 1000), endMs: Math.round(endS * 1000) } : undefined,
         quality,
         signal: ctrl.signal,
@@ -177,7 +180,7 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
       let w = web;
       if (!w) {
         setBusyKind("mp4");
-        w = await canExportInBrowser(video.width, video.height);
+        w = await canExportInBrowser(webMax.width, webMax.height);
         setWeb(w);
         setBusyKind(null);
       }
@@ -234,7 +237,7 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
           <div className="mb-3 flex flex-col gap-1.5 text-sm text-st-text/80 sm:flex-row sm:items-center sm:justify-between">
             <span>Resolution</span>
             <div className="grid grid-cols-3 rounded-lg border border-st-line bg-st-raised p-0.5 sm:inline-flex">
-              {([["source", `Original (${short}p)`], ["1080", "1080p"], ["720", "720p"]] as const).map(([v, label]) => (
+              {([["source", `Original (${Math.min(webMax.width, webMax.height)}p)`], ["1080", "1080p"], ["720", "720p"]] as const).map(([v, label]) => (
                 <button key={v} disabled={v !== "source" && short <= Number(v)} onClick={() => setRes(v)} className={`whitespace-nowrap rounded-md px-2.5 py-2 text-xs disabled:opacity-30 sm:py-1 ${res === v ? "bg-st-lav text-obsidian" : "text-st-text/80"}`}>{label}</button>
               ))}
             </div>

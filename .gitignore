@@ -39,3 +39,4 @@ apps/launch-video/
 .agents/
 skills-lock.json
 .mcp.json
+packages/web/gallery/out/

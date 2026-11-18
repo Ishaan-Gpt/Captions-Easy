@@ -24,7 +24,9 @@ import {
   type TemplateDefinition,
 } from "@capseasy/templates";
 import { CaptionsEasyError } from "./errors";
+import { briefFor, guideFor } from "./guide";
 import { getKey, setKey } from "./keys";
+import { roleSupport } from "./roles";
 import type { ControlType, ListLooksOptions, LookControl, LookDetails, LookRef, LookSummary, SettingControl } from "./types";
 
 // ---------------------------------------------------------------- zod introspection
@@ -192,6 +194,7 @@ function summary(look: LookDefinition): LookSummary {
     description: look.description,
     layout: t.layout === "word" ? "word" : t.layout.replace(/^pack-/, ""),
     wordsPerCard: wordsPerCard(look),
+    ...(briefFor(look.id) ? { guide: briefFor(look.id) } : {}),
   };
 }
 
@@ -215,11 +218,21 @@ export function listLooks(opts: ListLooksOptions = {}): LookSummary[] {
   const tags = (opts.tags ?? []).map((t) => t.toLowerCase());
   return LOOKS.map(summary).filter((l) => {
     if (opts.section && l.section !== opts.section.toLowerCase()) return false;
-    const hay = `${l.number} #${l.number} ${l.id} ${l.name} ${l.description} ${l.tags.join(" ")} ${l.section} ${l.layout}`.toLowerCase();
+    const g = l.guide;
+    const hay = `${l.number} #${l.number} ${l.id} ${l.name} ${l.description} ${l.tags.join(" ")} ${l.section} ${l.layout} ${g ? `${g.summary} ${g.tone.join(" ")} ${g.bestFor.join(" ")}` : ""}`.toLowerCase();
     if (!terms.every((t) => hay.includes(t))) return false;
     return tags.every((t) => l.tags.some((x) => x.toLowerCase().includes(t)));
   });
 }
+
+/**
+ * Language settings every look shares (0.2.0). Append here to add one (e.g. a Hinglish spelling normaliser); each
+ * needs a matching field in ProjectSettingsSchema so it survives validation.
+ */
+export const LANGUAGE_SETTINGS: SettingControl[] = [
+  { key: "romanize", label: "Romanize Devanagari (Hinglish)", type: "boolean", default: false, description: "write Devanagari words in Roman letters as creators type them (pehle, karte hain)" },
+  { key: "hinglishSpelling", label: "Hinglish spelling", type: "enum", options: ["off", "creator"], default: "off", description: "creator = rewrite scholarly romanized Hindi (yah, kyonki, achchha) the way creators type it (yeh, kyunki, achha); English words are never touched" },
+];
 
 /** Pacing controls every look shares (the studio's Settings panel). */
 export function settingControls(look: LookDefinition, settings: ProjectSettings): SettingControl[] {
@@ -241,6 +254,7 @@ export function settingControls(look: LookDefinition, settings: ProjectSettings)
     num("syncOffsetMs", "Sync offset (ms)", -1000, 1000, 10, "positive = captions later"),
     { key: "removeFillers", label: "Remove filler words (um, uh)", type: "boolean", default: settings.removeFillers },
     { key: "profanity", label: "Profanity", type: "enum", options: ["off", "mask", "hide"], default: settings.profanity },
+    ...LANGUAGE_SETTINGS.map((c) => ({ ...c, default: (settings as unknown as Record<string, unknown>)[c.key] ?? c.default })),
   );
   return out;
 }
@@ -249,6 +263,15 @@ export function settingControls(look: LookDefinition, settings: ProjectSettings)
 export function lookBase(look: LookDefinition): { style: CaptionStyleV2; settings: ProjectSettings } {
   const { style, settings } = applyLook(look);
   return { style, settings: ProjectSettingsSchema.parse(settings) };
+}
+
+/** A control's value as the renderer uses it (unset keys resolve the way describeLook reports them). */
+export function controlValue(templateId: string, style: CaptionStyleV2, key: string): unknown {
+  const def = controlByKey(key);
+  if (!def) return getKey(style, key);
+  const v = visibility(def, getTemplate(templateId), style);
+  const value = getKey(style, key) ?? (v.visible && v.needs ? getKey(v.needs.apply(style), key) : undefined);
+  return value ?? (key === "hero.fontId" ? style.fontId : key === "active.boxColor" ? style.active.color : undefined);
 }
 
 /** Everything an agent needs to use and customise one look. */
@@ -278,5 +301,7 @@ export function describeLook(ref: LookRef): LookDetails {
       ...(def.description ? { description: def.description } : {}),
     });
   }
-  return { ...summary(look), retired: isRetiredLook(look.id), defaults, controls, settings: settingControls(look, settings) };
+  const { guide: _brief, ...base } = summary(look);
+  const guide = guideFor(look.id, base.wordsPerCard);
+  return { ...base, ...(guide ? { guide } : {}), retired: isRetiredLook(look.id), defaults, controls, settings: settingControls(look, settings), roles: roleSupport(look.id) };
 }

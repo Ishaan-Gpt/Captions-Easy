@@ -1,11 +1,11 @@
 import type { Emotion, Word } from "@capseasy/shared";
 
-const STOP_EN = new Set([
+export const STOP_EN = new Set([
   "the", "a", "an", "is", "are", "was", "were", "of", "to", "and", "in", "on", "at", "it", "this", "that", "i", "you", "he",
   "she", "we", "they", "but", "or", "so", "be", "as", "for", "with", "my", "your", "do", "does", "did", "its", "im", "just",
 ]);
 // romanized Hindi / Hinglish function words
-const STOP_HI = new Set([
+export const STOP_HI = new Set([
   "hai", "hain", "ho", "tha", "thi", "the", "ka", "ki", "ke", "ko", "se", "me", "mein", "main", "mai", "hum", "aur", "ye",
   "yeh", "wo", "woh", "toh", "to", "bhi", "kya", "nahi", "nahin", "par", "pe", "ek", "is", "us", "kuch", "koi", "jo",
 ]);

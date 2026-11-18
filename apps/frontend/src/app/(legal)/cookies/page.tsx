@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LegalDoc, Sec } from "@/components/legal/Doc";
 import { LEGAL } from "@/lib/legal";
 
-export const metadata: Metadata = { title: "Cookie Policy · CaptionsEasy", description: "The small amount of browser storage CaptionsEasy uses and why." };
+export const metadata: Metadata = { title: "Cookie Policy · CaptionsEasy", description: "The small amount of browser storage CaptionsEasy uses and why.", alternates: { canonical: "/cookies" } };
 
 const ITEMS: [string, string, string, string][] = [
   ["sb-…-auth-token", "Local storage", "Keeps you signed in (your session with our authentication provider).", "Until you sign out"],

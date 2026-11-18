@@ -47,6 +47,8 @@ const ffmpeg = RenderInternals.getExecutablePath({ type: "ffmpeg", indent: false
 mkdirSync(outDir, { recursive: true });
 const serveUrl = await bundle({ entryPoint: resolve("src/entry.ts"), onProgress: () => undefined });
 const browser = await openBrowser("chrome");
+/** looks whose lockup needs a wider measure, so the whole phrase paginates onto one card (the stack is the look) */
+const PREVIEW_MAX_WIDTH: Record<string, number> = { editorial_3d_stack: 0.7 };
 const looks = LOOKS.filter((l) => !only || only.split(",").includes(l.id));
 const manifest: Record<string, { still: string; clip: string }> = {};
 
@@ -55,7 +57,7 @@ for (const look of looks) {
   const layout = tpl.layout;
   const oneWord = layout === "word" || tpl.fixedWordsPerCard === 1;
   const backdrop = BACKDROP;
-  const placed = resolveStyle({ ...look.style, maxWidth: oneWord ? 0.9 : 0.36, safeBox: { top: 0.04, bottom: 0.04, left: 0.04, right: 0.04 }, position: { x: 0.5, y: 0.5 } });
+  const placed = resolveStyle({ ...look.style, maxWidth: oneWord ? 0.9 : PREVIEW_MAX_WIDTH[look.id] ?? 0.36, safeBox: { top: 0.04, bottom: 0.04, left: 0.04, right: 0.04 }, position: { x: 0.5, y: 0.5 } });
   const style = { ...placed, ...(layout === "metal-script" ? { exit: { type: "none" as const, durationMs: 0 } } : {}) };
   // the whole phrase on one card (one word at a time for word-by-word looks)
   const settings = { ...look.settings, maxWordsPerCard: oneWord ? 1 : TEXT.length, maxLines: 3, maxCharsPerLine: 16 };

@@ -1,0 +1,1435 @@
+{
+  "size": {
+    "width": 360,
+    "height": 640,
+    "fps": 30
+  },
+  "words": [
+    {
+      "text": "Stop",
+      "startMs": 0,
+      "endMs": 360
+    },
+    {
+      "text": "scrolling",
+      "startMs": 380,
+      "endMs": 740
+    },
+    {
+      "text": "and",
+      "startMs": 760,
+      "endMs": 1120
+    },
+    {
+      "text": "watch",
+      "startMs": 1140,
+      "endMs": 1500
+    },
+    {
+      "text": "this",
+      "startMs": 1520,
+      "endMs": 1880
+    },
+    {
+      "text": "incredible",
+      "startMs": 1900,
+      "endMs": 2260
+    },
+    {
+      "text": "money",
+      "startMs": 2280,
+      "endMs": 2640
+    },
+    {
+      "text": "trick",
+      "startMs": 2660,
+      "endMs": 3020
+    },
+    {
+      "text": "right",
+      "startMs": 3040,
+      "endMs": 3400
+    },
+    {
+      "text": "now",
+      "startMs": 3420,
+      "endMs": 3780
+    }
+  ],
+  "fixtures": [
+    {
+      "look": 1,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "1_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "e099403b50ea",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "6c77cd90cc45",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "984a46385501",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "1585fbfbdac1",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "9ba76d727fd7",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "71aff1bc91de",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "2216701e3e0c",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "04a97336a9e0",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "e33daed30554",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "462c9e5cd184",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "metal_script",
+          "fontId": "Anton",
+          "fontWeight": 400,
+          "fontStyle": "normal",
+          "fontSize": 112,
+          "casing": "upper",
+          "letterSpacing": 1,
+          "wordSpacing": 0,
+          "lineHeight": 1.05,
+          "align": "center",
+          "maxWidth": 0.86,
+          "fill": {
+            "type": "gradient",
+            "stops": [
+              {
+                "color": "#FFFFFF",
+                "at": 0
+              },
+              {
+                "color": "#F1F3F2",
+                "at": 0.46
+              },
+              {
+                "color": "#BFC4C2",
+                "at": 0.54
+              },
+              {
+                "color": "#7D8482",
+                "at": 1
+              }
+            ],
+            "angle": 180
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "fontId": "Pacifico",
+            "fontWeight": 400,
+            "scale": 0.95,
+            "fill": {
+              "type": "gradient",
+              "stops": [
+                {
+                  "color": "#E4F5EC",
+                  "at": 0
+                },
+                {
+                  "color": "#9FD8BD",
+                  "at": 0.35
+                },
+                {
+                  "color": "#3FAF84",
+                  "at": 0.7
+                },
+                {
+                  "color": "#2C6F57",
+                  "at": 1
+                }
+              ],
+              "angle": 180
+            },
+            "casing": "title",
+            "rotate": 0
+          },
+          "active": {
+            "effect": "none",
+            "color": "#FFFFFF",
+            "scale": 1,
+            "boxRadius": 12
+          },
+          "stroke": {
+            "enabled": false,
+            "width": 4,
+            "color": "#000000"
+          },
+          "shadows": [
+            {
+              "x": 0,
+              "y": 6,
+              "blur": 18,
+              "color": "rgba(0,0,0,0.6)"
+            }
+          ],
+          "glow": {
+            "enabled": true,
+            "color": "#34D399",
+            "radius": 26,
+            "intensity": 0.7
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.72
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "none",
+            "durationMs": 0,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "fade",
+            "durationMs": 200
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {
+            "overlap": 0.38
+          }
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 3,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 1,
+          "id": "metal_script",
+          "name": "Metal Slam + Script"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "look": 5,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "5_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "70ac0cce26f5",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "42f1d4aa89a9",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "d4006ec399e8",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "991d91e4f9b0",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "f63099dd1658",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "ede288dca5f9",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "9a61b528943d",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "cbd69b892f49",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "37bf8827bc97",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "170706feca04",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "glow_duo",
+          "fontId": "Montserrat",
+          "fontWeight": 900,
+          "fontStyle": "normal",
+          "fontSize": 104,
+          "casing": "upper",
+          "letterSpacing": 0,
+          "wordSpacing": 0,
+          "lineHeight": 1,
+          "align": "center",
+          "maxWidth": 0.86,
+          "fill": {
+            "type": "solid",
+            "color": "#A8DDFF"
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "fontId": "Playfair Display",
+            "fontWeight": 700,
+            "scale": 0.74,
+            "fill": {
+              "type": "solid",
+              "color": "#FFFFFF"
+            },
+            "rotate": -3
+          },
+          "active": {
+            "effect": "glow",
+            "color": "#D6F1FF",
+            "scale": 1,
+            "boxRadius": 12
+          },
+          "stroke": {
+            "enabled": false,
+            "width": 4,
+            "color": "#000000"
+          },
+          "shadows": [],
+          "glow": {
+            "enabled": true,
+            "color": "#3EA6FF",
+            "radius": 18,
+            "intensity": 0.95
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.72
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "none",
+            "durationMs": 0,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "fade",
+            "durationMs": 180
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {
+            "duoOrder": "accent-first",
+            "depth": 0.38,
+            "overlap": 0.4,
+            "accentShadow": 0.75
+          }
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 3,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 5,
+          "id": "ice_duo",
+          "name": "Italic Over Ice Caps"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "look": 12,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "12_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "2e2ba6a8aea6",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "b63a3c5e8280",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "fd37486b7a9d",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "67359fae7a88",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "181da8169ae1",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "a318e7cb6f8b",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "4930f5c96662",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "a3dfc78f637f",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "788b11dbb57c",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "b5403039992f",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "boxed_word",
+          "fontId": "Montserrat",
+          "fontWeight": 900,
+          "fontStyle": "normal",
+          "fontSize": 58,
+          "casing": "upper",
+          "letterSpacing": 0,
+          "wordSpacing": 0,
+          "lineHeight": 1.15,
+          "align": "center",
+          "maxWidth": 0.86,
+          "fill": {
+            "type": "solid",
+            "color": "#FFFFFF"
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "scale": 1.4,
+            "rotate": 0
+          },
+          "active": {
+            "effect": "box",
+            "color": "#000000",
+            "scale": 1.06,
+            "boxColor": "#22C55E",
+            "boxRadius": 14
+          },
+          "stroke": {
+            "enabled": true,
+            "width": 3,
+            "color": "#000000"
+          },
+          "shadows": [],
+          "glow": {
+            "enabled": false,
+            "color": "#FFFFFF",
+            "radius": 12,
+            "intensity": 0.8
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.72
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "rise",
+            "durationMs": 220,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "none",
+            "durationMs": 120
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {
+            "reveal": "all"
+          }
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 3,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 12,
+          "id": "hormozi_box",
+          "name": "Jumping Box"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "look": 87,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "87_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "37333ff310de",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "1a01b255bb0a",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "9223edcd380c",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "b7e4c6885b7e",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "737e4b178f59",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "cb5f3f20e16a",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "1a0458ba40ec",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "a470778c1d48",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "f0ae5137ccde",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "962db02a4ec6",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "pack_cook",
+          "fontId": "Archivo Black",
+          "fontWeight": 400,
+          "fontStyle": "normal",
+          "fontSize": 300,
+          "casing": "upper",
+          "letterSpacing": 0,
+          "wordSpacing": 0,
+          "lineHeight": 1.15,
+          "align": "center",
+          "maxWidth": 0.92,
+          "fill": {
+            "type": "solid",
+            "color": "#FFFFFF"
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "scale": 1.4,
+            "rotate": 0
+          },
+          "active": {
+            "effect": "none",
+            "color": "#FFFFFF",
+            "scale": 1,
+            "boxRadius": 12
+          },
+          "stroke": {
+            "enabled": true,
+            "width": 2,
+            "color": "#FFFFFF"
+          },
+          "shadows": [],
+          "glow": {
+            "enabled": false,
+            "color": "#FFFFFF",
+            "radius": 12,
+            "intensity": 0.8
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "none",
+            "durationMs": 0,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "none",
+            "durationMs": 0
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {
+            "matte": "#000000"
+          }
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 1,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 87,
+          "id": "knockout_word",
+          "name": "Video-Through Knockout"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "look": 89,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "89_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "f9c00fe51864",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "746754b3a5c3",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "9eb865dc4725",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "5cd174354fa0",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "fee9a98bd34a",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "02ad7dde8ee1",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "6962b0182267",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "773c827097da",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "98119aeb56e7",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "1d3418a87a00",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "pack_ransom",
+          "fontId": "Anton",
+          "fontWeight": 400,
+          "fontStyle": "normal",
+          "fontSize": 66,
+          "casing": "upper",
+          "letterSpacing": 0,
+          "wordSpacing": 0,
+          "lineHeight": 1.15,
+          "align": "center",
+          "maxWidth": 0.86,
+          "fill": {
+            "type": "solid",
+            "color": "#FFFFFF"
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "scale": 1.4,
+            "rotate": 0
+          },
+          "active": {
+            "effect": "none",
+            "color": "#FFFFFF",
+            "scale": 1,
+            "boxRadius": 12
+          },
+          "stroke": {
+            "enabled": false,
+            "width": 4,
+            "color": "#000000"
+          },
+          "shadows": [
+            {
+              "x": 2.2,
+              "y": 3.4,
+              "blur": 2.8,
+              "color": "rgba(0,0,0,0.35)"
+            }
+          ],
+          "glow": {
+            "enabled": false,
+            "color": "#FFFFFF",
+            "radius": 12,
+            "intensity": 0.8
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.72
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "none",
+            "durationMs": 0,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "none",
+            "durationMs": 0
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {
+            "ransomLive": false
+          }
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 3,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 89,
+          "id": "ransom_cutouts",
+          "name": "Ransom Cut-Outs"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "look": 123,
+      "timeMs": 1300,
+      "frame": 39,
+      "file": "123_1300.png",
+      "props": {
+        "doc": {
+          "version": 2,
+          "language": "en",
+          "direction": "ltr",
+          "words": [
+            {
+              "id": "cd80a2b6d22e",
+              "text": "Stop",
+              "startMs": 0,
+              "endMs": 360,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "424e818b7155",
+              "text": "scrolling",
+              "startMs": 380,
+              "endMs": 740,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "75d0db7d94ce",
+              "text": "and",
+              "startMs": 760,
+              "endMs": 1120,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "d7b3306f9e71",
+              "text": "watch",
+              "startMs": 1140,
+              "endMs": 1500,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "b21987499d94",
+              "text": "this",
+              "startMs": 1520,
+              "endMs": 1880,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "c095089ceed7",
+              "text": "incredible",
+              "startMs": 1900,
+              "endMs": 2260,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "0efb774cbaa0",
+              "text": "money",
+              "startMs": 2280,
+              "endMs": 2640,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "12889d8ada55",
+              "text": "trick",
+              "startMs": 2660,
+              "endMs": 3020,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "24dcbc86195a",
+              "text": "right",
+              "startMs": 3040,
+              "endMs": 3400,
+              "source": {
+                "text": "asr"
+              }
+            },
+            {
+              "id": "be05bdd253f7",
+              "text": "now",
+              "startMs": 3420,
+              "endMs": 3780,
+              "source": {
+                "text": "asr"
+              }
+            }
+          ],
+          "manualBreaks": [],
+          "noBreakAfter": [],
+          "cards": {},
+          "meta": {
+            "userEdited": false
+          }
+        },
+        "style": {
+          "templateId": "pack_flip_3d",
+          "fontId": "Big Shoulders",
+          "fontWeight": 900,
+          "fontStyle": "normal",
+          "fontSize": 124,
+          "casing": "upper",
+          "letterSpacing": 1,
+          "wordSpacing": 0,
+          "lineHeight": 0.98,
+          "align": "center",
+          "maxWidth": 0.86,
+          "fill": {
+            "type": "solid",
+            "color": "#F6F3EC"
+          },
+          "inactiveOpacity": 1,
+          "hero": {
+            "scale": 1.4,
+            "rotate": 0
+          },
+          "active": {
+            "effect": "none",
+            "color": "#FFB23F",
+            "scale": 1,
+            "boxRadius": 12
+          },
+          "stroke": {
+            "enabled": false,
+            "width": 4,
+            "color": "#000000"
+          },
+          "shadows": [
+            {
+              "x": 0,
+              "y": 0,
+              "blur": 40,
+              "color": "rgba(0,0,0,0.38)"
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "blur": 16,
+              "color": "rgba(0,0,0,0.5)"
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "blur": 4,
+              "color": "rgba(0,0,0,0.6)"
+            }
+          ],
+          "glow": {
+            "enabled": false,
+            "color": "#FFFFFF",
+            "radius": 12,
+            "intensity": 0.8
+          },
+          "background": {
+            "type": "none",
+            "color": "#000000",
+            "opacity": 0.7,
+            "padding": 16,
+            "radius": 16,
+            "blur": 0
+          },
+          "position": {
+            "x": 0.5,
+            "y": 0.7
+          },
+          "safeBox": {
+            "top": 0.06,
+            "bottom": 0.1,
+            "left": 0.06,
+            "right": 0.06
+          },
+          "rotation": 0,
+          "entrance": {
+            "type": "none",
+            "durationMs": 0,
+            "stagger": "none",
+            "easing": "outExpo"
+          },
+          "exit": {
+            "type": "none",
+            "durationMs": 0
+          },
+          "motionIntensity": 1,
+          "emotionReactivity": 0.6,
+          "emoji": {
+            "enabled": false,
+            "size": 1,
+            "animation": "pop"
+          },
+          "templateOptions": {}
+        },
+        "settings": {
+          "platform": "custom",
+          "maxWordsPerCard": 3,
+          "maxLines": 2,
+          "maxCharsPerLine": 24,
+          "pauseMs": 400,
+          "holdMs": 500,
+          "minCardMs": 900,
+          "gapBehavior": "hold",
+          "syncOffsetMs": 0,
+          "removeFillers": false,
+          "fillerList": [],
+          "profanity": "off",
+          "customVocabulary": [],
+          "romanize": false,
+          "language": "auto",
+          "translateTo": null,
+          "bilingual": false
+        },
+        "look": {
+          "number": 123,
+          "id": "flip_3d_type",
+          "name": "3D Drum Flip"
+        },
+        "warnings": []
+      }
+    }
+  ]
+}

@@ -1,4 +1,6 @@
 import { newId, type Word } from "@capseasy/shared";
+import { builtInRomanize } from "./romanize";
+import { hinglishSpellingWords } from "./hinglish";
 
 export interface RawToken {
   text: string;
@@ -11,8 +13,13 @@ export interface NormalizeOptions {
   /** clamp to media duration when known */
   durationMs?: number;
   minWordMs?: number;
-  /** transliterate non-Latin tokens (Hinglish romanization fallback) */
-  romanize?: (text: string) => string;
+  /**
+   * transliterate non-Latin tokens: a function, or `true` for the built-in Devanagari -> Hinglish romanizer
+   * (settings.romanize). Absent/false: text is kept as transcribed.
+   */
+  romanize?: ((text: string) => string) | boolean;
+  /** "creator": rewrite scholarly romanized Hindi into creator spelling (context-aware, see hinglish.ts) */
+  hinglishSpelling?: "off" | "creator";
   /** custom vocabulary: replace case-insensitive matches with the canonical spelling */
   vocabulary?: string[];
 }
@@ -42,6 +49,7 @@ export function mergeSubwordTokens(tokens: RawToken[]): RawToken[] {
 export function normalizeTokens(input: RawToken[], opts: NormalizeOptions = {}): Word[] {
   const minMs = opts.minWordMs ?? 40;
   const vocab = new Map((opts.vocabulary ?? []).map((v) => [v.toLowerCase(), v]));
+  const romanize = opts.romanize === true ? builtInRomanize : typeof opts.romanize === "function" ? opts.romanize : undefined;
 
   const cleaned = input
     .map((t) => ({ ...t, text: t.text.replace(/\s+/g, " ") }))
@@ -53,7 +61,7 @@ export function normalizeTokens(input: RawToken[], opts: NormalizeOptions = {}):
   let prevStart = 0;
   for (const t of cleaned) {
     let text = t.text.trim();
-    if (opts.romanize && !isAscii(text)) text = opts.romanize(text);
+    if (romanize && !isAscii(text)) text = romanize(text);
     const canon = vocab.get(text.replace(/[^\p{L}\p{N}'-]/gu, "").toLowerCase());
     if (canon) text = text.replace(/[\p{L}\p{N}'-]+/u, canon);
 
@@ -81,7 +89,8 @@ export function normalizeTokens(input: RawToken[], opts: NormalizeOptions = {}):
     const next = words[i + 1]!;
     if (cur.endMs > next.startMs) cur.endMs = Math.max(cur.startMs + 1, next.startMs);
   }
-  return dropRepeatedHallucinations(words);
+  const out = dropRepeatedHallucinations(words);
+  return opts.hinglishSpelling === "creator" ? hinglishSpellingWords(out) : out;
 }
 
 /** Whisper loops on silence ("Thank you. Thank you. Thank you."). Drop n-gram runs repeated 4+ times. */

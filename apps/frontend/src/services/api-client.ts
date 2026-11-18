@@ -9,15 +9,14 @@
  */
 
 import { authService } from "./auth";
+import { OFFLINE_MESSAGE, isNetworkError, waitForOnline, withNetworkRetry } from "@/lib/network";
 
 // The API is served by this same Next app (route handlers), so it is always same-origin.
 const API_BASE_URL = "/api/v1";
 
-/** Idempotent GETs only get one extra attempt — a network blip, not a
- * fixed contract response, is the only thing worth retrying automatically.
- * 4xx/5xx responses (the backend answered) are never retried here. */
-const GET_RETRY_ATTEMPTS = 1;
-const GET_RETRY_DELAY_MS = 400;
+/** A dropped connection never ends a request on the first try: every request waits for the browser to be online,
+ * and GET/PUT/PATCH/DELETE (safe to repeat) retry network failures with backoff (lib/network.ts). A POST retries
+ * only when the caller says it is safe to repeat (`retry: true`). Backend answers (4xx/5xx) are never retried here. */
 
 export interface ApiErrorBody {
   code: string;
@@ -49,7 +48,8 @@ export class ApiError extends Error {
  * respond, just with an error. */
 export class NetworkUnavailableError extends Error {
   constructor() {
-    super("Could not reach the backend. Check your connection and try again.");
+    super(OFFLINE_MESSAGE);
+    this.name = "NetworkUnavailableError";
   }
 }
 
@@ -65,11 +65,8 @@ async function unwrap<T>(response: Response): Promise<T> {
   return body.data as T;
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function fetchWithNetworkErrorHandling(url: string, init: RequestInit): Promise<Response> {
+async function fetchOnce(url: string, init: RequestInit): Promise<Response> {
+  if (!(await waitForOnline(init.signal ?? undefined))) throw new NetworkUnavailableError();
   try {
     return await fetch(url, init);
   } catch (err) {
@@ -78,8 +75,15 @@ async function fetchWithNetworkErrorHandling(url: string, init: RequestInit): Pr
   }
 }
 
+/** One request; a network failure is retried with backoff when `retry` (the request is safe to repeat). */
+function fetchWithNetworkErrorHandling(url: string, init: RequestInit, retry = true): Promise<Response> {
+  if (!retry) return fetchOnce(url, init);
+  return withNetworkRetry(() => fetchOnce(url, init), { signal: init.signal ?? undefined, shouldRetry: isNetworkError });
+}
+
 export const apiClient = {
-  async post<T>(path: string, init?: { json?: unknown; formData?: FormData; signal?: AbortSignal }): Promise<T> {
+  /** `retry`: the endpoint is safe to call twice (idempotent), so a dropped connection is retried. */
+  async post<T>(path: string, init?: { json?: unknown; formData?: FormData; signal?: AbortSignal; retry?: boolean }): Promise<T> {
     const token = await getAuthToken();
     const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
 
@@ -88,7 +92,7 @@ export const apiClient = {
       headers: init?.formData ? headers : { ...headers, "Content-Type": "application/json" },
       body: init?.formData ?? (init?.json !== undefined ? JSON.stringify(init.json) : undefined),
       signal: init?.signal,
-    });
+    }, init?.retry ?? false);
     return unwrap<T>(response);
   },
 
@@ -135,24 +139,8 @@ export const apiClient = {
     const token = await getAuthToken();
     const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
 
-    let lastError: unknown;
-    for (let attempt = 0; attempt <= GET_RETRY_ATTEMPTS; attempt++) {
-      try {
-        const response = await fetchWithNetworkErrorHandling(`${API_BASE_URL}${path}`, {
-          headers,
-          signal: init?.signal,
-        });
-        return await unwrap<T>(response);
-      } catch (err) {
-        lastError = err;
-        // Only retry network failures, never aborts or backend error responses.
-        if (!(err instanceof NetworkUnavailableError) || attempt === GET_RETRY_ATTEMPTS) {
-          throw err;
-        }
-        await sleep(GET_RETRY_DELAY_MS);
-      }
-    }
-    throw lastError;
+    const response = await fetchWithNetworkErrorHandling(`${API_BASE_URL}${path}`, { headers, signal: init?.signal });
+    return unwrap<T>(response);
   },
 
   /** Like `get`, but returns `meta` alongside `data` — needed for paginated
@@ -161,27 +149,12 @@ export const apiClient = {
     const token = await getAuthToken();
     const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
 
-    let lastError: unknown;
-    for (let attempt = 0; attempt <= GET_RETRY_ATTEMPTS; attempt++) {
-      try {
-        const response = await fetchWithNetworkErrorHandling(`${API_BASE_URL}${path}`, {
-          headers,
-          signal: init?.signal,
-        });
-        const body = await response.json();
-        if (!response.ok || body.success === false) {
-          throw new ApiError(response.status, body.error ?? { code: "UNKNOWN_ERROR", message: "Request failed." });
-        }
-        return { data: body.data as T, meta: body.meta ?? {} };
-      } catch (err) {
-        lastError = err;
-        if (!(err instanceof NetworkUnavailableError) || attempt === GET_RETRY_ATTEMPTS) {
-          throw err;
-        }
-        await sleep(GET_RETRY_DELAY_MS);
-      }
+    const response = await fetchWithNetworkErrorHandling(`${API_BASE_URL}${path}`, { headers, signal: init?.signal });
+    const body = await response.json();
+    if (!response.ok || body.success === false) {
+      throw new ApiError(response.status, body.error ?? { code: "UNKNOWN_ERROR", message: "Request failed." });
     }
-    throw lastError;
+    return { data: body.data as T, meta: body.meta ?? {} };
   },
 
   /** Multipart upload with progress reporting (fetch has no upload-progress event).

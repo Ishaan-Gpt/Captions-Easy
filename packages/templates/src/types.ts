@@ -70,6 +70,13 @@ export interface TemplateDefinition {
   heroDrawn?: boolean;
   /** the layout is composed for exactly this many words per card (e.g. a 2-word bubble, a 5-word composition) */
   fixedWordsPerCard?: number;
+  /**
+   * scripts the layout can shape. Omitted = every script the font stack can draw (words are whole text runs).
+   * ["latin"] = the layout splits words into letters/graphemes, which breaks Devanagari conjuncts: romanize instead.
+   */
+  scripts?: readonly ("latin" | "devanagari")[];
+  /** vertical band (frame fractions) the caption box may move within for layout safety; default from style.position */
+  placementBand?: { top: number; bottom: number };
   /** per-template overrides of the default emotion styling */
   emotionMap?: Partial<Record<Emotion, EmotionModifier>>;
   Page: React.FC<PageRenderProps>;

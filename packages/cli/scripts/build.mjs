@@ -9,8 +9,9 @@
  *   captionseasy-render      packages/cli-render/dist      (node scripts/build.mjs render)
  *     index.mjs + site/      renderer + the pre-bundled Remotion site (no webpack at the user's end)
  *   captionseasy-transcribe  packages/cli-transcribe/dist  (node scripts/build.mjs transcribe)
+ *   captionseasy-web         packages/web/dist             (node scripts/build.mjs web; runs packages/web/scripts/build.mjs)
  *
- * `node scripts/build.mjs` builds all three. `--no-site` reuses an existing render site.
+ * `node scripts/build.mjs` builds all four (root: `pnpm release:build`). `--no-site` reuses an existing render site.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -25,7 +26,7 @@ const pkgsDir = join(cliDir, "..");
 const repo = join(pkgsDir, "..");
 const require = createRequire(join(cliDir, "package.json"));
 const which = process.argv.slice(2).filter((a) => !a.startsWith("--"));
-const targets = which.length ? which : ["core", "render", "transcribe"];
+const targets = which.length ? which : ["core", "render", "transcribe", "web"];
 const skipSite = process.argv.includes("--no-site");
 
 const size = (p) => (statSync(p).isDirectory() ? readdirSync(p).reduce((n, f) => n + size(join(p, f)), 0) : statSync(p).size);
@@ -74,7 +75,7 @@ const inertPlugin = {
 
 const BANNER = "import { createRequire as __ceCreateRequire } from 'node:module'; const require = __ceCreateRequire(import.meta.url);";
 
-async function nodeBundle({ entryPoints, outdir, external = [], shebang = false, version }) {
+async function nodeBundle({ entryPoints, outdir, external = [], shebang = [], version }) {
   await build({
     entryPoints,
     outdir,
@@ -90,7 +91,53 @@ async function nodeBundle({ entryPoints, outdir, external = [], shebang = false,
     external,
     plugins: [inertPlugin],
     define: { __CAPTIONSEASY_VERSION__: JSON.stringify(version), "process.env.NODE_ENV": '"production"' },
-    banner: { js: `${shebang ? "#!/usr/bin/env node\n" : ""}${BANNER}` },
+    banner: { js: BANNER },
+    legalComments: "none",
+    logLevel: "warning",
+  });
+  // only an executable gets a shebang: a library entry stays a plain module
+  for (const name of shebang) {
+    const file = join(outdir, `${name}.mjs`);
+    writeFileSync(file, `#!/usr/bin/env node\n${readFileSync(file, "utf8")}`);
+  }
+}
+
+/**
+ * The same library for browsers, workers and edge runtimes: no Node banner, file access replaced by a NODE_ONLY
+ * error (saveLooksFile / loadLooksFile), add-ons refused with NODE_ONLY (IS_BROWSER_BUILD). One file, no chunks.
+ */
+async function browserBundle({ entry, outfile, version }) {
+  const nodeStub = {
+    name: "node-only-stub",
+    setup(b) {
+      b.onResolve({ filter: /^(node:)?(fs|path)$/ }, (a) => ({ path: a.path.replace(/^node:/, ""), namespace: "node-only" }));
+      b.onLoad({ filter: /.*/, namespace: "node-only" }, (a) => {
+        const names = a.path === "fs" ? ["readFileSync", "writeFileSync", "existsSync", "statSync", "mkdirSync"] : ["resolve", "join", "dirname", "basename", "extname"];
+        const fail =
+          'function nodeOnly(){const e=new Error("This needs Node (file access). In the browser, keep custom looks as JSON yourself and pass the look objects to buildCaptions / registerLook.");e.name="CaptionsEasyError";e.code="NODE_ONLY";throw e;}';
+        const contents = [fail, ...names.map((n) => `export const ${n} = nodeOnly;`), `export default { ${names.map((n) => `${n}: nodeOnly`).join(", ")} };`].join("\n");
+        return { contents, loader: "js" };
+      });
+      // the add-on loader throws NODE_ONLY first in this build; drop its dynamic import so no bundler sees (or warns about) it
+      b.onLoad({ filter: /[\\/]addons\.ts$/ }, (a) => {
+        const src = readFileSync(a.path, "utf8");
+        const out = src.replace(/await import\(\/\* webpackIgnore: true \*\/ pkg\)/, "undefined");
+        if (out === src) throw new Error("browser build: the add-on import in addons.ts moved; update the build");
+        return { contents: out, loader: "ts" };
+      });
+    },
+  };
+  await build({
+    entryPoints: [entry],
+    outfile,
+    bundle: true,
+    platform: "browser",
+    format: "esm",
+    target: "es2020",
+    jsx: "automatic",
+    minify: true,
+    plugins: [inertPlugin, nodeStub],
+    define: { __CAPTIONSEASY_VERSION__: JSON.stringify(version), __CAPTIONSEASY_BROWSER__: "true", "process.env.NODE_ENV": '"production"' },
     legalComments: "none",
     logLevel: "warning",
   });
@@ -127,9 +174,10 @@ async function buildCore() {
   await nodeBundle({
     entryPoints: { index: join(cliDir, "src", "index.ts"), cli: join(cliDir, "src", "bin.ts") },
     outdir: dist,
-    shebang: true,
+    shebang: ["cli"],
     version: version(cliDir),
   });
+  await browserBundle({ entry: join(cliDir, "src", "index.ts"), outfile: join(dist, "browser.mjs"), version: version(cliDir) });
 
   // the React components for Remotion projects: real react/remotion (peer deps), fonts as lazy chunks
   const mediaShim = {
@@ -144,7 +192,7 @@ async function buildCore() {
     },
   };
   await build({
-    entryPoints: { remotion: join(cliDir, "src", "remotion.ts") },
+    entryPoints: { remotion: join(cliDir, "src", "remotion.ts"), react: join(cliDir, "src", "react.tsx") },
     outdir: dist,
     outExtension: { ".js": ".mjs" },
     chunkNames: "remotion-chunks/[name]-[hash]",
@@ -156,14 +204,16 @@ async function buildCore() {
     target: "es2020",
     jsx: "automatic",
     minify: true,
-    external: ["react", "react/*", "react-dom", "react-dom/*", "remotion", "remotion/*"],
+    external: ["react", "react/*", "react-dom", "react-dom/*", "remotion", "remotion/*", "@remotion/player"],
     plugins: [mediaShim],
+    // client components (Next.js App Router): every file of these entries runs in the browser
+    banner: { js: '"use client";' },
     legalComments: "none",
     logLevel: "warning",
   });
 
-  typings(cliDir, dist, { "index.d.ts": "cli/src/index.d.ts", "types.d.ts": "cli/src/types.d.ts", "errors.d.ts": "cli/src/errors.d.ts", "version.d.ts": "cli/src/version.d.ts" }, { "remotion.d.ts": `!${join(cliDir, "src", "remotion.public.d.ts")}` });
-  console.log(`captionseasy: dist ${mb(size(dist))} (node ${mb(size(join(dist, "index.mjs")) + size(join(dist, "cli.mjs")) + size(join(dist, "chunks")))}, remotion components ${mb(size(join(dist, "remotion.mjs")) + size(join(dist, "remotion-chunks")))})`);
+  typings(cliDir, dist, { "index.d.ts": "cli/src/index.d.ts", "types.d.ts": "cli/src/types.d.ts", "errors.d.ts": "cli/src/errors.d.ts", "version.d.ts": "cli/src/version.d.ts" }, { "remotion.d.ts": `!${join(cliDir, "src", "remotion.public.d.ts")}`, "react.d.ts": `!${join(cliDir, "src", "react.public.d.ts")}` });
+  console.log(`captionseasy: dist ${mb(size(dist))} (node ${mb(size(join(dist, "index.mjs")) + size(join(dist, "cli.mjs")) + size(join(dist, "chunks")))}, browser ${mb(size(join(dist, "browser.mjs")))}, react + remotion components ${mb(size(join(dist, "remotion.mjs")) + size(join(dist, "react.mjs")) + size(join(dist, "remotion-chunks")))})`);
 }
 
 // ---------------------------------------------------------------- captionseasy-render
@@ -192,6 +242,9 @@ async function buildRender() {
     };
     strip(site);
   }
+  // the bundler writes the build machine's project folder into the page (window.remotion_cwd, studio-only): blank it
+  const html = join(site, "index.html");
+  writeFileSync(html, readFileSync(html, "utf8").replace(/window\.remotion_cwd = "[^"]*";/, 'window.remotion_cwd = "";'));
   await nodeBundle({
     entryPoints: { index: join(pkgDir, "src", "index.ts") },
     outdir: dist,
@@ -224,6 +277,7 @@ for (const t of targets) {
   if (t === "core") await buildCore();
   else if (t === "render") await buildRender();
   else if (t === "transcribe") await buildTranscribe();
-  else throw new Error(`unknown target ${t} (core | render | transcribe)`);
+  else if (t === "web") execFileSync(process.execPath, [join(pkgsDir, "web", "scripts", "build.mjs")], { stdio: "inherit", cwd: join(pkgsDir, "web") });
+  else throw new Error(`unknown target ${t} (core | render | transcribe | web)`);
 }
 console.log(`built ${targets.join(", ")} in ${((Date.now() - t0) / 1000).toFixed(1)}s`);

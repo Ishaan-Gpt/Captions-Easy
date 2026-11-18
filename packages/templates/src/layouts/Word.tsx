@@ -1,5 +1,5 @@
 import React from "react";
-import { activeEffect, combineMotion, effectiveIntensity, entranceStyle, exitStyle, SPRINGS, springMs } from "../motion";
+import { activeEffect, combineMotion, effectiveIntensity, entranceStyle, exitStyle, SPRINGS, springMs, wordEntryTransform } from "../motion";
 import { fitSize } from "../measure";
 import { backgroundCss, baseTextCss, containerCss, displayText, famCss, layoutBox, scaleOf } from "../text";
 import type { PageRenderProps } from "../types";
@@ -24,7 +24,8 @@ export const WordLayout: React.FC<PageRenderProps> = ({ page, timeMs, style, can
   const display = displayText(word, style, casing);
   const scale = typeof style.templateOptions.sizeScale === "number" ? style.templateOptions.sizeScale : 1.35;
   // leave room for the spoken-word growth and any 3D extrusion/shadow so the word never touches the edges
-  const size = fitSize(display, style.fontSize * scale * sc, box.width / (1 + Math.max(0, style.active.scale - 1) * Math.min(2, effectiveIntensity(style, page.emotion))) * 0.94, {
+  // opt-in role size (Word.scale): still fitted to the frame width
+  const size = fitSize(display, style.fontSize * scale * sc * (word.scale ?? 1), box.width / (1 + Math.max(0, style.active.scale - 1) * Math.min(2, effectiveIntensity(style, page.emotion))) * 0.94, {
     fontFamily: famCss(style.fontId), fontWeight: style.fontWeight, fontStyle: style.fontStyle, letterSpacing: style.letterSpacing * sc,
   }, measure);
 
@@ -36,11 +37,14 @@ export const WordLayout: React.FC<PageRenderProps> = ({ page, timeMs, style, can
   const fx = timeMs < word.endMs ? activeEffect(style, word, timeMs, canvas.fps, sc, intensity, settled) : { css: {} };
   const { transform: fxTransform, ...fxCss } = fx.css;
   const emphasised = word.emphasis === "strong" || word.emphasis === "hero";
+  // opt-in role entry (Word.entry) on top of the beat pop
+  const own = word.entry && !settled ? wordEntryTransform(word.entry, timeMs, word.startMs, canvas.fps, intensity) : {};
   const css: React.CSSProperties = {
     ...baseTextCss(style, sc, size),
     position: "relative",
     display: "inline-block",
-    transform: `scale(${from + pop * (1 - from)}) rotate(${rot}deg)${fxTransform ? ` ${fxTransform}` : ""}`,
+    transform: `scale(${from + pop * (1 - from)}) rotate(${rot}deg)${fxTransform ? ` ${fxTransform}` : ""}${own.transform ? ` ${own.transform}` : ""}`,
+    ...(own.opacity !== undefined ? { opacity: own.opacity } : {}),
     ...(word.color ? { color: word.color, WebkitTextFillColor: word.color, backgroundImage: "none" } : {}),
     ...(emphasised ? { color: style.active.color, WebkitTextFillColor: style.active.color, backgroundImage: "none" } : {}),
     ...fxCss,

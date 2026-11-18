@@ -26,6 +26,10 @@ export interface CaptionedVideoInput {
   backdrop?: string | null;
   /** "offthread" (default). "media" is accepted and falls back to OffthreadVideo in this package */
   videoEngine?: "offthread" | "media";
+  /** layout safety from buildCaptions (props.layout) */
+  layout?: CaptionsProps["layout"] | null;
+  /** several looks in one video, from buildCaptions({ tracks }) (props.tracks); when set it is what renders */
+  tracks?: CaptionsProps["tracks"] | null;
 }
 
 /** The captions (and optionally the video under them). Size/fps/duration come from your <Composition>. */

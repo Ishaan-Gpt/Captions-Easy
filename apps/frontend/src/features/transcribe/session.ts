@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { isNetworkError, waitForOnline } from "@/lib/network";
 import { fromWhisperCaptions } from "@motion-ai/caption-engine/core";
 import type { Word } from "@capseasy/shared";
 import { apiClient } from "@/services/api-client";
@@ -53,7 +54,12 @@ export interface SessionView {
   startedAt: number;
   /** seconds until the rest of the captions are written (null until a window has finished) */
   etaSec: number | null;
+  /** the connection dropped (usually while the speech model downloads): paused, carries on by itself when back */
+  waitingForNetwork?: boolean;
 }
+
+/** How many times a run waits out a dropped connection before it shows the error (with Try again). */
+const MAX_NETWORK_WAITS = 6;
 
 type Raw = { text: string; startMs: number; endMs: number };
 
@@ -130,6 +136,7 @@ export class TranscriptionSession {
   private windowsThisRun = 0;
   private hiddenAt = 0;
   private revives = 0;
+  private networkWaits = 0;
   private probe: ReturnType<typeof setTimeout> | null = null;
 
   constructor(private readonly o: StartOptions) {
@@ -179,7 +186,8 @@ export class TranscriptionSession {
     this.transcribeStart = 0;
     this.windowsThisRun = 0;
     this.revives = 0;
-    this.set({ phase: "starting", error: null, status: null, etaSec: null });
+    this.networkWaits = 0;
+    this.set({ phase: "starting", error: null, status: null, etaSec: null, waitingForNetwork: false });
     void this.run();
   }
 
@@ -417,6 +425,30 @@ export class TranscriptionSession {
 
   private fail(e: unknown, allowGentle = true) {
     const message = e instanceof Error ? e.message : "failed";
+    // a dropped connection (the model download, a job call) is not a broken device: wait for it, then carry on from
+    // the last saved window. Only after several waits does it become an error with Try again.
+    if (isNetworkError(e) && this.networkWaits < MAX_NETWORK_WAITS && this.view.phase !== "saving") {
+      this.networkWaits++;
+      console.warn("[captions] connection dropped, waiting to carry on:", message);
+      if (this.watchdog) clearInterval(this.watchdog);
+      this.watchdog = null;
+      if (this.worker) dropWorker(this.worker);
+      this.worker = null;
+      this.completing = false;
+      this.finished = null;
+      this.transcribeStart = 0;
+      this.windowsThisRun = 0;
+      this.set({ phase: "starting", status: null, etaSec: null, waitingForNetwork: true });
+      const attempt = this.networkWaits;
+      void waitForOnline(undefined, 24 * 3_600_000)
+        .then(() => new Promise((r) => setTimeout(r, Math.min(30_000, 1500 * 2 ** (attempt - 1)))))
+        .then(() => {
+          if (this.view.phase !== "starting" || !this.view.waitingForNetwork) return; // stopped or restarted meanwhile
+          this.set({ waitingForNetwork: false });
+          void this.run();
+        });
+      return;
+    }
     // first failure: quietly try again in gentle mode (one thread, processor only) before showing an error;
     // phones that run out of memory or lose their GPU usually succeed that way
     if (allowGentle && !this.safe && this.view.phase !== "saving") {

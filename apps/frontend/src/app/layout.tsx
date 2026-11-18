@@ -5,6 +5,7 @@ import { introScript } from "@/components/home/intro";
 import { authReturnScript } from "@/lib/authReturn";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { StartClickTracker } from "@/components/StartClickTracker";
 import "./globals.css";
 
 /**
@@ -27,9 +28,9 @@ const fontAccent = Instrument_Serif({
 });
 
 const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://www.captionseasy.com").replace(/\/$/, "");
-const SITE_TITLE = "Free Auto Captions for Reels, Shorts & TikTok, No Watermark | CaptionsEasy";
+const SITE_TITLE = "Free Auto Captions for Reels, Shorts & TikTok | CaptionsEasy";
 const SITE_DESCRIPTION =
-  "Add animated, word-timed captions to your Reels, Shorts and TikToks in minutes. 20+ caption styles, English and Hinglish, MP4 and SRT export. Free, no watermark, and your video never leaves your browser.";
+  "Animated, word-timed captions for Reels, Shorts and TikToks in minutes. English and Hinglish, MP4 and SRT export, free with no watermark.";
 
 // og:image / twitter:image come from app/opengraph-image.jpg and app/twitter-image.jpg
 export const metadata: Metadata = {
@@ -74,6 +75,7 @@ export default function RootLayout({
         <QueryProvider>{children}</QueryProvider>
         <Analytics />
         <SpeedInsights />
+        <StartClickTracker />
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import generated from "./fontCatalog.generated.json";
+import { scriptFallbackCss } from "./scriptFonts";
 
 export type FontCategory = "sans" | "serif" | "display" | "handwriting" | "mono";
 
@@ -93,6 +94,7 @@ const q = (f: string) => `'${f.replace(/'/g, "")}'`;
 /** CSS font-family for a style's fontId. Device fonts list their local names, then the loaded open fallback. */
 export function fontStack(fontId: string): string {
   const e = byFamily.get(fontId);
-  if (e?.source === "device") return [...e.local!, e.fallback!].map(q).join(", ") + ", system-ui, sans-serif";
-  return `${q(fontId)}, system-ui, sans-serif`;
+  // a Devanagari partner joins the stack only once loaded for a track that needs it (scriptFonts.ts): "" otherwise
+  if (e?.source === "device") return [...e.local!, e.fallback!].map(q).join(", ") + scriptFallbackCss(e.fallback!, byFamily.get(e.fallback!)?.category) + ", system-ui, sans-serif";
+  return `${q(fontId)}${scriptFallbackCss(fontId, e?.category)}, system-ui, sans-serif`;
 }

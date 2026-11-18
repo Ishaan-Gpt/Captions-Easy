@@ -8,3 +8,8 @@ export * from "./exporters";
 export * from "./srt-import";
 export * from "./legacy";
 export * from "./emoji";
+export * from "./roles";
+export * from "./romanize";
+export * from "./script";
+export * from "./hinglish";
+export * from "./placement";

@@ -794,18 +794,22 @@ const FOOTER_COLUMNS = [
   {
     title: "PRODUCT",
     links: [
-      { label: "How it works", href: "/#how" },
-      { label: "Looks gallery", href: "/#looks" },
-      { label: "Precision controls", href: "/#control" },
+      { label: "Caption styles", href: "/styles" },
+      { label: "Animated captions", href: "/animated-captions" },
+      { label: "Auto caption generator", href: "/auto-caption-generator" },
+      { label: "SRT generator", href: "/srt-generator" },
+      { label: "No-watermark captions", href: "/captions-without-watermark" },
     ],
   },
   {
     title: "CREATORS",
     links: [
-      { label: "TikTok & Shorts", href: "/#looks" },
-      { label: "Instagram Reels", href: "/#looks" },
-      { label: "Hinglish & Multi-lingual", href: "/#faq" },
-      { label: "Transparent Overlays", href: "/#faq" },
+      { label: "Instagram Reels", href: "/instagram-reels-captions" },
+      { label: "YouTube Shorts", href: "/youtube-shorts-captions" },
+      { label: "TikTok", href: "/tiktok-captions" },
+      { label: "Hinglish captions", href: "/hinglish-captions" },
+      { label: "Podcast clips", href: "/podcast-clip-captions" },
+      { label: "Add subtitles to a video", href: "/add-subtitles-to-video" },
     ],
   },
   {

@@ -1,0 +1,77 @@
+{
+  "name": "captionseasy-web",
+  "version": "0.2.0",
+  "description": "Framework-free renderer for captionseasy: draw any CaptionsEasy look on a canvas or in the DOM as a pure function of time, and export transparent overlay frames (PNG sequence / WebM) in the browser. React and Remotion are bundled in; you need neither.",
+  "license": "MIT",
+  "author": "Ishaan Gupta",
+  "bugs": {
+    "url": "https://github.com/Ishaan-Gpt/Captions-Easy/issues"
+  },
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Ishaan-Gpt/Captions-Easy/tree/main/packages/web#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ishaan-Gpt/Captions-Easy.git",
+    "directory": "packages/web"
+  },
+  "keywords": [
+    "captionseasy",
+    "captions",
+    "subtitles",
+    "animated-captions",
+    "canvas",
+    "video",
+    "overlay",
+    "browser"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "regression": "node scripts/regression.mjs"
+  },
+  "devDependencies": {
+    "@capseasy/compositions": "workspace:*",
+    "@capseasy/shared": "workspace:*",
+    "@capseasy/templates": "workspace:*",
+    "@motion-ai/caption-engine": "workspace:*",
+    "@remotion/bundler": "4.0.484",
+    "@remotion/google-fonts": "4.0.484",
+    "@remotion/layout-utils": "4.0.484",
+    "@remotion/renderer": "4.0.484",
+    "@remotion/web-renderer": "4.0.484",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "captionseasy": "workspace:*",
+    "esbuild": "^0.28.1",
+    "mediabunny": "1.47.0",
+    "puppeteer-core": "24.43.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.484",
+    "typescript": "^5.6.0",
+    "vitest": "^4.1.9",
+    "zod": "^3.23.8"
+  }
+}

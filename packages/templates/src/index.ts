@@ -11,3 +11,6 @@ export { PageView } from "./PageView";
 export { controlVisible, effectsFor, entrancesFor, exitsFor, EXIT_TYPES, BACKGROUND_TYPES, type ControlId } from "./controls";
 /** the source video's frames for layouts that blend against the picture in the in-browser exporter (see videoFrame.ts) */
 export { VideoFrameBus, VideoFrameContext, containRect, frameSourceSize, type VideoFrameListener } from "./videoFrame";
+export { lookCapabilities, type LookCapabilities } from "./capabilities";
+export { DEVANAGARI_FONTS, NATIVE_DEVANAGARI, DEVANAGARI_UNICODE_RANGE, devanagariPartner, devanagariAlias, fontScripts, scriptFallbackFamilies, scriptFallbackKey, scriptSupport, isDevanagariFallbackActive, type FontScript, type ScriptSupport, type DevanagariFont } from "./scriptFonts";
+export { LATIN_ONLY_TEMPLATES, templateScripts, lookScriptSupport, styleScriptSupport, measureCardBox } from "./scriptSupport";

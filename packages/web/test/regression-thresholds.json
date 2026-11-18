@@ -1,0 +1,5 @@
+{
+  "//": "Max share of caption pixels off by more than 48/255 even with a +-1 px tolerance (regression.mjs 'off'), worst moment per look. Overrides: looks { \"<number>\": limit }. svg 123 (3D flip) and 21 (rotated label cards): rotated/3D glyph edges are anti-aliased slightly differently inside an SVG image than in a page screenshot (visually identical, see regression-results.md).",
+  "svg": { "default": 0.02, "looks": { "123": 0.04, "21": 0.03 } },
+  "remotion": { "default": 1, "looks": {} }
+}

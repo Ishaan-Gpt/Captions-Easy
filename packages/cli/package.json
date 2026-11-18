@@ -1,7 +1,7 @@
 {
   "name": "captionseasy",
-  "version": "0.1.1",
-  "description": "Designed, animated captions for developers and AI agents. Bring your words, get styled captions: 99 caption looks, validated caption props and Remotion components, a CLI and an MCP server. Zero dependencies; rendering and local transcription are optional add-ons. Runs 100% locally, free.",
+  "version": "0.3.0",
+  "description": "Designed, animated captions for apps and AI agents. Words in, styled caption props out (105 looks), drawn by React/Remotion components that follow your own <video>. Works in Node, the browser and edge runtimes, with a CLI and an MCP server. Zero runtime dependencies; rendering and local transcription are optional add-ons.",
   "license": "MIT",
   "author": "Ishaan Gupta",
   "bugs": {
@@ -32,7 +32,12 @@
     "video-editing",
     "tiktok-captions",
     "karaoke",
-    "cli"
+    "cli",
+    "react",
+    "react-component",
+    "video-player",
+    "browser",
+    "subtitles-react"
   ],
   "bin": {
     "captionseasy": "dist/cli.mjs"
@@ -42,17 +47,25 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs"
+      "browser": "./dist/browser.mjs",
+      "worker": "./dist/browser.mjs",
+      "node": "./dist/index.mjs",
+      "default": "./dist/browser.mjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.mjs"
     },
     "./remotion": {
       "types": "./dist/remotion.d.ts",
-      "import": "./dist/remotion.mjs"
+      "default": "./dist/remotion.mjs"
     },
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "SKILL.md",
     "LICENSE"
   ],
@@ -61,17 +74,22 @@
     "build": "node scripts/build.mjs core",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "dev": "tsx src/bin.ts"
+    "dev": "tsx src/bin.ts",
+    "docs:guide": "tsx scripts/guide-table.ts"
   },
   "peerDependencies": {
     "react": ">=18",
-    "remotion": "^4.0.484"
+    "remotion": "^4.0.484",
+    "@remotion/player": "^4.0.484"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": true
     },
     "remotion": {
+      "optional": true
+    },
+    "@remotion/player": {
       "optional": true
     }
   },
@@ -95,7 +113,10 @@
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
     "vitest": "^4.1.9",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@remotion/player": "4.0.484",
+    "react-dom": "19.2.4",
+    "@types/react-dom": "^19.2.3"
   },
   "mcpName": "io.github.Ishaan-Gpt/captionseasy"
 }

@@ -64,9 +64,30 @@ describe("projectsService", () => {
     expect(project).toBeNull();
   });
 
-  it("surfaces a backend-unavailable network error distinctly", async () => {
-    mockFetch().mockRejectedValue(new TypeError("Failed to fetch"));
+  it("surfaces a backend-unavailable network error distinctly, after retrying", async () => {
+    vi.useFakeTimers();
+    try {
+      mockFetch().mockRejectedValue(new TypeError("Failed to fetch"));
+      const result = expect(projectsService.getProjects()).rejects.toBeInstanceOf(NetworkUnavailableError);
+      await vi.runAllTimersAsync(); // the backoff between retries
+      await result;
+      expect(mockFetch().mock.calls.length).toBeGreaterThan(1);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 
-    await expect(projectsService.getProjects()).rejects.toBeInstanceOf(NetworkUnavailableError);
+  it("rides out a dropped connection on a GET", async () => {
+    vi.useFakeTimers();
+    try {
+      mockFetch()
+        .mockRejectedValueOnce(new TypeError("Failed to fetch"))
+        .mockResolvedValueOnce(jsonResponse({ success: true, data: [], meta: {} }));
+      const result = projectsService.getProjects();
+      await vi.runAllTimersAsync();
+      await expect(result).resolves.toBeDefined();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

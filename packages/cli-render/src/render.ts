@@ -14,6 +14,22 @@ import { existingFile } from "../../cli/src/fsutil";
 import { probeMedia } from "../../cli/src/node/media";
 import { cacheDir } from "../../cli/src/node/paths";
 import type { CaptionsProps, RenderOptions, RenderResult, TranscribeOptions, Transcript } from "../../cli/src/types";
+import { burnComposite, canComposite } from "./composite";
+
+/** overlay containers this add-on writes; "png-sequence" (a folder of transparent PNGs) is new in 0.2.0 */
+export type RenderOverlayFormat = "mov" | "webm" | "png-sequence";
+export type RenderOptionsExt = Omit<RenderOptions, "overlayFormat"> & {
+  /**
+   * overlay output: "mov" = ProRes 4444 with alpha (default), "webm" = VP9 with alpha, "png-sequence" = a folder of
+   * transparent PNGs (frame_0000.png ...; `out` is the folder, default <video>.captions/)
+   */
+  overlayFormat?: RenderOverlayFormat;
+};
+export type RenderResultExt = RenderResult & {
+  /** png-sequence only: number of PNGs written and their file-name pattern for ffmpeg (e.g. "frame_%04d.png") */
+  frames?: number;
+  pattern?: string;
+};
 
 /** Transcription is a separate optional add-on, loaded only when no words are given. */
 async function transcribe(video: string, opts: TranscribeOptions): Promise<Transcript> {
@@ -59,9 +75,16 @@ export function getSite(quiet?: boolean): Promise<string> {
   return sitePromise;
 }
 
-const defaultOut = (video: string, mode: "burn" | "overlay", fmt: "mov" | "webm") => {
+/** What to do about a renderer error, appended to RENDER_FAILED's message ("" when there is nothing to add). */
+export function failureHint(msg: string, concurrency: number): string {
+  if (/No frame found at position/.test(msg)) return " The video has frames the decoder cannot reach (common after cutting with ffmpeg -c copy). Re-encode it (e.g. ffmpeg -i in.mp4 -c:v libx264 -c:a aac out.mp4) or render an --overlay instead.";
+  if (/Compositor quit|Mingw-w64 runtime failure/i.test(msg)) return ` Remotion's frame compositor crashed; it does at high concurrency (seen at 8 on Windows). Render again with a lower --concurrency (e.g. ${Math.max(1, Math.min(4, concurrency - 2))}; this render used ${concurrency}).`;
+  return "";
+}
+
+const defaultOut = (video: string, mode: "burn" | "overlay", fmt: RenderOverlayFormat) => {
   const stem = join(dirname(video), basename(video, extname(video)));
-  return mode === "burn" ? `${stem}.captioned.mp4` : `${stem}.captions.${fmt}`;
+  return mode === "burn" ? `${stem}.captioned.mp4` : fmt === "png-sequence" ? `${stem}.captions` : `${stem}.captions.${fmt}`;
 };
 
 /**
@@ -69,12 +92,13 @@ const defaultOut = (video: string, mode: "burn" | "overlay", fmt: "mov" | "webm"
  * burned in (MP4, original audio) or a transparent captions-only overlay sized to the video (ProRes 4444 .mov or
  * VP9-alpha .webm) to lay over it in any editor.
  */
-export async function render(opts: RenderOptions): Promise<RenderResult> {
+export async function render(opts: RenderOptionsExt): Promise<RenderResultExt> {
   const video = existingFile(opts.video, "Video");
   const mode = opts.mode ?? "burn";
   if (mode !== "burn" && mode !== "overlay") throw new CaptionsEasyError("BAD_ARGS", `mode must be "burn" or "overlay" (got ${JSON.stringify(mode)}).`);
   const fmt = opts.overlayFormat ?? (opts.out && extname(opts.out).toLowerCase() === ".webm" ? "webm" : "mov");
-  if (fmt !== "mov" && fmt !== "webm") throw new CaptionsEasyError("BAD_ARGS", `overlayFormat must be "mov" or "webm" (got ${JSON.stringify(fmt)}).`);
+  if (fmt !== "mov" && fmt !== "webm" && fmt !== "png-sequence") throw new CaptionsEasyError("BAD_ARGS", `overlayFormat must be "mov", "webm" or "png-sequence" (got ${JSON.stringify(fmt)}).`);
+  if (fmt === "png-sequence" && mode !== "overlay") throw new CaptionsEasyError("BAD_ARGS", `overlayFormat "png-sequence" needs mode "overlay" (got mode ${JSON.stringify(mode)}).`);
   const out = resolve(opts.out ?? defaultOut(video, mode, fmt));
   const info = await probeMedia(video);
   if (!info.hasVideo || !info.width || !info.height) throw new CaptionsEasyError("NO_VIDEO", `${video} has no video track.`);
@@ -91,14 +115,19 @@ export async function render(opts: RenderOptions): Promise<RenderResult> {
   }
 
   // validate everything before starting a browser
-  const props: CaptionsProps = buildCaptions({ words, look: opts.look, overrides: opts.overrides, settings: opts.settings, language: language === "auto" ? undefined : language, durationMs: info.durationMs || undefined });
+  const props: CaptionsProps = buildCaptions({ words, look: opts.look, overrides: opts.overrides, settings: opts.settings, theme: opts.theme, roles: opts.roles, roleMap: opts.roleMap, stamps: opts.stamps, layout: opts.layout, ...(opts.tracks !== undefined ? { tracks: opts.tracks } : {}), language: language === "auto" ? undefined : language, durationMs: info.durationMs || undefined });
 
+  const styles = props.tracks?.map((t) => t.style) ?? [props.style];
   // looks that blend with the picture (difference) have no picture to blend with in a transparent overlay
-  if (mode === "overlay" && BLEND_TEMPLATES.has(props.style.templateId)) {
+  if (mode === "overlay" && styles.some((st) => BLEND_TEMPLATES.has(st.templateId))) {
     props.warnings.push(`${props.look.name} (#${props.look.number}) blends with the video picture; an overlay has no picture, so it renders as plain text. Use mode "burn" for this look.`);
   }
+  // a burn whose looks only draw on top of the picture renders the captions alone and lays them over the video
+  // outside Chrome (composite.ts): the same pixels, without the page decoding and screenshotting every video frame.
+  // The picture is laid 1:1, so the video must already be the frame's (even) size.
+  const fast = mode === "burn" && opts.fastBurn !== false && styles.every(canComposite) && info.width % 2 === 0 && info.height % 2 === 0;
 
-  const { ensureBrowser, renderMedia, selectComposition } = await import("@remotion/renderer");
+  const { ensureBrowser, makeCancelSignal, renderFrames, renderMedia, selectComposition } = await import("@remotion/renderer");
   const started = performance.now();
   await ensureBrowser({
     logLevel: "error",
@@ -108,18 +137,25 @@ export async function render(opts: RenderOptions): Promise<RenderResult> {
     },
   });
   const serveUrl = await getSite(opts.quiet);
-  const media = mode === "burn" ? await serveFile(video) : null;
-  mkdirSync(dirname(out), { recursive: true });
+  const media = mode === "burn" && !fast ? await serveFile(video) : null;
+  mkdirSync(fmt === "png-sequence" && mode === "overlay" ? out : dirname(out), { recursive: true });
+  let sequence: { frames: number; pattern: string } | undefined;
+  const concurrency = opts.concurrency ?? Math.max(1, Math.floor(cpus().length / 2));
+  const writeStart = Date.now() - 1000; // file-time granularity
   try {
+    const drawn = fast ? "overlay" : mode;
     const inputProps = {
       src: media?.url ?? null,
       media: { width: info.width, height: info.height, fps: info.fps, durationMs: info.durationMs, rotation: 0 },
       doc: props.doc,
       style: props.style,
       settings: props.settings,
-      mode,
+      mode: drawn,
+      // opt-in 0.2.0 props: only sent when present
+      ...(props.layout ? { layout: props.layout } : {}),
+      ...(props.tracks ? { tracks: props.tracks } : {}),
     };
-    const id = mode === "burn" ? "CaptionedVideo" : "CaptionsOverlay";
+    const id = drawn === "burn" ? "CaptionedVideo" : "CaptionsOverlay";
     const composition = await selectComposition({ serveUrl, id, inputProps, timeoutInMilliseconds: FRAME_TIMEOUT_MS, logLevel: "error" });
     const common = {
       // renderMedia draws composition.props: pass the real ones in
@@ -129,18 +165,54 @@ export async function render(opts: RenderOptions): Promise<RenderResult> {
       outputLocation: out,
       overwrite: true,
       timeoutInMilliseconds: FRAME_TIMEOUT_MS,
-      concurrency: opts.concurrency ?? Math.max(1, Math.floor(cpus().length / 2)),
+      concurrency,
       logLevel: "error" as const,
       onProgress: ({ progress }: { progress: number }) => opts.onProgress?.(progress, "render"),
     };
-    if (mode === "burn") {
+    if (fast) {
+      const { composition: comp, timeoutInMilliseconds, logLevel } = common;
+      const { cancelSignal, cancel } = makeCancelSignal();
+      await burnComposite({
+        video,
+        out,
+        width: comp.width,
+        height: comp.height,
+        fps: comp.fps,
+        frames: comp.durationInFrames,
+        hasAudio: info.hasAudio,
+        onProgress: (p) => opts.onProgress?.(p, "render"),
+        renderOverlay: (onFrameBuffer) =>
+          renderFrames({ composition: comp, serveUrl, inputProps, outputDir: null, imageFormat: "png", onFrameBuffer, timeoutInMilliseconds, concurrency, logLevel, cancelSignal, onStart: () => undefined, onFrameUpdate: () => undefined }),
+        cancelOverlay: cancel,
+      });
+    } else if (mode === "burn") {
       await renderMedia({ ...common, codec: "h264", crf: 18, pixelFormat: "yuv420p" });
+    } else if (fmt === "png-sequence") {
+      // one transparent PNG per frame: frame_<n>.png, n zero-padded to the frame count's width
+      const { composition: comp, serveUrl: url, inputProps: ip, timeoutInMilliseconds, concurrency, logLevel } = common;
+      let total = composition.durationInFrames;
+      await renderFrames({
+        composition: comp,
+        serveUrl: url,
+        inputProps: ip,
+        outputDir: out,
+        imageFormat: "png",
+        imageSequencePattern: "frame_[frame].[ext]",
+        timeoutInMilliseconds,
+        concurrency,
+        logLevel,
+        onStart: ({ frameCount }) => void (total = frameCount),
+        onFrameUpdate: (done) => opts.onProgress?.(done / Math.max(1, total), "render"),
+      });
+      sequence = { frames: total, pattern: `frame_%0${Math.max(1, String(total - 1).length)}d.png` };
     } else if (fmt === "mov") {
       await renderMedia({ ...common, codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png", muted: true });
     } else {
       await renderMedia({ ...common, codec: "vp9", pixelFormat: "yuva420p", imageFormat: "png", muted: true });
     }
-    if (!existsSync(out) || statSync(out).size === 0) throw new CaptionsEasyError("RENDER_FAILED", "The renderer produced an empty file.");
+    if (sequence) {
+      if (!existsSync(join(out, sequence.pattern.replace(/%0(\d+)d/, (_m, n: string) => "0".repeat(Number(n)))))) throw new CaptionsEasyError("RENDER_FAILED", "The renderer produced no PNG frames.");
+    } else if (!existsSync(out) || statSync(out).size === 0) throw new CaptionsEasyError("RENDER_FAILED", "The renderer produced an empty file.");
     return {
       out,
       mode,
@@ -153,13 +225,14 @@ export async function render(opts: RenderOptions): Promise<RenderResult> {
       renderMs: Math.round(performance.now() - started),
       ...(transcribeMs !== undefined ? { transcribeMs } : {}),
       warnings: props.warnings,
+      ...(sequence ?? {}),
     };
   } catch (e) {
-    if (existsSync(out) && statSync(out).size === 0) rmSync(out, { force: true });
+    // an empty file, or the half-written MP4 of a fast burn (never a file this render did not write)
+    if (!sequence && existsSync(out) && statSync(out).isFile() && (statSync(out).size === 0 || (fast && statSync(out).mtimeMs >= writeStart))) rmSync(out, { force: true });
     if (e instanceof CaptionsEasyError) throw e;
     const msg = e instanceof Error ? e.message : String(e);
-    const hint = /No frame found at position/.test(msg) ? " The video has frames the decoder cannot reach (common after cutting with ffmpeg -c copy). Re-encode it (e.g. ffmpeg -i in.mp4 -c:v libx264 -c:a aac out.mp4) or render an --overlay instead." : "";
-    throw new CaptionsEasyError("RENDER_FAILED", `Rendering failed: ${msg.split("\n")[0]}${hint}`, { cause: msg.slice(0, 2000) });
+    throw new CaptionsEasyError("RENDER_FAILED", `Rendering failed: ${msg.split("\n")[0]}${failureHint(msg, concurrency)}`, { cause: msg.slice(0, 2000) });
   } finally {
     await media?.close();
   }

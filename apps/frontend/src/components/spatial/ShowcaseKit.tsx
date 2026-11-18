@@ -8,6 +8,7 @@ import { CaptionedVideo, computePages } from "@capseasy/compositions";
 import { getLook, getTemplate, loadFontFamily, resolveStyle } from "@capseasy/templates";
 import { CaptionDocSchema, ProjectSettingsSchema, type CaptionDoc, type CaptionStyleV2, type Page, type ProjectSettings } from "@capseasy/shared";
 import { useIsMobile } from "./useIsMobile";
+import { loadTranscript, type Transcript } from "./heroTranscript";
 
 /* ── shared pieces for the four showcase cards ───────────────────
  * Every demo runs the REAL caption renderer (the composition the
@@ -23,15 +24,11 @@ export const FPS = 30;
 export const CLIP_W = 432;
 export const CLIP_H = 600;
 
-type Transcript = { language: string; durationMs: number; words: { id: string; text: string; startMs: number; endMs: number }[] };
-
-const cache = new Map<string, Promise<Transcript>>();
 export function useTranscript(clip: string) {
   const [t, setT] = useState<Transcript | null>(null);
   useEffect(() => {
     let alive = true;
-    if (!cache.has(clip)) cache.set(clip, fetch(`/hero/${clip}.json`).then((r) => r.json()));
-    void cache.get(clip)!.then((v) => alive && setT(v));
+    void loadTranscript(clip).then((v) => alive && v && setT(v));
     return () => {
       alive = false;
     };

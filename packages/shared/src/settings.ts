@@ -21,6 +21,12 @@ export const ProjectSettingsSchema = z.object({
   profanity: z.enum(["off", "mask", "emoji", "hide"]).default("off"),
   customVocabulary: z.array(z.string()).default([]),
   romanize: z.boolean().default(false),
+  /**
+   * "creator": rewrite scholarly romanized Hindi ("yah", "dekhana", "kyonki", "achchha") into the way creators type it
+   * ("yeh", "dekhna", "kyunki", "achha"), only where the surrounding words are Hindi. Absent/"off" = text as is.
+   * Optional with no default, so existing parsed settings are unchanged.
+   */
+  hinglishSpelling: z.enum(["off", "creator"]).optional(),
   language: z.string().default("auto"),
   translateTo: z.string().nullable().default(null),
   bilingual: z.boolean().default(false),

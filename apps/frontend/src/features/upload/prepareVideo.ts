@@ -3,12 +3,15 @@
 import * as Sentry from "@sentry/nextjs";
 import { ALL_FORMATS, BlobSource, BufferTarget, Conversion, Input, Mp4OutputFormat, Output, canEncodeVideo } from "mediabunny";
 import { ensureRoomFor } from "./localVideos";
+import { browserExportSize } from "@/features/studio/exportSize";
 
 /**
  * Everything a phone or laptop needs to check BEFORE the video is saved, so a bad file never gets in and a good one
  * is never refused:
  *
  *   native player can show it           -> use the original file as it is (size doesn't matter: nothing is uploaded)
+ *   ... but it is bigger than 4K (8K)   -> make a 4K copy here first: browsers can't export 8K H.264, and 8K previews
+ *                                          stutter and fail to seek; if the copy can't be made, keep the original
  *   can't show it, WebCodecs can decode -> convert to 720p H.264 in this tab
  *   neither, but it has sound           -> "captions only": captions are written from the audio, the picture is not shown
  *   neither and no sound                -> the one case we have to refuse
@@ -35,7 +38,8 @@ export interface PreparedVideo {
   needsCompat: boolean;
 }
 
-export type PrepareStage = { stage: "check" } | { stage: "convert"; progress: number; reason: "playback" };
+/** "playback": this browser can't show the original; "size": the original is bigger than 4K and is scaled down. */
+export type PrepareStage = { stage: "check" } | { stage: "convert"; progress: number; reason: "playback" | "size" };
 
 export class PrepareError extends Error {
   constructor(message: string, public code: "UNREADABLE" | "TOO_LONG" | "TOO_BIG" | "CANT_CONVERT") {
@@ -110,7 +114,20 @@ export async function prepareVideo(
     audio ? audio.canDecode().catch(() => false) : Promise.resolve(false),
   ]);
 
-  if (nativePlay) return { ...base, file, converted: false, previewMode: "native", needsCompat: !webcodecsVideo };
+  // bigger than browsers can encode or preview smoothly (8K): a 4K copy, made on this device
+  const fit = browserExportSize(base.width, base.height);
+  const original: PreparedVideo = { ...base, file, converted: false, previewMode: "native", needsCompat: !webcodecsVideo };
+  if (nativePlay && fit.scale >= 1) return original;
+  if (nativePlay) {
+    if (!webcodecsVideo) return original; // can't read frames to scale: keep it, export is capped at 4K anyway
+    try {
+      return await convert(file, input, base, audio, Math.min(fit.width, fit.height), "size", onStage, signal);
+    } catch (e) {
+      if (signal?.aborted) throw new DOMException("Cancelled", "AbortError");
+      Sentry.captureMessage("upload: 4K copy failed, kept the original", { level: "warning", extra: { width: base.width, height: base.height, message: e instanceof Error ? e.message : String(e) } });
+      return original;
+    }
+  }
 
   const diagnostics = async () => ({
     codec: video.codec,
@@ -141,45 +158,72 @@ export async function prepareVideo(
   if (!webcodecsVideo || !(await canEncodeVideo("avc").catch(() => false))) return captionsOnly("no decoder or encoder");
 
   // convert on this device: 720p on the short edge is plenty for captions and keeps editing smooth
-  onStage({ stage: "convert", progress: 0, reason: "playback" });
-  const portrait = base.height >= base.width;
-  const shortEdge = Math.min(base.width, base.height);
-  const edge = Math.min(720, shortEdge - (shortEdge % 2));
-  const target = new BufferTarget();
-  const output = new Output({ format: new Mp4OutputFormat({ fastStart: "in-memory" }), target });
   try {
-    const conversion = await Conversion.init({
-      input,
-      output,
-      video: { ...(portrait ? { width: edge } : { height: edge }), codec: "avc", bitrate: 2_500_000, forceTranscode: true },
-      audio: { codec: "aac", bitrate: 128_000 },
-      showWarnings: false,
-    });
-    // a browser that can't decode the picture "converts" audio only: never keep that
-    const videoDropped = conversion.discardedTracks.some((d) => d.track.type === "video") || !conversion.utilizedTracks.some((t) => t.type === "video");
-    if (!conversion.isValid || videoDropped) return captionsOnly("conversion dropped the picture");
-    conversion.onProgress = (p) => onStage({ stage: "convert", progress: p, reason: "playback" });
-    const stop = () => void conversion.cancel();
-    signal?.addEventListener("abort", stop, { once: true });
-    try {
-      await conversion.execute();
-    } finally {
-      signal?.removeEventListener("abort", stop);
-    }
+    return await convert(file, input, base, audio, Math.min(720, Math.min(base.width, base.height)), "playback", onStage, signal);
   } catch (e) {
     if (signal?.aborted) throw new DOMException("Cancelled", "AbortError");
     if (e instanceof PrepareError) throw e;
-    return captionsOnly(`conversion failed: ${e instanceof Error ? e.message : "unknown"}`);
+    return captionsOnly(e instanceof ConvertError ? e.message : `conversion failed: ${e instanceof Error ? e.message : "unknown"}`);
+  }
+}
+
+class ConvertError extends Error {}
+
+type Base = { durationMs: number; width: number; height: number; rotation: number; videoCodec?: string; audioCodec?: string; hasAudio: boolean };
+
+/** Bitrate for an H.264 copy: about 20 Mbps at 4K, scaled by pixel count, never under 2.5 Mbps. */
+export const copyBitrate = (width: number, height: number) => Math.max(2_500_000, Math.round((20_000_000 * width * height) / (3840 * 2160)));
+
+/** Re-encodes to H.264 with `shortEdge` px on the short edge (aspect kept). Throws ConvertError when it can't. */
+async function convert(
+  file: File,
+  input: Input,
+  base: Base,
+  audio: unknown,
+  shortEdge: number,
+  reason: "playback" | "size",
+  onStage: (s: PrepareStage) => void,
+  signal?: AbortSignal,
+): Promise<PreparedVideo> {
+  const portrait = base.height >= base.width;
+  let edge = shortEdge - (shortEdge % 2);
+  const sizeFor = (e: number) => {
+    const k = e / Math.min(base.width, base.height);
+    return { width: Math.round(base.width * k), height: Math.round(base.height * k) };
+  };
+  // a phone that can't encode 4K still gets a smooth 1080p copy
+  if (reason === "size" && edge > 1080 && !(await canEncodeVideo("avc", { ...sizeFor(edge), bitrate: copyBitrate(sizeFor(edge).width, sizeFor(edge).height) }).catch(() => false))) edge = 1080;
+  const { width, height } = sizeFor(edge);
+  onStage({ stage: "convert", progress: 0, reason });
+  const target = new BufferTarget();
+  const output = new Output({ format: new Mp4OutputFormat({ fastStart: "in-memory" }), target });
+  const conversion = await Conversion.init({
+    input,
+    output,
+    video: { ...(portrait ? { width: edge } : { height: edge }), codec: "avc", bitrate: reason === "size" ? copyBitrate(width, height) : 2_500_000, forceTranscode: true },
+    audio: { codec: "aac", bitrate: 128_000 },
+    showWarnings: false,
+  });
+  // a browser that can't decode the picture "converts" audio only: never keep that
+  const videoDropped = conversion.discardedTracks.some((d) => d.track.type === "video") || !conversion.utilizedTracks.some((t) => t.type === "video");
+  if (!conversion.isValid || videoDropped) throw new ConvertError("conversion dropped the picture");
+  conversion.onProgress = (p) => onStage({ stage: "convert", progress: p, reason });
+  const stop = () => void conversion.cancel();
+  signal?.addEventListener("abort", stop, { once: true });
+  try {
+    await conversion.execute();
+  } finally {
+    signal?.removeEventListener("abort", stop);
   }
   const buf = target.buffer;
-  if (!buf || !buf.byteLength) return captionsOnly("conversion came out empty");
+  if (!buf || !buf.byteLength) throw new ConvertError("conversion came out empty");
   const out = new File([buf], mp4Name(file.name), { type: "video/mp4" });
   const outVideo = await new Input({ source: new BlobSource(out), formats: ALL_FORMATS }).getPrimaryVideoTrack().catch(() => null);
   return {
     ...base,
     file: out,
-    width: outVideo?.displayWidth ?? base.width,
-    height: outVideo?.displayHeight ?? base.height,
+    width: outVideo?.displayWidth ?? width,
+    height: outVideo?.displayHeight ?? height,
     rotation: 0,
     videoCodec: "avc",
     audioCodec: audio ? "aac" : undefined,

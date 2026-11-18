@@ -18,6 +18,28 @@ const err = (f: () => unknown): CaptionsEasyError => {
 };
 
 describe("buildCaptions", () => {
+  it("says a look is needed when none is given (0.3.0), instead of 'Unknown look \"\"'", () => {
+    for (const look of [undefined, null, ""]) {
+      const e = err(() => buildCaptions({ words, look } as never));
+      expect(e.code).toBe("BAD_ARGS");
+      expect(e.message).toMatch(/needs a look/);
+    }
+  });
+
+  it("is deterministic: the same input gives deep-equal props, word ids included (0.2.0)", () => {
+    for (const look of [12, 1, "ransom_cutouts"] as const) {
+      const a = buildCaptions({ words, look });
+      const b = buildCaptions({ words, look });
+      expect(a).toEqual(b);
+      expect(new Set(a.doc.words.map((w) => w.id)).size).toBe(a.doc.words.length);
+    }
+    const tracks = [{ name: "a", look: 12, time: [0, 600] as [number, number] }, { name: "b", look: 104, time: { fromMs: 600 } }];
+    expect(buildCaptions({ words, tracks })).toEqual(buildCaptions({ words, tracks }));
+    // ids depend on content: changed timing -> changed id
+    const moved = buildCaptions({ words: [{ ...words[0]!, startMs: 10 }, ...words.slice(1)], look: 12 });
+    expect(moved.doc.words[0]!.id).not.toBe(buildCaptions({ words, look: 12 }).doc.words[0]!.id);
+  });
+
   it("builds valid props from words + look number", () => {
     const p = buildCaptions({ words, look: 12 });
     expect(p.look).toEqual({ number: 12, id: "hormozi_box", name: "Jumping Box" });

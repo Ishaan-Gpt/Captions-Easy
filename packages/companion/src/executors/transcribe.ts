@@ -1,6 +1,7 @@
 import { rmSync } from "node:fs";
 import { join } from "node:path";
 import anyAscii from "any-ascii";
+import { romanize } from "@motion-ai/caption-engine/core";
 import type { TranscribeJob } from "@capseasy/shared";
 import type { WhisperModel } from "@remotion/install-whisper-cpp";
 import { downloadTo } from "../transfer";
@@ -39,7 +40,8 @@ export async function runTranscribe(ctx: JobContext) {
       onProgress: (f) => void report("Transcribing", slice(33, 92, f)),
       normalize: {
         durationMs: info.durationMs || undefined,
-        romanize: job.romanize ? (t) => anyAscii(t) : undefined,
+        // Devanagari -> Hinglish as creators type it (built-in), then any other script transliterated to ASCII
+        romanize: job.romanize ? (t) => anyAscii(romanize(t)) : undefined,
         vocabulary: job.prompt ? job.prompt.split(",").map((s) => s.trim()).filter(Boolean) : undefined,
       },
     });

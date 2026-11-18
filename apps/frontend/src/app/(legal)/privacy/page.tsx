@@ -4,7 +4,7 @@ import { PLANS } from "@capseasy/shared";
 import { LegalDoc, Sec } from "@/components/legal/Doc";
 import { LEGAL } from "@/lib/legal";
 
-export const metadata: Metadata = { title: "Privacy Policy · CaptionsEasy", description: "What CaptionsEasy collects, why, where it is stored and your choices." };
+export const metadata: Metadata = { title: "Privacy Policy · CaptionsEasy", description: "What CaptionsEasy collects, why, where it is stored and your choices.", alternates: { canonical: "/privacy" } };
 
 export default function PrivacyPage() {
   return (
