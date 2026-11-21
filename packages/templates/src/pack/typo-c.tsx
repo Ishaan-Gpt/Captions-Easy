@@ -3,6 +3,7 @@
  * rows and vertical side accents), Gilded (huge display headline over a Bodoni line built word by word), Story
  * (editorial serif, italic accent, indented second line).
  */
+import { CAPTION_RULES } from "../rules";
 import React from "react";
 import { showAt } from "../motion";
 import { displayText } from "../text";
@@ -89,9 +90,24 @@ export const SpotlightLayout: React.FC<PageRenderProps> = (p) => {
   const sideSize = (i: number) => Math.min(smallF.size, smallF.size * (heroH / Math.max(1, textW(measure, texts[i]!, smallF))));
   const sideBox = (i: number) => (i < 0 ? 0 : sideSize(i) * 1.15 + heroF.size * 0.07);
   const rowW = (ids: number[]) => ids.reduce((a, i, j) => a + textW(measure, texts[i]!, smallF) + (j < ids.length - 1 ? gapS : 0), 0);
-  const f = fitK([heroW + sideBox(left) + sideBox(right), rowW(before), rowW(after)], c.box.width);
+  // the hero line (hero + side words) and the small rows fit the width separately: a long hero word shrinks itself,
+  // not the small words (caption rules: no word below CAPTION_RULES.minTextPx)
+  const heroLineW = () => heroW + sideBox(left) + sideBox(right);
+  let f = fitK([heroLineW()], c.box.width);
+  // a side word too long to stay readable beside the hero (it is sized to the hero's height) goes back into its row
+  const floor = CAPTION_RULES.minTextPx * c.sc;
+  if (left >= 0 && sideSize(left) * f < floor) {
+    before.push(left);
+    left = -1;
+  }
+  if (right >= 0 && sideSize(right) * f < floor) {
+    after.unshift(right);
+    right = -1;
+  }
+  f = fitK([heroLineW()], c.box.width);
+  const fs = fitK([rowW(before), rowW(after)], c.box.width);
   const H = scaleFace(heroF, f);
-  const S = scaleFace(smallF, f);
+  const S = scaleFace(smallF, fs);
   const sh = shadowStack(style, c.sc);
   const stroke = strokeOf(style, c.sc);
   const ctxPaint = { ...fillPaint(style.fill), shadow: sh, stroke };
@@ -107,7 +123,7 @@ export const SpotlightLayout: React.FC<PageRenderProps> = (p) => {
   const smallRow = (ids: number[]) =>
     ids.length ? (
       <div style={{ display: "flex", whiteSpace: "pre", justifyContent: "center", alignItems: "baseline" }}>
-        {ids.map((i, j) => <Ink key={page.words[i]!.id} text={texts[i]!} face={S} paint={ctxPaint} css={{ ...(pop(i, S.size) ?? { opacity: 0 }), marginRight: j < ids.length - 1 ? gapS * f : undefined }} />)}
+        {ids.map((i, j) => <Ink key={page.words[i]!.id} text={texts[i]!} face={S} paint={ctxPaint} css={{ ...(pop(i, S.size) ?? { opacity: 0 }), marginRight: j < ids.length - 1 ? gapS * fs : undefined }} />)}
       </div>
     ) : null;
   const side = (i: number, rot: number) => {

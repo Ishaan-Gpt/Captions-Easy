@@ -5,6 +5,7 @@
  * without a picture under it, no face box or person matte).
  */
 import { fontStack } from '../../fontCatalog';
+import { CAPTION_RULES } from '../../rules';
 import type { PremiumPreset, TierSpec } from './presets';
 
 export interface Word { text: string; t: number; end: number }
@@ -465,7 +466,9 @@ function drawStack(ctx: CanvasRenderingContext2D, p: PremiumPreset, c: Card, t: 
 
   // the highlight line, scaled so it spans the shoulders (never past the frame)
   const base = c.key.map(w => item(w));
-  const kScale = c.key.length ? Math.max(0.6, Math.min(3, an.span / Math.max(1, widthOf(base)))) : 1;
+  // CaptionsEasy (caption rules): a short highlight ("3", "year") never grows past CAPTION_RULES.maxLeadPx
+  const keyCapK = (CAPTION_RULES.maxLeadPx * (S / 1080)) / Math.max(1, ...base.map(l => l.px));
+  const kScale = c.key.length ? Math.max(0.6, Math.min(3, keyCapK, an.span / Math.max(1, widthOf(base)))) : 1;
   const keyLine = c.key.map(w => item(w, kScale));
   const pairs = (ws: Word[]) => { const out: Item[][] = []; for (let i = 0; i < ws.length; i += 2) out.push(ws.slice(i, i + 2).map(w => item(w))); return out; };
   const above = pairs(c.lead), below = pairs(c.tail);

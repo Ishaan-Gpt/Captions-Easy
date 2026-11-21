@@ -16,7 +16,9 @@
  * No runtime dependencies. The signatures are spelled out here (types from ./types only) so the published typings
  * stay self-contained.
  */
+import { CAPTION_RULES as _CAPTION_RULES, ruleIssues as _ruleIssues } from "@capseasy/templates";
 import { loadAddon } from "./addons";
+import { directCaptions as _directCaptions, parseMeaning as _parseMeaning } from "./director";
 import { buildCaptions as _buildCaptions } from "./captions";
 import { describeAnyLook, listAllLooks } from "./catalog";
 import {
@@ -38,6 +40,11 @@ import { hinglishSpelling as _hinglishSpelling, hinglishSpellingWords as _hingli
 import { SAFE_ZONES as _SAFE_ZONES, safeZoneFor as _safeZoneFor, safeZoneTable as _safeZoneTable, solvePlacement as _solvePlacement, validateLayout as _validateLayout } from "./safety";
 import type {
   Aspect,
+  DirectCaptionsInput,
+  DirectCaptionsResult,
+  DirectorMeaning,
+  CaptionRules,
+  LookMeasurement,
   HinglishSpellingOptions,
   LayoutSafety,
   LookScriptSupport,
@@ -207,3 +214,16 @@ export const validateLayout: (layout: unknown) => LayoutSafety = _validateLayout
 export { CaptionsEasyError, isCaptionsEasyError, type CaptionsEasyErrorCode } from "./errors";
 export { VERSION } from "./version";
 export type * from "./types";
+
+/** The caption rules every look keeps to: safe area, face-free band, text sizes, key-word ratio, words per card. */
+export const CAPTION_RULES: CaptionRules = _CAPTION_RULES;
+/** The rules a look measured at 1080 x 1920 breaks (empty when it keeps to all of them). */
+export const ruleIssues: (m: LookMeasurement) => string[] = (m) => _ruleIssues(m);
+
+/**
+ * The caption director: words (+ optional roles), mood and faces -> one look, the key words, words per card and the
+ * position, as validated buildCaptions arguments with every taste rule checked. See src/director/SKILL.md.
+ */
+export const directCaptions: (input: DirectCaptionsInput) => DirectCaptionsResult = _directCaptions;
+/** Validate a model's JSON reading of a transcript: only { mood?, keyWords? } is accepted. */
+export const parseMeaning: (raw: unknown, wordCount: number) => DirectorMeaning = _parseMeaning;

@@ -41,7 +41,7 @@ describe("describeLook", () => {
     expect(keys).toContain("fontSize");
     expect(keys).not.toContain("background.type"); // this template has no background
     expect(d.controls.find((c) => c.key === "active.effect")!.options).toEqual(["none", "box"]);
-    expect(d.defaults.fontSize).toBe(118);
+    expect(d.defaults.fontSize).toBe(108.9); // 118 x 0.923: caption rules fit it inside the safe area (rules.generated.json)
   });
 
   it("every listed control is honoured (controlVisible, or after its prerequisite) for every look", () => {

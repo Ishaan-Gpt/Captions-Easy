@@ -14,3 +14,4 @@ export { VideoFrameBus, VideoFrameContext, containRect, frameSourceSize, type Vi
 export { lookCapabilities, type LookCapabilities } from "./capabilities";
 export { DEVANAGARI_FONTS, NATIVE_DEVANAGARI, DEVANAGARI_UNICODE_RANGE, devanagariPartner, devanagariAlias, fontScripts, scriptFallbackFamilies, scriptFallbackKey, scriptSupport, isDevanagariFallbackActive, type FontScript, type ScriptSupport, type DevanagariFont } from "./scriptFonts";
 export { LATIN_ONLY_TEMPLATES, templateScripts, lookScriptSupport, styleScriptSupport, measureCardBox } from "./scriptSupport";
+export { CAPTION_RULES, ruleIssues, type CaptionRules, type LookMeasurement, type LookRulesFix } from "./rules";
