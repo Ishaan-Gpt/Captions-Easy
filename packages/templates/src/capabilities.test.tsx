@@ -44,7 +44,9 @@ export function measureCapabilities(id: string): LookCapabilities {
   const deva: Word[] = DEVANAGARI.map((text, i) => ({ id: `d${i}`, text, startMs: i * 420, endMs: i * 420 + 380 }));
   const { pages } = pagesFor(id, deva);
   const wholeWords = pages.every((p) => {
-    const late = html(id, deva, (q) => (q.startMs === p.startMs ? [Math.round((p.startMs + p.endMs) / 2), p.endMs - 30, ...p.words.map((w) => Math.min(p.endMs - 1, w.endMs + 20))] : []));
+    // a word counts as drawn whole if it shows whole at any of these moments (while spoken, too: one-word-at-a-time
+    // compositions show each word only while it is spoken)
+    const late = html(id, deva, (q) => (q.startMs === p.startMs ? [Math.round((p.startMs + p.endMs) / 2), p.endMs - 30, ...p.words.flatMap((w) => [Math.min(p.endMs - 1, w.startMs + 60), Math.min(p.endMs - 1, w.endMs + 20)])] : []));
     return p.words.every((w) => late.includes(w.text));
   });
   return {

@@ -1,0 +1,716 @@
+{
+  "cartoon_stack_classic": {
+    "fontScale": 1.127,
+    "why": [
+      "smallest word 39px < 44px"
+    ]
+  },
+  "chat_bubble": {
+    "fontScale": 1.573,
+    "why": [
+      "lead word 61px < 72px",
+      "lead word 46px < 60px"
+    ]
+  },
+  "chrome_sweep": {
+    "fontScale": 0.818,
+    "maxWidth": 0.667,
+    "why": [
+      "lead word 69px < 72px",
+      "text x 78-1002 outside 70-905"
+    ]
+  },
+  "cinematic_track_in": {
+    "fontScale": 0.753,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.483,
+      "y": 0.62
+    },
+    "why": [
+      "text x 62-1018 outside 70-905",
+      "text y 1025 above the lower band (1060): may cover a face"
+    ]
+  },
+  "color_block_cutin": {
+    "fontScale": 1.103,
+    "heroScale": 1.31,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.485,
+      "y": 0.697
+    },
+    "why": [
+      "smallest word 40px < 44px",
+      "lead word 252px > 170px",
+      "size jump x6.3 > x3",
+      "text x 92-956 outside 70-905",
+      "text y 1135-1536 outside 230-1480"
+    ]
+  },
+  "cream_strip_lines": {
+    "position": {
+      "x": 0.5,
+      "y": 0.619
+    },
+    "why": [
+      "text y 842 above the lower band (1060): may cover a face"
+    ]
+  },
+  "creator_arcade_door": {
+    "position": {
+      "x": 0.5,
+      "y": 0.732
+    },
+    "why": [
+      "text y 1441-1563 outside 230-1480"
+    ]
+  },
+  "creator_block_middle": {
+    "fontScale": 1.049,
+    "why": [
+      "inside the rules on the main transcript; sized for long words on the second"
+    ]
+  },
+  "creator_fusion_type": {
+    "fontScale": 1.17,
+    "why": [
+      "smallest word 38px < 44px"
+    ]
+  },
+  "creator_gloss_serif": {
+    "position": {
+      "x": 0.5,
+      "y": 0.703
+    },
+    "why": [
+      "text y 1387-1502 outside 230-1480"
+    ]
+  },
+  "creator_golden_glow": {
+    "fontScale": 1.049,
+    "why": [
+      "lead word 69px < 72px"
+    ]
+  },
+  "creator_neon_title": {
+    "fontScale": 1.49,
+    "why": [
+      "smallest word 44px < 46px",
+      "smallest word 31px < 44px"
+    ]
+  },
+  "creator_shine_band": {
+    "fontScale": 1.2,
+    "position": {
+      "x": 0.5,
+      "y": 0.706
+    },
+    "why": [
+      "lead word 60px < 72px"
+    ]
+  },
+  "creator_shine_sweep": {
+    "fontScale": 1.764,
+    "why": [
+      "lead word 60px < 72px",
+      "smallest word 41px < 44px",
+      "lead word 41px < 60px"
+    ]
+  },
+  "creator_shine_title": {
+    "fontScale": 2.45,
+    "position": {
+      "x": 0.5,
+      "y": 0.696
+    },
+    "why": [
+      "lead word 60px < 72px",
+      "smallest word 29px < 44px",
+      "lead word 29px < 60px"
+    ]
+  },
+  "creator_three_part": {
+    "fontScale": 1.157,
+    "position": {
+      "x": 0.5,
+      "y": 0.718
+    },
+    "why": [
+      "smallest word 38px < 44px"
+    ]
+  },
+  "cycling_color_pop": {
+    "fontScale": 1.07,
+    "why": [
+      "lead word 67px < 72px"
+    ]
+  },
+  "difference_invert": {
+    "fontScale": 0.923,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.5,
+      "y": 0.611
+    },
+    "why": [
+      "text x 152-932 outside 70-905",
+      "text y 1042 above the lower band (1060): may cover a face"
+    ]
+  },
+  "dyn_simple_cycle": {
+    "fontScale": 1.286,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 56px < 60px"
+    ]
+  },
+  "echo_zoom": {
+    "fontScale": 0.909,
+    "maxWidth": 0.667,
+    "why": [
+      "text x 80-962 outside 70-905"
+    ]
+  },
+  "editorial_3d_stack": {
+    "fontScale": 0.86,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.5,
+      "y": 0.608
+    },
+    "why": [
+      "lead word 175px > 170px",
+      "text x 124-939 outside 70-905",
+      "text y 934 above the lower band (1060): may cover a face"
+    ]
+  },
+  "explainer": {
+    "fontScale": 1.385,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 52px < 60px"
+    ]
+  },
+  "fade_in_words": {
+    "fontScale": 1.412,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 51px < 60px"
+    ]
+  },
+  "fat_bar_pop": {
+    "fontScale": 0.905,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.482,
+      "y": 0.732
+    },
+    "why": [
+      "text x 122-981 outside 70-905",
+      "text y 1485-1622 outside 230-1480"
+    ]
+  },
+  "glitch_slice": {
+    "fontScale": 0.897,
+    "maxWidth": 0.667,
+    "why": [
+      "text x 142-945 outside 70-905"
+    ]
+  },
+  "gold_bevel_caps": {
+    "position": {
+      "x": 0.5,
+      "y": 0.609
+    },
+    "why": [
+      "text y 938 above the lower band (1060): may cover a face"
+    ]
+  },
+  "highlighter_card": {
+    "fontScale": 1.385,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 52px < 60px"
+    ]
+  },
+  "hollow_caps_fill": {
+    "fontScale": 1.091,
+    "why": [
+      "lead word 66px < 72px"
+    ]
+  },
+  "hormozi_box": {
+    "fontScale": 1.168,
+    "position": {
+      "x": 0.494,
+      "y": 0.72
+    },
+    "why": [
+      "lead word 62px < 72px"
+    ]
+  },
+  "karaoke_pill": {
+    "fontScale": 1.334,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 54px < 60px"
+    ]
+  },
+  "kinetic_camera": {
+    "fontScale": 0.876,
+    "position": {
+      "x": 0.5,
+      "y": 0.669
+    },
+    "why": [
+      "lead word 193px > 170px",
+      "text y 1267-1592 outside 230-1480"
+    ]
+  },
+  "kinetic_mix": {
+    "position": {
+      "x": 0.5,
+      "y": 0.692
+    },
+    "why": [
+      "text y 1251-1523 outside 230-1480"
+    ]
+  },
+  "knockout_word": {
+    "fontScale": 0.567,
+    "position": {
+      "x": 0.5,
+      "y": 0.598
+    },
+    "why": [
+      "lead word 300px > 170px",
+      "text x 65-1015 outside 70-905",
+      "text y 825 above the lower band (1060): may cover a face"
+    ]
+  },
+  "letter_cascade": {
+    "fontScale": 0.984,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.5,
+      "y": 0.634
+    },
+    "why": [
+      "text y 1034 above the lower band (1060): may cover a face"
+    ]
+  },
+  "light_slit_reveal": {
+    "fontScale": 0.89,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.5,
+      "y": 0.656
+    },
+    "why": [
+      "text x 127-969 outside 70-905",
+      "text y 978 above the lower band (1060): may cover a face"
+    ]
+  },
+  "light_to_bold": {
+    "position": {
+      "x": 0.5,
+      "y": 0.601
+    },
+    "fontScale": 1.067,
+    "why": [
+      "lead word 68px < 72px",
+      "text y 1055 above the lower band (1060): may cover a face"
+    ]
+  },
+  "luxe_serif": {
+    "fontScale": 1.241,
+    "why": [
+      "lead word 58px < 72px"
+    ]
+  },
+  "metal_script": {
+    "position": {
+      "x": 0.5,
+      "y": 0.697
+    },
+    "why": [
+      "text y 1260-1514 outside 230-1480"
+    ]
+  },
+  "minimal_pro": {
+    "fontScale": 1.44,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 50px < 60px"
+    ]
+  },
+  "mint_caps_pop": {
+    "position": {
+      "x": 0.483,
+      "y": 0.72
+    },
+    "why": [
+      "text x 186-917 outside 70-905"
+    ]
+  },
+  "moovi_caption_1_1": {
+    "position": {
+      "x": 0.5,
+      "y": 0.71
+    },
+    "why": [
+      "text below the safe area (y > 1480)"
+    ],
+    "manual": true
+  },
+  "moovi_caption_1_2": {
+    "position": {
+      "x": 0.5,
+      "y": 0.71
+    },
+    "why": [
+      "text below the safe area (y > 1480)"
+    ],
+    "manual": true
+  },
+  "moovi_caption_2": {
+    "position": {
+      "x": 0.5,
+      "y": 0.7
+    },
+    "heroScale": 0.8,
+    "why": [
+      "text below the safe area (y > 1480)",
+      "key word 213px > 170px, size jump x3.2"
+    ],
+    "manual": true
+  },
+  "moovi_caption_3": {
+    "why": [
+      "the highlight word was sized to the line width: short words reached 300-500px (fixed in moovi/draw.ts: capped at maxLeadPx)"
+    ],
+    "manual": true
+  },
+  "moovi_caption_4": {
+    "position": {
+      "x": 0.5,
+      "y": 0.7
+    },
+    "fontScale": 0.9,
+    "heroScale": 0.5,
+    "why": [
+      "key word 373px > 170px, size jump x5.7"
+    ],
+    "manual": true
+  },
+  "motion_blur_whip": {
+    "position": {
+      "x": 0.493,
+      "y": 0.739
+    },
+    "fontScale": 0.92,
+    "maxWidth": 0.667,
+    "why": [
+      "text x 149-931 outside 70-905",
+      "text y 1502-1604 outside 230-1480"
+    ]
+  },
+  "neon_frame_lines": {
+    "position": {
+      "x": 0.5,
+      "y": 0.697
+    },
+    "why": [
+      "text y 1270-1514 outside 230-1480"
+    ]
+  },
+  "netflix_sub": {
+    "fontScale": 1.713,
+    "position": {
+      "x": 0.5,
+      "y": 0.743
+    },
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 42px < 60px",
+      "text y 1625-1676 outside 230-1480"
+    ]
+  },
+  "orange_stamp_hoist": {
+    "fontScale": 0.948,
+    "position": {
+      "x": 0.5,
+      "y": 0.684
+    },
+    "why": [
+      "text y 1335-1675 outside 230-1480"
+    ]
+  },
+  "phone_notification": {
+    "fontScale": 1.793,
+    "maxWidth": 0.667,
+    "position": {
+      "x": 0.467,
+      "y": 0.68
+    },
+    "why": [
+      "lead word 60px < 72px",
+      "smallest word 32px < 44px",
+      "lead word 40px < 60px"
+    ]
+  },
+  "plain_lowercase": {
+    "fontScale": 1.412,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 51px < 60px"
+    ]
+  },
+  "read_along": {
+    "fontScale": 1.385,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 52px < 60px"
+    ]
+  },
+  "retro_vhs": {
+    "fontScale": 1.125,
+    "why": [
+      "lead word 64px < 72px"
+    ]
+  },
+  "rgb_split_slam": {
+    "position": {
+      "x": 0.487,
+      "y": 0.635
+    },
+    "fontScale": 0.897,
+    "maxWidth": 0.667,
+    "why": [
+      "text x 141-944 outside 70-905",
+      "text y 1052 above the lower band (1060): may cover a face"
+    ]
+  },
+  "sand_word_tiles": {
+    "position": {
+      "x": 0.5,
+      "y": 0.74
+    },
+    "why": [
+      "text y 1390-1490 outside 230-1480"
+    ]
+  },
+  "scribble": {
+    "fontScale": 1.286,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 56px < 60px"
+    ]
+  },
+  "selection_highlight": {
+    "fontScale": 1.2,
+    "why": [
+      "lead word 60px < 72px"
+    ]
+  },
+  "serif_behind": {
+    "fontScale": 0.925,
+    "position": {
+      "x": 0.5,
+      "y": 0.711
+    },
+    "heroScale": 2.74,
+    "why": [
+      "lead word 184px > 170px",
+      "size jump x3.4 > x3",
+      "text x 175-927 outside 70-905",
+      "text y 1242-1522 outside 230-1480"
+    ]
+  },
+  "serif_pop_classic": {
+    "fontScale": 1.068,
+    "why": [
+      "lead word 67px < 72px"
+    ]
+  },
+  "soft_glow": {
+    "fontScale": 1.075,
+    "why": [
+      "lead word 67px < 72px"
+    ]
+  },
+  "solid_label_card": {
+    "position": {
+      "x": 0.5,
+      "y": 0.589
+    },
+    "why": [
+      "text y 898 above the lower band (1060): may cover a face"
+    ]
+  },
+  "stacked_slam": {
+    "position": {
+      "x": 0.5,
+      "y": 0.672
+    },
+    "why": [
+      "text y 729 above the lower band (1060): may cover a face"
+    ]
+  },
+  "storytime": {
+    "fontScale": 1.329,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 54px < 60px"
+    ]
+  },
+  "terminal": {
+    "fontScale": 1.5,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 48px < 60px"
+    ]
+  },
+  "tilted_label_stack": {
+    "position": {
+      "x": 0.5,
+      "y": 0.609
+    },
+    "fontScale": 1.138,
+    "why": [
+      "lead word 63px < 72px",
+      "text y 1007 above the lower band (1060): may cover a face"
+    ]
+  },
+  "tri_color_keywords": {
+    "position": {
+      "x": 0.5,
+      "y": 0.58
+    },
+    "fontScale": 1.111,
+    "why": [
+      "lead word 65px < 72px",
+      "text y 920 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_banded_word": {
+    "position": {
+      "x": 0.5,
+      "y": 0.593
+    },
+    "why": [
+      "text y 892 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_big_small": {
+    "position": {
+      "x": 0.5,
+      "y": 0.594
+    },
+    "why": [
+      "text y 889 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_editorial_indent": {
+    "position": {
+      "x": 0.5,
+      "y": 0.603
+    },
+    "fontScale": 1.125,
+    "why": [
+      "lead word 64px < 72px",
+      "text y 882 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_huge_script": {
+    "fontScale": 1.104,
+    "position": {
+      "x": 0.5,
+      "y": 0.621
+    },
+    "why": [
+      "smallest word 40px < 44px",
+      "text y 850 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_punch_slide": {
+    "position": {
+      "x": 0.5,
+      "y": 0.613
+    },
+    "why": [
+      "text y 854 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_red_block_wipe": {
+    "position": {
+      "x": 0.5,
+      "y": 0.601
+    },
+    "why": [
+      "text y 876 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_red_neon": {
+    "position": {
+      "x": 0.5,
+      "y": 0.595
+    },
+    "why": [
+      "text y 881 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_scatter_fly": {
+    "position": {
+      "x": 0.5,
+      "y": 0.624
+    },
+    "fontScale": 0.971,
+    "why": [
+      "text y 832 above the lower band (1060): may cover a face"
+    ]
+  },
+  "typo_spotlight_sides": {
+    "fontScale": 2.283,
+    "position": {
+      "x": 0.5,
+      "y": 0.642
+    },
+    "heroScale": 1.81,
+    "why": [
+      "smallest word 29px < 44px",
+      "size jump x3.9 > x3",
+      "text y 873 above the lower band (1060): may cover a face"
+    ]
+  },
+  "vintage_cinematic": {
+    "fontScale": 1.068,
+    "why": [
+      "lead word 67px < 72px"
+    ]
+  },
+  "wave_bounce": {
+    "fontScale": 1.286,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 56px < 60px"
+    ]
+  },
+  "whip_in_cards": {
+    "position": {
+      "x": 0.5,
+      "y": 0.607
+    },
+    "why": [
+      "text y 999 above the lower band (1060): may cover a face"
+    ]
+  },
+  "yellow_jump_box": {
+    "fontScale": 1.263,
+    "why": [
+      "lead word 60px < 72px",
+      "lead word 57px < 60px"
+    ]
+  }
+}

@@ -1,0 +1,363 @@
+[
+ {
+  "name": "business talking head",
+  "input": {
+   "mood": "clean",
+   "content": "business-advice",
+   "platform": "shorts",
+   "words": [
+    {
+     "text": "Most",
+     "startMs": 200,
+     "endMs": 521
+    },
+    {
+     "text": "founders",
+     "startMs": 561,
+     "endMs": 1004
+    },
+    {
+     "text": "waste",
+     "startMs": 1044,
+     "endMs": 1395
+    },
+    {
+     "text": "their",
+     "startMs": 1435,
+     "endMs": 1787
+    },
+    {
+     "text": "first",
+     "startMs": 1827,
+     "endMs": 2178
+    },
+    {
+     "text": "90",
+     "startMs": 2218,
+     "endMs": 2479
+    },
+    {
+     "text": "days",
+     "startMs": 2519,
+     "endMs": 2840
+    },
+    {
+     "text": "building",
+     "startMs": 2880,
+     "endMs": 3322
+    },
+    {
+     "text": "features",
+     "startMs": 3362,
+     "endMs": 3805
+    },
+    {
+     "text": "nobody",
+     "startMs": 3845,
+     "endMs": 4227
+    },
+    {
+     "text": "asked",
+     "startMs": 4267,
+     "endMs": 4618
+    },
+    {
+     "text": "for.",
+     "startMs": 4658,
+     "endMs": 4979
+    },
+    {
+     "text": "Talk",
+     "startMs": 5299,
+     "endMs": 5621
+    },
+    {
+     "text": "to",
+     "startMs": 5661,
+     "endMs": 5921
+    },
+    {
+     "text": "20",
+     "startMs": 5961,
+     "endMs": 6222
+    },
+    {
+     "text": "customers",
+     "startMs": 6262,
+     "endMs": 6735
+    },
+    {
+     "text": "before",
+     "startMs": 6775,
+     "endMs": 7156
+    },
+    {
+     "text": "you",
+     "startMs": 7196,
+     "endMs": 7487
+    },
+    {
+     "text": "write",
+     "startMs": 7527,
+     "endMs": 7879
+    },
+    {
+     "text": "a",
+     "startMs": 7919,
+     "endMs": 8149
+    },
+    {
+     "text": "single",
+     "startMs": 8189,
+     "endMs": 8571
+    },
+    {
+     "text": "line",
+     "startMs": 8611,
+     "endMs": 8932
+    },
+    {
+     "text": "of",
+     "startMs": 8972,
+     "endMs": 9233
+    },
+    {
+     "text": "code.",
+     "startMs": 9273,
+     "endMs": 9624
+    }
+   ]
+  }
+ },
+ {
+  "name": "fitness hype hook",
+  "input": {
+   "mood": "hype",
+   "content": "fitness",
+   "energy": 5,
+   "platform": "reels",
+   "words": [
+    {
+     "text": "Stop",
+     "startMs": 200,
+     "endMs": 452
+    },
+    {
+     "text": "doing",
+     "startMs": 492,
+     "endMs": 769
+    },
+    {
+     "text": "crunches!",
+     "startMs": 809,
+     "endMs": 1180
+    },
+    {
+     "text": "This",
+     "startMs": 1500,
+     "endMs": 1752
+    },
+    {
+     "text": "one",
+     "startMs": 1792,
+     "endMs": 2021
+    },
+    {
+     "text": "move",
+     "startMs": 2061,
+     "endMs": 2313
+    },
+    {
+     "text": "burns",
+     "startMs": 2353,
+     "endMs": 2630
+    },
+    {
+     "text": "twice",
+     "startMs": 2670,
+     "endMs": 2946
+    },
+    {
+     "text": "the",
+     "startMs": 2986,
+     "endMs": 3214
+    },
+    {
+     "text": "fat",
+     "startMs": 3254,
+     "endMs": 3483
+    },
+    {
+     "text": "in",
+     "startMs": 3523,
+     "endMs": 3728
+    },
+    {
+     "text": "half",
+     "startMs": 3768,
+     "endMs": 4020
+    },
+    {
+     "text": "the",
+     "startMs": 4060,
+     "endMs": 4289
+    },
+    {
+     "text": "time.",
+     "startMs": 4329,
+     "endMs": 4605
+    },
+    {
+     "text": "Watch",
+     "startMs": 4925,
+     "endMs": 5201
+    },
+    {
+     "text": "till",
+     "startMs": 5241,
+     "endMs": 5493
+    },
+    {
+     "text": "the",
+     "startMs": 5533,
+     "endMs": 5762
+    },
+    {
+     "text": "end.",
+     "startMs": 5802,
+     "endMs": 6054
+    }
+   ],
+   "meaning": {
+    "mood": "hype",
+    "keyWords": [
+     0,
+     2,
+     5,
+     7,
+     9,
+     11
+    ]
+   }
+  }
+ },
+ {
+  "name": "luxury perfume ad, face low in frame",
+  "input": {
+   "mood": "luxury",
+   "content": "product-ad",
+   "platform": "tiktok",
+   "words": [
+    {
+     "text": "Crafted",
+     "startMs": 200,
+     "endMs": 720
+    },
+    {
+     "text": "in",
+     "startMs": 760,
+     "endMs": 1118
+    },
+    {
+     "text": "Grasse,",
+     "startMs": 1158,
+     "endMs": 1678
+    },
+    {
+     "text": "from",
+     "startMs": 1998,
+     "endMs": 2440
+    },
+    {
+     "text": "rare",
+     "startMs": 2480,
+     "endMs": 2922
+    },
+    {
+     "text": "jasmine",
+     "startMs": 2962,
+     "endMs": 3482
+    },
+    {
+     "text": "and",
+     "startMs": 3522,
+     "endMs": 3922
+    },
+    {
+     "text": "amber.",
+     "startMs": 3962,
+     "endMs": 4482
+    },
+    {
+     "text": "A",
+     "startMs": 4802,
+     "endMs": 5118
+    },
+    {
+     "text": "scent",
+     "startMs": 5158,
+     "endMs": 5642
+    },
+    {
+     "text": "that",
+     "startMs": 5682,
+     "endMs": 6123
+    },
+    {
+     "text": "stays",
+     "startMs": 6163,
+     "endMs": 6647
+    },
+    {
+     "text": "with",
+     "startMs": 6687,
+     "endMs": 7128
+    },
+    {
+     "text": "you,",
+     "startMs": 7168,
+     "endMs": 7610
+    },
+    {
+     "text": "long",
+     "startMs": 7930,
+     "endMs": 8372
+    },
+    {
+     "text": "after",
+     "startMs": 8412,
+     "endMs": 8895
+    },
+    {
+     "text": "you",
+     "startMs": 8935,
+     "endMs": 9335
+    },
+    {
+     "text": "leave",
+     "startMs": 9375,
+     "endMs": 9858
+    },
+    {
+     "text": "the",
+     "startMs": 9898,
+     "endMs": 10298
+    },
+    {
+     "text": "room.",
+     "startMs": 10338,
+     "endMs": 10822
+    }
+   ],
+   "faces": [
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "w": 0.4,
+     "h": 0.32,
+     "label": "face"
+    }
+   ]
+  }
+ }
+]

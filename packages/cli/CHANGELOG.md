@@ -9,6 +9,52 @@ with the same inputs keeps its exact result. New behaviour comes only through ne
 - `packages/cli/test/compat.test.ts`: `listLooks`, `describeLook`, `buildCaptions` and `recommendLooks` results for 0.1.x
   inputs, compared against a fixture recorded with 0.1.2 (only the additive fields listed below are stripped).
 
+## Unreleased (caption rules + caption director)
+
+**Existing look output: changed, deliberately.** This breaks rule zero once, on Ishaan's request: every look now
+keeps to the caption rules, and the per-look render hashes and the 0.1.x API fixture were re-recorded with this
+change. Projects store their full style, so saved projects render exactly as before. A new `buildCaptions({ look })`
+call gets the fixed look.
+
+### Changed
+
+- **Caption rules for every look** (`CAPTION_RULES`, `packages/templates/src/rules.ts`, measured at 1080x1920):
+  - text inside the Shorts safe area (x 70-905, y 230-1480)
+  - captions in the lower band (y 1060-1480), under a talking head's face
+  - any word at least 46 px, the lead word 72-170 px
+  - the largest word at most 3x the smallest on screen
+  - at most 4 words a card
+
+  Before the change, 63 of the 105 gallery looks broke at least one rule. Examples:
+  - #29 had a 252 px word over 40 px words.
+  - #67's side words were 24 px.
+  - #33 and #34 were 29-31 px.
+  - #20-#25, #56-#72 and #87 sat on the speaker's face.
+  - #105, #30, #31 and #40 ran under the platform UI.
+  - #132's highlight reached 500 px on a short word.
+
+  Now none does. Each fix changes only the font size factor, line width, position, key-word scale or words per
+  card. Fonts, colours and motion stay as they were. The fixes are in
+  `packages/templates/src/looks/rules.generated.json`, each with the reason, and are written by
+  `packages/web/scripts/calibrate.mjs`.
+- Layout fixes where a look ignored its size:
+  - #67 Spotlight: the hero and the small rows now fit the width separately, and a side word too long to read goes
+    back into its row.
+  - #128 Editorial Depth Stack: lines grow no larger than the lead-word limit.
+  - Premium Caption 3 (#132): the highlight is capped at the lead-word limit.
+- Looks composed for 5 or 6 words a card start at 4 (#50-#55, #65, #67, #128, retired #49 and two retired typo looks). A
+  creator's own words-per-card choice is kept.
+
+### Added
+
+- **`directCaptions()`**, the caption director (`src/director`, see `src/director/SKILL.md`). Given words with times,
+  optional roles, the mood and the faces, it chooses one look, the key words, the words per card and the position.
+  It returns validated `buildCaptions` arguments with every taste rule checked. **`parseMeaning()`** validates the
+  only thing a model may add: `{ mood, keyWords }`.
+- **`CAPTION_RULES`** and **`ruleIssues()`**: the rules as numbers, and a check for a measured look.
+- `packages/web/scripts/audit.mjs` (fails on any look breaking a rule), `calibrate.mjs` and `stills.mjs` (contact
+  sheets with the safe area outlined).
+
 ## 0.3.0
 
 App release: captionseasy now works inside your own app, in the browser as well as Node, and draws its captions over

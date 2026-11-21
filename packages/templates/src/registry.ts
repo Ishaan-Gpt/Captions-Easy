@@ -2,6 +2,8 @@ import { CaptionStyleSchema, DEFAULT_WORDS_PER_CARD, type CaptionStyleV2, type P
 import legacyLooks from "./looks/legacy.generated.json";
 import { NEW_LOOKS } from "./looks/new";
 import { isRetiredLook, lookNumber } from "./looks/numbers";
+import rulesFixes from "./looks/rules.generated.json";
+import { CAPTION_RULES, type LookRulesFix } from "./rules";
 import { PACK_LOOKS, PACK_SECTIONS } from "./pack";
 import { TEMPLATES } from "./templates";
 import type { LookDefinition, TemplateDefinition } from "./types";
@@ -153,7 +155,30 @@ export const LOOK_SECTIONS: { id: string; label: string; lookIds: string[] }[] =
 ].map((s) => ({ ...s, lookIds: s.lookIds.filter((id) => !isRetiredLook(id)) })).filter((s) => s.lookIds.length);
 const featured = LOOK_SECTIONS.flatMap((s) => s.lookIds);
 const rank = (id: string) => (featured.includes(id) ? featured.indexOf(id) : featured.length);
-const NUMBERED: LookDefinition[] = [...ALL_LOOKS].sort((a, b) => rank(a.id) - rank(b.id)).map((l) => lazyLook({ ...l, number: lookNumber(l.id) }));
+/**
+ * Caption rules (rules.ts): the smallest change that keeps each look inside the common-sense limits (text size,
+ * key-word ratio, safe area, face-free band, words per card), measured live by packages/web/scripts/calibrate.mjs.
+ * Only size, width, position, hero scale and words per card change; the look's design does not.
+ */
+const RULES_FIXES = rulesFixes as Record<string, LookRulesFix>;
+function withRules(l: LookSeedDef): LookSeedDef {
+  const fix = RULES_FIXES[l.id];
+  if (!fix) return l;
+  return {
+    ...l,
+    makeStyle: () => {
+      const s = l.makeStyle();
+      return {
+        ...s,
+        ...(fix.fontScale ? { fontSize: Math.round(s.fontSize * fix.fontScale * 10) / 10 } : {}),
+        ...(fix.maxWidth ? { maxWidth: fix.maxWidth } : {}),
+        ...(fix.position ? { position: { ...fix.position } } : {}),
+        ...(fix.heroScale ? { hero: { ...s.hero, scale: fix.heroScale } } : {}),
+      };
+    },
+  };
+}
+const NUMBERED: LookDefinition[] = [...ALL_LOOKS].map(withRules).sort((a, b) => rank(a.id) - rank(b.id)).map((l) => lazyLook({ ...l, number: lookNumber(l.id) }));
 /** the gallery: every look except retired ones (see looks/numbers.ts) */
 export const LOOKS: LookDefinition[] = NUMBERED.filter((l) => !isRetiredLook(l.id));
 
@@ -176,5 +201,8 @@ export function applyLook(look: LookDefinition, currentWordsPerCard?: number): {
   const { maxWordsPerCard: _ignored, ...rest } = look.settings;
   const keep = currentWordsPerCard !== undefined && currentWordsPerCard > 1 ? currentWordsPerCard : DEFAULT_WORDS_PER_CARD;
   // layouts composed for an exact word count (a 2-word bubble, a 5-word composition) always get it
-  return { style, settings: { ...rest, maxWordsPerCard: oneWord ? 1 : tpl.fixedWordsPerCard ?? keep } };
+  // caption rules: a look never starts with more than CAPTION_RULES.maxWordsPerCard words a card, whatever its layout
+  // was composed for (a creator's own choice, passed in, is theirs)
+  const fixed = tpl.fixedWordsPerCard === undefined ? undefined : Math.min(CAPTION_RULES.maxWordsPerCard, tpl.fixedWordsPerCard);
+  return { style, settings: { ...rest, maxWordsPerCard: oneWord ? 1 : fixed ?? keep } };
 }

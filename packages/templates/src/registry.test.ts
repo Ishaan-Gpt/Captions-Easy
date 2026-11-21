@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { CaptionStyleSchema } from "@capseasy/shared";
 import { PACK_LOOKS } from "./pack";
+import rulesFixes from "./looks/rules.generated.json";
+import { CAPTION_RULES } from "./rules";
 import { LOOK_NUMBER_ORDER, RETIRED_LOOK_NUMBERS } from "./looks/numbers";
 import { KNOWN_FONTS, FALLBACK_TEMPLATE, LOOKS, LOOK_SECTIONS, TEMPLATE_IDS, applyLook, deepMerge, getLook, getTemplate, lookCategories, resolveStyle } from "./index";
 
@@ -77,7 +79,9 @@ describe("template registry", () => {
   it("words per card defaults to 3 for every multi-word look and survives look switches", () => {
     for (const look of LOOKS) {
       const oneWord = getTemplate(look.templateId).layout === "word";
-      expect(applyLook(look).settings.maxWordsPerCard, look.id).toBe(oneWord ? 1 : getTemplate(look.templateId).fixedWordsPerCard ?? 3);
+      const fixed = getTemplate(look.templateId).fixedWordsPerCard;
+      // caption rules: layouts composed for 5 or 6 words start at CAPTION_RULES.maxWordsPerCard (4)
+      expect(applyLook(look).settings.maxWordsPerCard, look.id).toBe(oneWord ? 1 : fixed === undefined ? 3 : Math.min(4, fixed));
     }
     // a creator's own choice is kept when switching between multi-word looks, reset after a one-word look
     expect(applyLook(getLook("karaoke_fill")!, 6).settings.maxWordsPerCard).toBe(6);
@@ -118,5 +122,25 @@ describe("emotion styling", () => {
     // a look's signature effect is never replaced (regression: Storytime lost its box on 'excited' cards)
     const boxed = resolveStyle({ templateId: "boxed_word" });
     expect(applyEmotion(boxed, getTemplate("boxed_word"), "excited").active.effect).toBe("box");
+  });
+});
+
+describe("caption rules", () => {
+  it("no look starts with more than CAPTION_RULES.maxWordsPerCard words a card", () => {
+    for (const look of LOOKS) expect(applyLook(look).settings.maxWordsPerCard!, look.id).toBeLessThanOrEqual(CAPTION_RULES.maxWordsPerCard);
+  });
+  it("every rules fix names a gallery look and only touches size, width, position, hero scale or words per card", () => {
+    const ids = new Set(LOOKS.map((l) => l.id));
+    for (const [id, fix] of Object.entries(rulesFixes as Record<string, Record<string, unknown>>)) {
+      expect(ids.has(id), id).toBe(true);
+      for (const k of Object.keys(fix)) expect(["fontScale", "maxWidth", "position", "heroScale", "maxWordsPerCard", "why", "manual"], `${id}.${k}`).toContain(k);
+    }
+  });
+  it("rules fixes keep text on the frame (positions inside the safe band)", () => {
+    for (const look of LOOKS) {
+      const y = look.style.position.y * CAPTION_RULES.frame.height;
+      expect(y, look.id).toBeGreaterThan(CAPTION_RULES.safe.y0);
+      expect(y, look.id).toBeLessThan(CAPTION_RULES.safe.y1);
+    }
   });
 });

@@ -27,6 +27,7 @@
  * come out heavier); the exporter precomposes a filtered group over the union of its descendants' boxes, so flying
  * letters are never cropped. Back-line dimming is a brightness() in the same group filter. Pure in `timeMs`.
  */
+import { CAPTION_RULES } from "../rules";
 import React from "react";
 import type { Word } from "@capseasy/shared";
 import { displayText } from "../text";
@@ -249,6 +250,12 @@ export const EditorialStackLayout: React.FC<PageRenderProps> = (p) => {
       let g = near.length ? near.reduce((a, b) => a + b, 0) / near.length : 1;
       if (l.width * g > measureW) g = measureW / l.width;
       grow[li] = g;
+    });
+    // caption rules: a grown line never takes a word past CAPTION_RULES.maxLeadPx
+    const capPx = CAPTION_RULES.maxLeadPx * 0.97 * sc;
+    natural.forEach((l, li) => {
+      const big = Math.max(...l.items.map((it) => it.size));
+      if (big * grow[li]! > capPx) grow[li] = capPx / big;
     });
     const blockW = Math.max(1, ...natural.map((l, li) => l.width * grow[li]!));
     const hasHeavy = natural.some((l) => l.heavy);

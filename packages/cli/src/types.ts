@@ -766,3 +766,81 @@ export interface HinglishSpellingOptions {
   /** extra/overriding rewrites { scholarly: creator } (lower-case keys) */
   extra?: Record<string, string>;
 }
+
+/** The caption rules every look is held to (px at 1080 x 1920). See CAPTION_RULES. */
+export interface CaptionRules {
+  readonly frame: { readonly width: number; readonly height: number };
+  /** platform UI never covers text inside it */
+  readonly safe: { readonly x0: number; readonly x1: number; readonly y0: number; readonly y1: number };
+  /** where captions sit when nothing is known about the picture (under a face, above the UI) */
+  readonly lowerBand: { readonly y0: number; readonly y1: number };
+  /** the band above a face, for when the face is low in the frame */
+  readonly upperBand: { readonly y0: number; readonly y1: number };
+  readonly minTextPx: number;
+  readonly hardMinTextPx: number;
+  readonly minLeadPx: number;
+  readonly maxLeadPx: number;
+  readonly maxSizeRatio: number;
+  readonly maxWordsPerCard: number;
+  readonly maxEmphasisShare: number;
+}
+/** A look measured at 1080 x 1920 (px). */
+export interface LookMeasurement {
+  minSize: number;
+  maxSize: number;
+  ratio: number;
+  box: { x0: number; y0: number; x1: number; y1: number };
+  wordsPerCard?: number;
+}
+
+// ---------------------------------------------------------------- caption director
+
+/**
+ * What a model may say about a transcript, and nothing else: which words carry the meaning and the video's mood.
+ * Colours, timings, sizes and positions are never accepted from a model (the director rejects any other key).
+ */
+export interface DirectorMeaning {
+  /** the video's mood in a word or two ("calm", "hype", "luxury", "playful") */
+  mood?: string;
+  /** indices into `words` of the words that carry the meaning (the director keeps at most one or two a card) */
+  keyWords?: number[];
+}
+export interface DirectCaptionsInput {
+  /** timed words; `role` on a word (key, number, name, emphasis, title, connector) is the caller's own call and wins */
+  words: TranscriptWord[];
+  /** the video's mood (overridden by meaning.mood) */
+  mood?: string;
+  /** what the video is (CONTENT_TYPES), passed to recommendLooks */
+  content?: string;
+  /** default "shorts" */
+  platform?: Platform;
+  /** 1 calm ... 5 hype */
+  energy?: number;
+  /** faces (or anything text must not cover), frame fractions, optionally timed */
+  faces?: AvoidBox[];
+  /** a model's reading of the transcript, as JSON (validated; see DirectorMeaning) */
+  meaning?: unknown;
+  /** pin the look instead of choosing one */
+  look?: LookRef;
+  /** "overlay" skips looks that need the video behind them */
+  mode?: "burn" | "overlay";
+}
+export interface DirectorCheck {
+  rule: string;
+  ok: boolean;
+  detail: string;
+}
+export interface DirectCaptionsResult {
+  look: { number: number; id: string; name: string };
+  mood?: string;
+  wordsPerCard: number;
+  keyWords: { index: number; text: string; role: WordRole }[];
+  /** where the caption block's centre sits (frame fractions) and why */
+  position: { x: number; y: number; band: "look" | "lower" | "upper" };
+  /** validated buildCaptions arguments: pass them as they are */
+  args: BuildCaptionsInput;
+  /** every taste rule, checked on the built captions */
+  checks: DirectorCheck[];
+  reasons: string[];
+  warnings: string[];
+}

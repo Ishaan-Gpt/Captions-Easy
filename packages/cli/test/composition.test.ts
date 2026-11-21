@@ -137,7 +137,7 @@ describe("custom looks", () => {
     expect(a.id).toMatch(/^custom:brand-box-[0-9a-z]{7}$/);
     expect(a.number).toBeUndefined();
     expect(a).toMatchObject({ kind: "custom", baseNumber: 12, baseId: "hormozi_box", overrides: { "active.boxColor": "#FF3366", fontSize: 80 } });
-    expect(a.changed).toEqual(expect.arrayContaining([{ key: "fontSize", from: 58, to: 80 }]));
+    expect(a.changed).toEqual(expect.arrayContaining([{ key: "fontSize", from: 67.7, to: 80 }])); // 58 x 1.167 (caption rules: lead word >= 72 px)
     expect(JSON.parse(JSON.stringify(a))).toEqual(a);
     expect(deriveLook(12, { fontSize: 81 }, { name: "Brand Box" }).id).not.toBe(a.id);
     expect(deriveLook(12, { "active.boxColor": "#FF3366", fontSize: 80 }, { name: "Brand Box", theme: "luxe-gold" }).id).not.toBe(a.id);

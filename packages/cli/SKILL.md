@@ -61,6 +61,13 @@ description: Style captions for a video with CaptionsEasy. Turn timed words into
    ```
    For speech that mixes Hindi and English, add `--language hinglish`.
 
+## Let the director choose (look, key words, card size, position)
+
+`directCaptions({ words, mood, faces, meaning })` picks one look, the key words, the words per card and the position
+by the house taste rules, and returns `args` for `buildCaptions` with every rule checked in `checks`. A model may only
+add meaning, as `{ "mood": "...", "keyWords": [indices] }`; colours, timings and positions always come from the rules.
+Full guide: `src/director/SKILL.md` in the repo.
+
 ## Brand, roles and multi-look videos (0.2.0)
 
 - **One brand for every look:** `--theme <id>` on `build` / the video command, or `captionseasy look 12 --theme neon-night --json` to see what it changes. `captionseasy themes --json` lists the 10 themes. A custom theme is a JSON file: `{ "id": "acme", "extends": "clean-corporate", "palette": { "accent": "#FF3366" } }`.
