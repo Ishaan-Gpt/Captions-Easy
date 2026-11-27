@@ -51,12 +51,12 @@ export const FontPicker: React.FC<Props> = ({ label, value, onChange }) => {
   const [cat, setCat] = useState<FontCategory | "all">("all");
   const [busy, setBusy] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const [currentCss, setCurrentCss] = useState<string>(fontStack(value));
+  const [loaded, setLoaded] = useState<{ value: string; css: string } | null>(null);
+  const currentCss = loaded?.value === value ? loaded.css : fontStack(value);
 
   useEffect(() => {
     let alive = true;
-    setCurrentCss(fontStack(value));
-    void loadFontFamily(value).then(() => alive && setCurrentCss(fontStack(value)));
+    void loadFontFamily(value).then(() => alive && setLoaded({ value, css: fontStack(value) }));
     return () => {
       alive = false;
     };

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
+import Link from "next/link";
+import { useIsAuthenticated } from "@/lib/useIsAuthenticated";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authService } from "@/services/auth";
 import { workersService, type PairingDetails } from "@/services/workers";
@@ -10,10 +12,13 @@ function PairConfirmContent() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code") ?? "";
 
-  const [authorized, setAuthorized] = useState(false);
+  const authorized = useIsAuthenticated();
   const [pairing, setPairing] = useState<PairingDetails | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [fetching, setFetching] = useState(true);
+  const [failure, setError] = useState<string | null>(null);
+  // no code in the link: nothing to look up
+  const loading = !!code && fetching;
+  const error = code ? failure : "Missing pairing code.";
   const [outcome, setOutcome] = useState<"confirmed" | "denied" | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -22,13 +27,7 @@ function PairConfirmContent() {
       router.push(`/login?redirect=${encodeURIComponent(`/pair?code=${code}`)}`);
       return;
     }
-    setAuthorized(true);
-
-    if (!code) {
-      setError("Missing pairing code.");
-      setLoading(false);
-      return;
-    }
+    if (!code) return;
 
     workersService
       .getPairingDetails(code)
@@ -40,7 +39,7 @@ function PairConfirmContent() {
         }
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Something went wrong."))
-      .finally(() => setLoading(false));
+      .finally(() => setFetching(false));
   }, [code, router]);
 
   const handleConfirm = async () => {
@@ -84,12 +83,12 @@ function PairConfirmContent() {
               This computer is now connected. You can close this tab and go back to your
               terminal, then return to CaptionsEasy to process a project.
             </p>
-            <a
+            <Link
               href="/settings"
               className="mt-5 inline-block rounded-full bg-ink px-6 py-2.5 font-sora text-[12px] font-semibold text-dune-white hover:bg-sand-800 transition-colors"
             >
               Go to Settings
-            </a>
+            </Link>
           </div>
         ) : outcome === "denied" ? (
           <p className="mt-6 text-[14px] text-sand-800">This computer was not connected.</p>

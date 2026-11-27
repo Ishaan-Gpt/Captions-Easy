@@ -11,7 +11,14 @@ checks) and published, in that order. A push that doesn't bump a version publish
    changed).
 2. Push to `main`. The workflow does the rest. Watch it under Actions > release.
 
-## One-time setup (pick one)
+## One-time setup
+
+Use **B, trusted publishing**. Option A only works with a token that can publish without a 2FA one-time password,
+and npm is withdrawing those: a normal token fails in CI with `EOTP` (seen 2026-11-19). A package that has never been
+published can't get trusted publishing yet, so publish its first version by hand (below); the workflow skips it with a
+warning until then.
+
+### Options
 
 **A. An npm token (simplest).** On npmjs.com: your avatar > Access Tokens > Generate New Token > Granular Access
 Token, with *Read and write* on the four packages (or *All packages*) and a long expiry. Then save it as a

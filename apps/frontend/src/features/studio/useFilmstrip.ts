@@ -18,15 +18,11 @@ const THUMB_H = 72;
  * Returns [] while loading or when the browser cannot decode the file (the track then shows a plain bar).
  */
 export function useFilmstrip(videoId: string | null | undefined, url: string | null | undefined, durationMs: number): FilmFrame[] {
-  const [frames, setFrames] = useState<FilmFrame[]>(() => (videoId ? cache.get(videoId) ?? [] : []));
+  // frames decoded so far, for the video they belong to; a finished strip comes from the cache
+  const [live, setLive] = useState<{ id: string; frames: FilmFrame[] } | null>(null);
 
   useEffect(() => {
-    if (!videoId || !url || durationMs <= 0) return;
-    const hit = cache.get(videoId);
-    if (hit) {
-      setFrames(hit);
-      return;
-    }
+    if (!videoId || !url || durationMs <= 0 || cache.has(videoId)) return;
     let alive = true;
     const v = document.createElement("video");
     v.crossOrigin = "anonymous";
@@ -63,7 +59,7 @@ export function useFilmstrip(videoId: string | null | undefined, url: string | n
         g.drawImage(v, 0, 0, w, THUMB_H);
         out.push({ ms, src: c.toDataURL("image/jpeg", 0.72) });
         // show frames as they arrive, a few at a time
-        if (alive && (i % 6 === 5 || i === n - 1)) setFrames([...out]);
+        if (alive && (i % 6 === 5 || i === n - 1)) setLive({ id: videoId, frames: [...out] });
       }
       if (alive) cache.set(videoId, out);
     })().catch(() => undefined);
@@ -75,5 +71,8 @@ export function useFilmstrip(videoId: string | null | undefined, url: string | n
     };
   }, [videoId, url, durationMs]);
 
-  return frames;
+  if (!videoId) return NO_FRAMES;
+  return cache.get(videoId) ?? (live?.id === videoId ? live.frames : NO_FRAMES);
 }
+
+const NO_FRAMES: FilmFrame[] = [];

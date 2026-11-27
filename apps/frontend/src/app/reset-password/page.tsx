@@ -50,8 +50,8 @@ export default function ResetPasswordPage() {
       await authService.updatePassword(password);
       setDone(true);
       setTimeout(() => router.push("/login"), 2000);
-    } catch (err: any) {
-      setError(friendlyAuthError(err.message || "Failed to update password."));
+    } catch (err) {
+      setError(friendlyAuthError((err instanceof Error && err.message) || "Failed to update password."));
     } finally {
       setLoading(false);
     }

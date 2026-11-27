@@ -98,15 +98,15 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
     if (attempt === 0) setRestarted(false);
     const ctrl = new AbortController();
     abort.current = ctrl;
-    let last = Date.now();
+    let last = clock();
     let stalled = false;
     let again = false;
     const onVisible = () => {
-      if (document.visibilityState === "visible") last = Date.now();
+      if (document.visibilityState === "visible") last = clock();
     };
     document.addEventListener("visibilitychange", onVisible);
     const guard = setInterval(() => {
-      if (document.visibilityState === "visible" && Date.now() - last > 45_000) {
+      if (document.visibilityState === "visible" && clock() - last > 45_000) {
         stalled = true;
         ctrl.abort();
       }
@@ -125,7 +125,7 @@ export const ExportModal: React.FC<Props> = ({ projectId, title, video, renderIn
         quality,
         signal: ctrl.signal,
         onProgress: (f) => {
-          last = Date.now();
+          last = clock();
           setWebProgress(f);
         },
       });

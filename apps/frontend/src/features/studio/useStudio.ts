@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { CaptionDocSchema, ProjectSettingsSchema, type CaptionDoc, type CaptionStyleV2, type ProjectSettings } from "@capseasy/shared";
 import { applyLook, getLook, resolveStyle, type LookDefinition } from "@capseasy/templates";
@@ -60,7 +60,15 @@ export function useStudio(projectId: string) {
   const past = useRef<CaptionDoc[]>([]);
   const future = useRef<CaptionDoc[]>([]);
   const lastKey = useRef<{ key: string; at: number } | null>(null);
-  const [, bump] = useState(0);
+  // undo/redo availability as state (the stacks live in refs, which render must not read)
+  const [history, setHistory] = useState({ undo: 0, redo: 0 });
+  const syncHistory = useCallback(() => setHistory({ undo: past.current.length, redo: future.current.length }), []);
+  const conflictRef = useRef<typeof conflict>(null);
+  useLayoutEffect(() => {
+    conflictRef.current = conflict;
+  }, [conflict]);
+  // flush re-arms itself from its own timers: they call the latest flush through this ref
+  const flushRef = useRef<() => Promise<void>>(async () => undefined);
 
   // adopt the server document when we have none yet, or when a newer one arrives and nothing has been edited here
   // (opening from a prefetched copy must never leave the editor on an older revision); never overwrite local edits
@@ -71,6 +79,8 @@ export function useStudio(projectId: string) {
     if (!parsed.success) return;
     docRef.current = parsed.data;
     revisionRef.current = data.document.revision;
+    // syncing from the server cache, and only when the local edit state (refs) allows it: an effect is the right place
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDocState(parsed.data);
   }, [data?.document.doc, data?.document.revision]);
 
@@ -94,16 +104,17 @@ export function useStudio(projectId: string) {
         const delay = Math.min(15000, 2000 * 2 ** retryRef.current++);
         timerRef.current = setTimeout(() => {
           timerRef.current = null;
-          void flush();
+          void flushRef.current();
         }, delay);
       }
     } finally {
       inflightRef.current = false;
-      if (dirtyRef.current && !timerRef.current && !conflictRef.current) timerRef.current = setTimeout(() => { timerRef.current = null; void flush(); }, SAVE_DEBOUNCE_MS);
+      if (dirtyRef.current && !timerRef.current && !conflictRef.current) timerRef.current = setTimeout(() => { timerRef.current = null; void flushRef.current(); }, SAVE_DEBOUNCE_MS);
     }
   }, [projectId]);
-  const conflictRef = useRef<typeof conflict>(null);
-  conflictRef.current = conflict;
+  useLayoutEffect(() => {
+    flushRef.current = flush;
+  }, [flush]);
 
   /** Resolves once every local edit is on the server (or gives up after 15 s). Used before exporting. */
   const saveNow = useCallback(async () => {
@@ -148,9 +159,10 @@ export function useStudio(projectId: string) {
       future.current = [];
       docRef.current = next;
       setDocState(next);
+      syncHistory();
       schedule();
     },
-    [schedule],
+    [schedule, syncHistory],
   );
 
   const undo = useCallback(() => {
@@ -161,8 +173,8 @@ export function useStudio(projectId: string) {
     setDocState(prev);
     lastKey.current = null;
     schedule();
-    bump((n) => n + 1);
-  }, [schedule]);
+    syncHistory();
+  }, [schedule, syncHistory]);
 
   const redo = useCallback(() => {
     const next = future.current.pop();
@@ -172,8 +184,8 @@ export function useStudio(projectId: string) {
     setDocState(next);
     lastKey.current = null;
     schedule();
-    bump((n) => n + 1);
-  }, [schedule]);
+    syncHistory();
+  }, [schedule, syncHistory]);
 
   const resolveConflict = useCallback(
     (choice: "mine" | "theirs") => {
@@ -185,6 +197,7 @@ export function useStudio(projectId: string) {
         setDocState(c.doc);
         past.current = [];
         future.current = [];
+        syncHistory();
         dirtyRef.current = false;
         setSaveState("saved");
       } else {
@@ -194,7 +207,7 @@ export function useStudio(projectId: string) {
       conflictRef.current = null;
       if (choice === "mine") void flush();
     },
-    [flush],
+    [flush, syncHistory],
   );
 
   useEffect(() => {
@@ -304,11 +317,12 @@ export function useStudio(projectId: string) {
     dirtyRef.current = false;
     past.current = [];
     future.current = [];
+    syncHistory();
     lastKey.current = null;
     setConflict(null);
     setSaveState("saved");
     setDocState(null);
-  }, []);
+  }, [syncHistory]);
 
   const rename = useCallback(
     async (title: string) => {
@@ -321,12 +335,12 @@ export function useStudio(projectId: string) {
   return useMemo(
     () => ({
       query, data, doc, style, settings, lookId, saveState, conflict,
-      canUndo: past.current.length > 0, canRedo: future.current.length > 0,
+      canUndo: history.undo > 0, canRedo: history.redo > 0,
       edit, undo, redo, resolveConflict, chooseLook, patchStyle, patchSettings, rename, resetDoc,
       refetch: () => qc.invalidateQueries({ queryKey: ["studio", projectId] }),
       saveNow,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [query, data, doc, style, settings, lookId, saveState, conflict, edit, undo, redo, resolveConflict, chooseLook, patchStyle, patchSettings, rename, resetDoc, saveNow],
+    [query, data, doc, style, settings, lookId, saveState, conflict, history, edit, undo, redo, resolveConflict, chooseLook, patchStyle, patchSettings, rename, resetDoc, saveNow],
   );
 }

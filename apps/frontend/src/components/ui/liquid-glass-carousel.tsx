@@ -1,14 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
-import {
-  type CSSProperties,
-  type KeyboardEvent as ReactKeyboardEvent,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useId, useRef, useState, useLayoutEffect } from "react";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 import {
@@ -1466,8 +1459,10 @@ export function LiquidGlassCarousel({
   const current = items[active] ?? items[0];
   const onActiveChangeRef = useRef(onActiveChange);
   const onFocusChangeRef = useRef(onFocusChange);
-  onActiveChangeRef.current = onActiveChange;
-  onFocusChangeRef.current = onFocusChange;
+  useLayoutEffect(() => {
+    onActiveChangeRef.current = onActiveChange;
+    onFocusChangeRef.current = onFocusChange;
+  });
 
   useEffect(() => {
     const mount = mountRef.current;

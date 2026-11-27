@@ -99,8 +99,11 @@ export default function StudioPage({ projectId }: { projectId: string }) {
   const [playing, setPlaying] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showExport, setShowExport] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
-  const [signupNotice, setSignupNotice] = useState<string | null>(null);
+  // back from a Google sign-in that didn't finish (?signin): say so and let them pick again. The studio only renders
+  // in the browser (behind the sign-in gate), so the URL is read on mount; the effect below tidies it away.
+  const [signinUnfinished] = useState(() => typeof window !== "undefined" && new URL(window.location.href).searchParams.has("signin"));
+  const [showSignup, setShowSignup] = useState(signinUnfinished);
+  const [signupNotice, setSignupNotice] = useState<string | null>(signinUnfinished ? "Google sign-in didn't finish. Try again, or use your email below." : null);
   // guests edit freely; exporting is the moment to create the (free) account
   const openExport = useCallback(async () => {
     if (await currentUserIsGuest()) setShowSignup(true);
@@ -120,18 +123,18 @@ export default function StudioPage({ projectId }: { projectId: string }) {
     if (url.searchParams.has("signin")) {
       url.searchParams.delete("signin");
       window.history.replaceState(null, "", url.toString());
-      setSignupNotice("Google sign-in didn't finish. Try again, or use your email below.");
-      setShowSignup(true);
       return;
     }
     if (!url.searchParams.has("export")) return;
     url.searchParams.delete("export");
     window.history.replaceState(null, "", url.toString());
+    // openExport only sets state after awaiting the guest check, so this is not a synchronous update in the effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void openExport();
   }, [openExport]);
   const [editingTitle, setEditingTitle] = useState(false);
   const [title, setTitle] = useState("");
-  const [fontsReady, setFontsReady] = useState(false);
+  const [fontsLoadedFor, setFontsLoadedFor] = useState("");
   const [replacing, setReplacing] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
 
@@ -153,11 +156,11 @@ export default function StudioPage({ projectId }: { projectId: string }) {
 
   // load the fonts the style needs before measuring text (same requirement as the render)
   const fontKey = style ? [style.fontId, style.hero.fontId ?? "", ...getTemplate(style.templateId).fonts].join("|") : "";
+  const fontsReady = !!fontKey && fontsLoadedFor === fontKey;
   useEffect(() => {
     if (!fontKey) return;
     let alive = true;
-    setFontsReady(false);
-    void Promise.all(fontKey.split("|").filter(Boolean).map(loadFontFamily)).then(() => alive && setFontsReady(true));
+    void Promise.all(fontKey.split("|").filter(Boolean).map(loadFontFamily)).then(() => alive && setFontsLoadedFor(fontKey));
     return () => { alive = false; };
   }, [fontKey]);
 

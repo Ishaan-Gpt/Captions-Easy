@@ -66,18 +66,14 @@ export const Timeline: React.FC<Props> = ({ pages, words, durationMs, timeMs, ge
   const [narrow, setNarrow] = useState(false);
   const LABEL_W = narrow ? LABEL_NARROW : LABEL_WIDE;
   const [drag, setDrag] = useState<Drag | null>(null);
-  const [mode, setModeState] = useState<Mode>("word");
-  const [snap, setSnap] = useState(true);
-  const [ripple, setRipple] = useState(false);
+  // the studio only renders in the browser (behind the sign-in gate), so the saved prefs are read on mount
+  const [mode, setModeState] = useState<Mode>(() => pref<Mode>("ce_tl_mode", "word"));
+  const [snap, setSnap] = useState(() => pref<string>("ce_tl_snap", "1") === "1");
+  const [ripple, setRipple] = useState(() => pref<string>("ce_tl_ripple", "0") === "1");
   const [renaming, setRenaming] = useState<string | null>(null);
   const zoomedOnce = useRef(false);
   const frames = useFilmstrip(videoId, videoUrl, durationMs);
 
-  useEffect(() => {
-    setModeState(pref<Mode>("ce_tl_mode", "word"));
-    setSnap(pref<string>("ce_tl_snap", "1") === "1");
-    setRipple(pref<string>("ce_tl_ripple", "0") === "1");
-  }, []);
   const setMode = (m: Mode) => { setModeState(m); save("ce_tl_mode", m); };
 
   useEffect(() => {

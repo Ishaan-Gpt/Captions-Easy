@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useIsAuthenticated } from "@/lib/useIsAuthenticated";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { projectsService } from "@/services/projects";
@@ -35,7 +36,7 @@ export default function DashboardPage() {
   const qc = useQueryClient();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   // signed in on this device? (read from the stored session: the projects request must not wait on anything else)
-  const [signedIn, setSignedIn] = useState(false);
+  const signedIn = useIsAuthenticated();
   /** how many deletions are still finishing on the server */
   const [deleting, setDeleting] = useState(0);
 
@@ -57,7 +58,6 @@ export default function DashboardPage() {
       router.push("/login");
       return;
     }
-    setSignedIn(true);
     authService.getCurrentUser().then(setCurrentUser);
   }, [router]);
 
@@ -92,8 +92,8 @@ export default function DashboardPage() {
       setNewTitle("");
       // the wave carries straight on into opening the new project
       nav.go(`/projects/${created.id}`, "Opening your project");
-    } catch (err: any) {
-      setCreateError(err.message || "Couldn't create the project. Please try again.");
+    } catch (err) {
+      setCreateError((err instanceof Error && err.message) || "Couldn't create the project. Please try again.");
     } finally {
       done();
       setCreating(false);
@@ -110,9 +110,9 @@ export default function DashboardPage() {
     try {
       await Promise.all([projectsService.deleteProject(target.id), new Promise((r) => setTimeout(r, 700))]);
       qc.removeQueries({ queryKey: ["studio", target.id] });
-    } catch (err: any) {
+    } catch (err) {
       setHiding((h) => h.filter((id) => id !== target.id));
-      window.alert(err?.message || "Couldn't delete the project. It is back in your list.");
+      window.alert((err instanceof Error && err.message) || "Couldn't delete the project. It is back in your list.");
     } finally {
       setDeleting((n) => n - 1);
       refetch();
@@ -137,8 +137,8 @@ export default function DashboardPage() {
               )}
             </h1>
             <p className="mt-2 text-[14px] text-sand-800">
-              Every clip you're captioning, in one place. Projects are deleted automatically 24 hours after they're created, so export what you need.
-            </p>
+              Every clip you&apos;re captioning, in one place. Projects are deleted automatically 24 hours after they&apos;re created, so export what you need.
+                 </p>
           </div>
           <button
             onClick={() => setCreateOpen(true)}
@@ -155,7 +155,7 @@ export default function DashboardPage() {
           ) : isError ? (
             <div className="rounded-xl border border-orange-accent/60 bg-orange-accent/10 p-8 text-center space-y-3">
               <p className="font-sora text-[14px] font-semibold text-obsidian">
-                Couldn't load your projects.
+                Couldn&apos;t load your projects.
               </p>
               <p className="text-[13px] text-obsidian">
                 The backend may be offline. Start it, then try again.
@@ -170,10 +170,10 @@ export default function DashboardPage() {
           ) : projects.length === 0 ? (
             <div className="rounded-xl border border-dashed border-sand-300 bg-sand-50 px-8 py-16 text-center">
               <p className="font-serif text-2xl font-semibold text-ink">
-                Nothing here yet — <em className="italic text-sand-600">let's fix that.</em>
+                Nothing here yet — <em className="italic text-sand-600">let&apos;s fix that.</em>
               </p>
               <p className="mx-auto mt-3 max-w-[42ch] text-[14px] leading-relaxed text-sand-800">
-                Create a project, drop in a talking-head clip, and you'll have
+                Create a project, drop in a talking-head clip, and you&apos;ll have
                 cinematic captions on it in minutes.
               </p>
               <button
@@ -306,8 +306,8 @@ export default function DashboardPage() {
           >
             <h3 className="font-serif text-2xl font-semibold text-ink">Delete this project?</h3>
             <p className="mt-2 text-[14px] leading-relaxed text-sand-800">
-              <strong className="text-ink">"{deleteTarget.title}"</strong> and its uploads,
-              transcript, and exports will be removed. This can't be undone.
+              <strong className="text-ink">&quot;{deleteTarget.title}&quot;</strong> and its uploads,
+              transcript, and exports will be removed. This can&apos;t be undone.
             </p>
 
             {deleteError && (

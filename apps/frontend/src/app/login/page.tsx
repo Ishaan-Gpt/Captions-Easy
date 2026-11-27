@@ -64,6 +64,8 @@ export default function LoginPage() {
     // arriving with an email means "I already have an email account": open the email form, filled in
     const e = q.get("email");
     if (e) {
+      // the page is prerendered, so ?email= can only be read once it is in the browser
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setEmail(e);
       setMode("email");
     }

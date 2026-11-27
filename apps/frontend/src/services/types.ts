@@ -67,7 +67,7 @@ export interface Transcript {
   provider: string;
   version: string;
   words: TranscriptWord[];
-  transcript_json?: { words: any[] };
+  transcript_json?: { words: unknown[] };
 }
 
 export interface CaptionSegment {

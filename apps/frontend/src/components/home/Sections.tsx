@@ -200,9 +200,9 @@ export function Hero() {
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#FFFFEB]" />
       </div>
       <div className="mx-auto flex w-full max-w-6xl justify-end px-5 pb-3">
-        <a href="/credits" className="inline-flex min-h-8 items-center text-[11px] text-[#1A1A1A]/40 hover:text-[#1A1A1A]/75">
+        <Link href="/credits" className="inline-flex min-h-8 items-center text-[11px] text-[#1A1A1A]/40 hover:text-[#1A1A1A]/75">
           Clips: Wikimedia Commons, CC BY / BY-SA
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -30,8 +30,8 @@ export default function ForgotPasswordPage() {
     try {
       await authService.requestPasswordReset(email);
       setSent(true);
-    } catch (err: any) {
-      setError(friendlyAuthError(err.message || "Failed to send reset email."));
+    } catch (err) {
+      setError(friendlyAuthError((err instanceof Error && err.message) || "Failed to send reset email."));
     } finally {
       setLoading(false);
     }

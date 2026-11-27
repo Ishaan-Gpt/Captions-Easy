@@ -11,23 +11,14 @@ export const PEAKS_PER_SECOND = 50;
  * Cached per video; skipped for very large files so the editor never stalls. Returns null while loading.
  */
 export function useWaveform(videoId: string | null | undefined, url: string | null | undefined, sizeBytes: number | null | undefined) {
-  const [peaks, setPeaks] = useState<Float32Array | null>(() => (videoId ? cache.get(videoId) ?? null : null));
-  const [state, setState] = useState<"idle" | "loading" | "ready" | "unavailable">(videoId && cache.has(videoId) ? "ready" : "idle");
+  // the result of decoding, for the video it belongs to; finished peaks come from the cache
+  const [done, setDone] = useState<{ id: string; peaks: Float32Array | null } | null>(null);
+  const tooBig = !!sizeBytes && sizeBytes > MAX_BYTES;
 
   useEffect(() => {
-    if (!videoId || !url) return;
-    if (cache.has(videoId)) {
-      setPeaks(cache.get(videoId)!);
-      setState("ready");
-      return;
-    }
-    if (sizeBytes && sizeBytes > MAX_BYTES) {
-      setState("unavailable");
-      return;
-    }
+    if (!videoId || !url || cache.has(videoId) || tooBig) return;
     let alive = true;
     const ac = new AbortController();
-    setState("loading");
     (async () => {
       const buf = await (await fetch(url, { signal: ac.signal })).arrayBuffer();
       const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -51,19 +42,21 @@ export function useWaveform(videoId: string | null | undefined, url: string | nu
         }
         if (max > 0) for (let i = 0; i < n; i++) out[i] = out[i]! / max;
         cache.set(videoId, out);
-        if (alive) {
-          setPeaks(out);
-          setState("ready");
-        }
+        if (alive) setDone({ id: videoId, peaks: out });
       } finally {
         void ctx.close();
       }
-    })().catch(() => alive && setState("unavailable"));
+    })().catch(() => alive && setDone({ id: videoId, peaks: null }));
     return () => {
       alive = false;
       ac.abort();
     };
-  }, [videoId, url, sizeBytes]);
+  }, [videoId, url, tooBig]);
 
-  return { peaks, state };
+  const cached = videoId ? cache.get(videoId) : undefined;
+  if (cached) return { peaks: cached, state: "ready" as const };
+  if (!videoId || !url) return { peaks: null, state: "idle" as const };
+  if (tooBig) return { peaks: null, state: "unavailable" as const };
+  if (done?.id === videoId) return done.peaks ? { peaks: done.peaks, state: "ready" as const } : { peaks: null, state: "unavailable" as const };
+  return { peaks: null, state: "loading" as const };
 }

@@ -180,7 +180,7 @@ export const apiClient = {
         };
 
         xhr.onload = () => {
-          let body: any;
+          let body: { success?: boolean; data?: unknown; error?: ApiErrorBody };
           try {
             body = JSON.parse(xhr.responseText);
           } catch {

@@ -82,7 +82,7 @@ export const StudioPlayer = forwardRef<PlayerRef, Props>(function StudioPlayer({
     const r = boxRef.current?.getBoundingClientRect();
     if (!r) return;
     let x = compact ? position.x : clamp((e.clientX - r.left) / r.width);
-    let y = clamp((e.clientY - r.top) / r.height);
+    const y = clamp((e.clientY - r.top) / r.height);
     if (Math.abs(x - 0.5) < 0.02) x = 0.5; // snap to the centre line
     onMovePosition({ x, y });
   };
